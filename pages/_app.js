@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
-
-import PageChange from "components/PageChange/PageChange.js";
+import Authenticator from "../components/Authenticator";
+import PageChange from "components/PageChange";
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -30,33 +30,35 @@ Router.events.on("routeChangeError", () => {
 export default class MyApp extends App {
   componentDidMount() {
     let comment = document.createComment(`
+      =========================================================
+      * * NextJS Argon Dashboard v1.1.0 based on Argon Dashboard React v1.1.0
+      =========================================================
 
-=========================================================
-* * NextJS Argon Dashboard v1.1.0 based on Argon Dashboard React v1.1.0
-=========================================================
+      * Product Page: https://www.creative-tim.com/product/nextjs-argon-dashboard
+      * Copyright 2021 Creative Tim (https://www.creative-tim.com)
+      * Licensed under MIT (https://github.com/creativetimofficial/nextjs-argon-dashboard/blob/master/LICENSE.md)
 
-* Product Page: https://www.creative-tim.com/product/nextjs-argon-dashboard
-* Copyright 2021 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://github.com/creativetimofficial/nextjs-argon-dashboard/blob/master/LICENSE.md)
+      * Coded by Creative Tim
 
-* Coded by Creative Tim
+      =========================================================
 
-=========================================================
+      * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-`);
+      `
+    );
     document.insertBefore(comment, document.documentElement);
   }
+
   static async getInitialProps({ Component, router, ctx }) {
     let pageProps = {};
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
-
+    
     return { pageProps };
   }
+
   render() {
     const { Component, pageProps } = this.props;
 
@@ -69,12 +71,14 @@ export default class MyApp extends App {
             name="viewport"
             content="width=device-width, initial-scale=1, shrink-to-fit=no"
           />
-          <title>NextJS Argon Dashboard by Creative Tim</title>
+          <title>Evaluation System</title>
           <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
         </Head>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <Authenticator>
+          <Layout>
+            <Component {...pageProps}/>
+          </Layout>
+        </Authenticator>
       </React.Fragment>
     );
   }

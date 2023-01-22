@@ -14,9 +14,9 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Admin from "layouts/Admin.js";
+import Admin from "../../layouts/Admin.js";
 // core components
-import UserHeader from "components/Headers/UserHeader.js";
+import UserHeader from "../../components/Headers/UserHeader.js";
 
 function Profile() {
   return (

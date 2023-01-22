@@ -1,4 +1,8 @@
 import React from "react";
+import axios from 'axios';
+import useUserStore from '../../hooks/useUserStore';
+import Cookies from 'js-cookie';
+import { useRouter } from "next/router";
 
 // reactstrap components
 import {
@@ -16,9 +20,57 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Auth from "layouts/Auth.js";
+import Auth from "../../layouts/Auth.js";
 
 function Register() {
+  const setUser = useUserStore(state => state.setUser);
+  const router = useRouter();
+  const [form, setForm] = React.useState({});
+
+  const handleFillUp = (fieldName) => (e) => {
+    setForm(form => ({
+      ...form,
+      [fieldName]: e.target.value,
+    }));
+  }
+
+  const handleSignUp = async () => {
+    const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-up`;
+    let payload = null;
+
+    if (form.password === form.confirmPassword) {
+      payload = { ...form };
+      delete payload.confirmPassword;  
+    } else {
+      return;
+    }
+    
+    await axios.post(URL, payload)
+      .then(res => {
+        const { token, type, user, message } = res.data;
+
+        setUser('email', user.firstName);
+        setUser('firstName', user.firstName);
+        setUser('middleName', user.firstName);
+        setUser('lastName', user.firstName);
+        setUser('course', user.course);
+        setUser('office', user.office);
+
+        Cookies.set('token', token);
+        Cookies.set('type', type);
+
+        console.log(message);
+        router.push('/admin/dashboard');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
+  React.useEffect(() => {
+    console.log(form);
+  }, [form]);
+
   return (
     <>
       <Col lg="6" md="8">
@@ -71,7 +123,7 @@ function Register() {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="First Name" type="text" />
+                  <Input placeholder="First Name" type="text" onChange={handleFillUp('firstName')}/>
                 </InputGroup>
               </FormGroup>
 
@@ -83,7 +135,7 @@ function Register() {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Middle Name" type="text" />
+                  <Input placeholder="Middle Name" type="text" onChange={handleFillUp('middleName')}/>
                 </InputGroup>
               </FormGroup>
 
@@ -95,7 +147,7 @@ function Register() {
                       <i className="ni ni-hat-3" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Last Name" type="text" />
+                  <Input placeholder="Last Name" type="text" onChange={handleFillUp('lastName')}/>
                 </InputGroup>
               </FormGroup>
 
@@ -111,6 +163,7 @@ function Register() {
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
+                    onChange={handleFillUp('email')}
                   />
                 </InputGroup>
               </FormGroup>
@@ -123,7 +176,7 @@ function Register() {
                       <i className="ni ni-books" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Course" type="text"/>
+                  <Input placeholder="Course" type="text" onChange={handleFillUp('course')}/>
                 </InputGroup>
               </FormGroup>
 
@@ -135,12 +188,15 @@ function Register() {
                       <i className="ni ni-collection" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input id="exampleFormControlSelect1" type="select">
-                    <option>Office</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
+                  <Input id="exampleFormControlSelect1" type="select" onChange={handleFillUp('office')}>
+                    <option> Professor </option>
+                    <option> Instructor </option>
+                    <option> Guest Lecturer </option>
+                    <option> Assistant Professor </option>
+                    <option> Associate Professor </option>
+                    <option> Administrative Staff </option>
+                    <option> Coordinator (Associate Professor/Professor) </option>
+                    <option> Coordinator  (Instructor/Assistant Professor) </option>
                   </Input>
                 </InputGroup>
               </FormGroup>
@@ -157,6 +213,7 @@ function Register() {
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
+                    onChange={handleFillUp('password')}
                   />
                 </InputGroup>
               </FormGroup>
@@ -173,6 +230,7 @@ function Register() {
                     placeholder="Confirm Password"
                     type="password"
                     autoComplete="new-password"
+                    onChange={handleFillUp('confirmPassword')}
                   />
                 </InputGroup>
               </FormGroup>
@@ -205,7 +263,7 @@ function Register() {
                 </Col>
               </Row> */}
               <div className="text-center">
-                <Button className="mt-4" color="primary" type="button">
+                <Button onClick={handleSignUp} className="mt-4" color="primary" type="button">
                   Create account
                 </Button>
               </div>

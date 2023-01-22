@@ -1,5 +1,10 @@
 import React from "react";
+import axios from 'axios';
 import Link from "next/link";
+import Cookies from 'js-cookie';
+import useUserStore from '../../hooks/useUserStore';
+import { useRouter } from "next/router";
+
 // reactstrap components
 import {
   DropdownMenu,
@@ -19,6 +24,31 @@ import {
 } from "reactstrap";
 
 function AdminNavbar({ brandText }) {
+  const clearUser = useUserStore(state => state.clearUser);
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-out`;
+    const token = Cookies.get('token');
+    const config = {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    }
+
+    await axios.delete(URL, config)
+      .then(() => {
+        Cookies.remove('token');
+        Cookies.remove('type');
+        clearUser();
+        
+        router.push('/auth/login');
+      })
+      .catch(err => {
+        console.log(err);
+      })
+  }
+
   return (
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
@@ -86,7 +116,7 @@ function AdminNavbar({ brandText }) {
                   </DropdownItem>
                 </Link>
                 <DropdownItem divider />
-                <DropdownItem href="#pablo" onClick={(e) => e.preventDefault()}>
+                <DropdownItem href="#pablo" onClick={handleSignOut}>
                   <i className="ni ni-user-run" />
                   <span>Logout</span>
                 </DropdownItem>

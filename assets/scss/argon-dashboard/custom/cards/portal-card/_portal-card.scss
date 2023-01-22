@@ -1,0 +1,9 @@
+.portal-card {
+    transition: all 0.1s ease-in-out;
+}
+
+.portal-card:hover {
+    border: 1px solid rgba(255, 25, 25, 0.8);
+    cursor: pointer;
+    box-shadow: inset 0px 0px 20px rgba(0, 0, 0 , 0.1);
+}

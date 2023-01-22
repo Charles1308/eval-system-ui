@@ -1,4 +1,8 @@
 import React from "react";
+import axios from 'axios';
+import Cookies from 'js-cookie';
+import useUserStore from '../../hooks/useUserStore';
+import { useRouter } from "next/router";
 
 // reactstrap components
 import {
@@ -15,10 +19,47 @@ import {
   Row,
   Col,
 } from "reactstrap";
+
 // layout for this page
-import Auth from "layouts/Auth.js";
+import Auth from "../../layouts/Auth.js";
 
 function Login() {
+  const router = useRouter();
+  const [form, setForm] = React.useState({});
+  const setUser = useUserStore(state => state.setUser);
+
+  const handleFillUp = (fieldName) => (e) => {
+    setForm(form => ({
+      ...form,
+      [fieldName]: e.target.value,
+    }));
+  }
+
+  const handleSignIn = async () => {
+    const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-in`;
+
+    await axios.post(URL, form)
+      .then(res => {
+        const { token, type, user, message } = res.data;
+
+        setUser('email', user.firstName);
+        setUser('firstName', user.firstName);
+        setUser('middleName', user.firstName);
+        setUser('lastName', user.firstName);
+        setUser('course', user.course);
+        setUser('office', user.office);
+
+        Cookies.set('token', token);
+        Cookies.set('type', type);
+
+        console.log(message);
+        router.push('/admin/dashboard');
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+
   return (
     <>
       <Col lg="5" md="7">
@@ -71,6 +112,7 @@ function Login() {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    onChange={handleFillUp('email')}
                     placeholder="Email"
                     type="email"
                     autoComplete="new-email"
@@ -85,6 +127,7 @@ function Login() {
                     </InputGroupText>
                   </InputGroupAddon>
                   <Input
+                    onChange={handleFillUp('password')}
                     placeholder="Password"
                     type="password"
                     autoComplete="new-password"
@@ -105,7 +148,7 @@ function Login() {
                 </label>
               </div>
               <div className="text-center">
-                <Button className="my-4" color="primary" type="button">
+                <Button onClick={handleSignIn} className="my-4" color="primary" type="button">
                   Sign in
                 </Button>
               </div>
