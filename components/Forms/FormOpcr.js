@@ -1,7 +1,11 @@
 import React from 'react';
 
 const FormOpcr = (props) => {
-    return <></>
+    return (
+        <>
+                    
+        </>
+    );
 }
 
 export default FormOpcr;

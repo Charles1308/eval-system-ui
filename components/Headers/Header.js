@@ -1,6 +1,7 @@
 import React from "react";
-import PORTALS from "../../utils/consts/headerPortals";
 import Link from "next/link";
+import IpcrForm from "../CardModals/IpcrForm";
+import OpcrForm from "../CardModals/OpcrForm";
 
 // reactstrap components
 import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
@@ -10,19 +11,11 @@ import { useRouter } from "next/router";
 function Header() {
   const router = useRouter();
   const [modalID, setModalID] = React.useState(null);
-  const modal = React.useMemo(() => {
-    return PORTALS.filter(({ name }) => name === modalID)[0];  
-  }, [modalID, PORTALS]);
+  const [modal, setModal] = React.useState(null);
 
-  const toggle = (item) => () => {
-    if (item?.destination) {
-      router.push(item.destination)
-    } else {
-      setModalID(item?.name);
-    }
-  };
-
-  console.log(modal);
+  const toggle = (item) => {
+    setModal(item);
+  }
 
   return (
     <>
@@ -32,39 +25,19 @@ function Header() {
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
-              {PORTALS.map((portal, index) => (
-                <Col key={portal.name + index} lg="6" xl="3" className="mb-sm-2" onClick={toggle(portal)}>
-                  <Card className="card-stats mb-4 mb-xl-0 portal-card">
-                    <CardBody>
-                      <Row>
-                        <div className="col">
-                          <CardTitle
-                            tag="h5"
-                            className="text-uppercase text-muted mb-0"
-                          >
-                            { portal.name }
-                          </CardTitle>
-                        </div>
-                        <Col className="col-auto">
-                          { portal.icon }
-                        </Col>
-                      </Row>
-                    </CardBody>
-                  </Card>
-                </Col>
-
-              ))}
+              <IpcrForm onClick={item => toggle(item)}/>
+              <OpcrForm onClick={item => toggle(item)}/>
             </Row>
           </div>
         </Container>
       </div>
-      <Modal isOpen={!!modal?.children} toggle={toggle()} >
-        <ModalHeader toggle={toggle()}>{ modal?.name }</ModalHeader>
+      <Modal isOpen={!!modal} toggle={() => toggle(null)} >
+        <ModalHeader toggle={() => toggle(null)}>{ modal?.title }</ModalHeader>
         <ModalBody>
           { modal?.children }
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={toggle()}>
+          <Button color="primary" onClick={() => toggle(null)}>
             Cancel
           </Button>
         </ModalFooter>

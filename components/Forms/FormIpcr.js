@@ -1,7 +1,11 @@
 import React from 'react';
 
 const FormIpcr = (props) => {
-    return <></>
+    return (
+        <>
+            
+        </>
+    );
 }
 
 export default FormIpcr;
