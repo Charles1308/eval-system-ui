@@ -4,8 +4,19 @@ import IpcrForm from "../CardModals/IpcrForm";
 import OpcrForm from "../CardModals/OpcrForm";
 
 // reactstrap components
-import { Card, CardBody, CardTitle, Container, Row, Col } from "reactstrap";
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { 
+  Col, 
+  Row, 
+  Card, 
+  Modal, 
+  Button, 
+  CardBody, 
+  CardTitle, 
+  Container, 
+  ModalBody, 
+  ModalHeader, 
+  ModalFooter,
+} from "reactstrap";
 import { useRouter } from "next/router";
 
 function Header() {
@@ -31,7 +42,7 @@ function Header() {
           </div>
         </Container>
       </div>
-      <Modal isOpen={!!modal} toggle={() => toggle(null)} >
+      <Modal isOpen={!!modal} toggle={() => toggle(null)} size="xl">
         <ModalHeader toggle={() => toggle(null)}>{ modal?.title }</ModalHeader>
         <ModalBody>
           { modal?.children }

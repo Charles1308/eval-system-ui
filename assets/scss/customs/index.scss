@@ -1,0 +1,19 @@
+.mfo-form-content-box {
+    width: 100%;
+    min-height: 180px;
+    height: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    border: solid 1px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    margin-bottom: 5px;
+    padding: 5px;
+}
+
+.mfo-form-content-field {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
