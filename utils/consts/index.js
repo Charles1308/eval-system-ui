@@ -28,25 +28,39 @@ function mfo_percentages () {
 const MFO_CONTENTS = {
     "MFO1": [
         {
-            title: "Acadmic and Professional Qualification",
+            title: "Academic and Professional Qualification",
             subtitle: "An incentive of 0.5% is added to the total score",
             fields: [
+                {
+                    title: "Academic Qualification",
+                    subtitle: null,
+                    dom: DOM_CONTENTS.next(),
+                    for: "Quality",
+                    other_fields: []
+                },
                 {
                     title: "__ Active registration to Professional/Certification Bodies",
                     subtitle: null,
                     dom: DOM_CONTENTS.next(),
+                    for: "Quality",
+                    other_fields: []
                 },
                 {
                     title: "__ Active membership to Professional Organization(s)",
                     subtitle: null,
                     dom: DOM_CONTENTS.next(),
+                    for: "Efficiency",
+                    other_fields: []
                 },
                 {
                     title: "Pursue in lifelong  learning through further studies",
                     subtitle: null,
                     dom: DOM_CONTENTS.next(),
+                    for: "Quality",
+                    other_fields: []
                 },
-            ]
+            ],
+            percentages: [],
         },
         {
             title: "Effectiveness of Classroom Instruction",
@@ -56,8 +70,76 @@ const MFO_CONTENTS = {
                     title: "An average rating of at least 3.00 in the Performance Evaluation for Teaching Effectiveness",
                     subtitle: null,
                     dom: DOM_CONTENTS.next(),
+                    for: "Quality",
+                    other_fields: []
                 },
-            ]
+            ],
+            percentage: [
+                {
+                    label: null,
+                    value: 0.45,
+                }
+            ],
+        },
+        {
+            title: "Attainment of Student Excellence",
+            subtitle: null,
+            fields: [
+                {
+                    title: "75% of the total number of students who struggled in any of the assessment tasks were provided with guidance and conselling to support academic performance, progress review, set academic goals, and implement academic interventions",
+                    subtitle: null,
+                    dom: DOM_CONTENTS.next(),
+                    for: "Efficiency",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Students",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Quality of Advising",
+                            subtitle: null,
+                        },
+                    ]
+                },
+                {
+                    title: "90% of the total number of students have passed all the handled courses",
+                    subtitle: null,
+                    dom: DOM_CONTENTS.next(),
+                    for: "Efficiency",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Students",
+                            subtitle: null,
+                        },
+                    ]
+                },
+                {
+                    title: "__% of the total number of students have attained the Intended Learning Outcomes (ILOs)",
+                    subtitle: null,
+                    dom: DOM_CONTENTS.next(),
+                    for: "Efficiency",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Students",
+                            subtitle: null,
+                        },
+                    ]
+                },
+            ],
+            percentage: [
+                {
+                    label: null,
+                    value: 0.45,
+                }
+            ],
         },
     ]
 }

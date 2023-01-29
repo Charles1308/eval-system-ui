@@ -12,27 +12,67 @@ import TargetField from "../Fields/MFO/TargetField";
 import ActualField from "../Fields/MFO/ActualField";
 import RateField from "../Fields/MFO/RateField";
 import DOM_CONTENTS from "../../utils/consts/domContents";
+import BaseInputField from '../Fields/MFO/BaseInputField';
 
 const MFO1 = props => {
 	const [target, setTarget] = React.useState({});
 	const [actual, setActual] = React.useState({});
+	const [rate, setRate] = React.useState({});
+	const [otherField, setOtherField] = React.useState({});
 
-	console.log(props?.contents);
+	const onlyOneDependencyField = (fields) => {
+		if (!fields || !fields?.length) return true;
+		const isTrue = fields?.some?.(field => field?.for?.length);
 
-	const handleChange = (type, index) => (value) => {
+		if (!isTrue) {
+			console.warn('Found more than 1 dependency field');
+		}
 
-		if (type === "target") {
-			setTarget(target => ({
-				...target,
-				[index]: value
-			}));
-		} else {
-			setActual(actual => ({
-				...actual,
-				[index]: value
-			}));
+		return isTrue;
+	}
+
+	const handleChange = (type, index, valueType = null) => (value) => {
+		switch (type) {
+			case "target":
+				setTarget(target => ({
+					...target,
+					[index]: value
+				}));
+				break;
+			
+			case "actual":
+				setActual(actual => ({
+					...actual,
+					[index]: value
+				}));
+				break;
+
+			case "rate":
+				setRate(rate => ({
+					...rate,
+					[index]: value
+				}));
+				break;
+
+			default:
+				setOtherField(otherField => ({
+					...otherField,
+					[index]: {
+						...otherField[index],
+						[valueType]: value,
+					}
+				}));
+				break;
 		}
 	}
+
+	React.useEffect(() => {
+		// console.log("Other: ", otherField);
+		console.log("target: ", target);
+		// console.log("actual: ", actual);
+		// console.log("rate: ", rate);
+	}, [otherField, target, actual, rate]);
+
 	return(
 		<>	
 			{props?.contents?.map?.((content, parentIndex) => (
@@ -42,28 +82,60 @@ const MFO1 = props => {
 						{content?.subtitle && <small className='text-red display-block'>{ content?.subtitle }</small>}
 					</div>
 					<div>
-						{content.fields.map((field, index) => (
-							<div className='mfo-form-content-box'>
+						{content.fields.map((field, fieldIndex) => (
+							<div key={`${parentIndex}${fieldIndex}`} className='mfo-form-content-box'>
 								<div style={{ width: '300px '}}>
 									<small className='m-0 p-0'>{field.title}</small>
 									{content?.subtitle && <small className='text-red display-block'>{ field?.subtitle }</small>}
 								</div>
 								<div style={{ width: '400px '}} className="d-flex flex-column justify-content-around">
-									<TargetField DOMValues={field.dom.value.values} value={target[`${parentIndex}${index}`]} onChange={handleChange('target', `${parentIndex}${index}`)}/>
-									<ActualField DOMValues={field.dom.value.values} value={actual[`${parentIndex}${index}`]} onChange={handleChange('actual', `${parentIndex}${index}`)}/>
-									<RateField target={target[`${parentIndex}${index}`]} actual={actual[`${parentIndex}${index}`]}/>
+									{onlyOneDependencyField(field.other_fields) && field.other_fields?.map?.((other_field, otherIndex) => {
+										const preKey = other_field?.for === "Target" ? "-for-target" : otherIndex;
+										const key = `${parentIndex}${fieldIndex}${preKey}`;
+										
+										return (
+											<BaseInputField
+												key={`${parentIndex}${fieldIndex}${otherIndex}`}
+												onChange={handleChange(null, key, 'total')}
+												value={otherField[key]?.total}
+												placeHolder={other_field.title}
+											/>
+										)
+									})}
+									<TargetField 
+										id={`${parentIndex}${fieldIndex}`}
+										DOMValues={field?.dom?.value?.contents?.[field?.for]?.values} 
+										dependencyTotalNumber={otherField[`${parentIndex}${fieldIndex}-for-target`]?.total}
+										value={target[`${parentIndex}${fieldIndex}`]} 
+										onDepTotalChange={handleChange(null, `${parentIndex}${fieldIndex}-for-target`, 'value')}
+										onChange={handleChange('target', `${parentIndex}${fieldIndex}`)}
+									/>
+									<ActualField 
+										id={`${parentIndex}${fieldIndex}`}
+										DOMValues={field?.dom?.value?.contents?.[field?.for]?.values} 
+										value={actual[`${parentIndex}${fieldIndex}`]} 
+										onChange={handleChange('actual', `${parentIndex}${fieldIndex}`)}	
+									/>
+									<RateField 
+										target={otherField[`${parentIndex}${fieldIndex}-for-target`]?.value ?? target[`${parentIndex}${fieldIndex}`]} 
+										actual={actual[`${parentIndex}${fieldIndex}`]}
+										onChange={handleChange('rate', `${parentIndex}${fieldIndex}`)}
+									/>
 								</div>
 								<div className='display-flex flex-column grow-2' style={{ width: '300px '}}>
 									{/* DOM */}
-									<h5>{field.dom.value.label}</h5>
-									{field.dom.value.values.map((dom, index) => (
-										<h5>{dom.label} = {parseFloat(dom.value).toFixed(2)}</h5>
+									{Object.keys(field?.dom?.value?.contents || {}).map((key, domIndex) => (
+										<div key={`${domIndex}${parentIndex}${fieldIndex}`}>
+											<h5>{field?.dom?.value?.contents[key].label}</h5>
+											{field?.dom?.value?.contents[key].values.map((dom, valueIndex) => (
+												<h5 key={valueIndex+dom.label}>{dom.label} = {parseFloat(dom.value).toFixed(2)}</h5>
+											))}
+										</div>
 									))}
 								</div>
 							</div>
 						))}
 					</div>
-					
 					<br/>
 					<hr/>
 				</div>
