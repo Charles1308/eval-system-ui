@@ -29,10 +29,22 @@ const BaseInputField = props => {
 	const selfValue = React.useMemo(() => {
 		if (dependencyTotalNumber !== null && dependencyTotalNumber >= 0 && value) {
 			return getSelfValue(parseInt(value), dependencyTotalNumber);
+		} else {
+			return 0;
 		}
 	}, [value, dependencyTotalNumber]);
 
-	console.log(value);
+	React.useEffect(() => {
+		console.log(value);
+		if (value !== null) {
+			console.log('here');
+			props?.onDepTotalChange?.(selfValue);
+		}
+	}, [value]);
+
+	React.useEffect(() => {
+		console.log(dependencyTotalNumber);
+	}, [dependencyTotalNumber]);
 
 	return (
 		<>
@@ -67,7 +79,7 @@ const BaseInputField = props => {
 							<InputGroup>
 								{dependencyTotalNumber && 
 								<InputGroupText>
-									{`Target: ${selfValue || "0"}`}
+									{`Target: ${selfValue || 0}`}
 								</InputGroupText>}
 								<Input 
 									id={props?.id}
@@ -79,8 +91,7 @@ const BaseInputField = props => {
 										props?.placeHolder?.length ? props.placeHolder : "Please enter a value"
 									}
 									onChange={e => {
-										console.log(value, dependencyTotalNumber, selfValue);
-										props?.onDepTotalChange?.(selfValue);
+										console.log('heree')
 										props?.onChange?.(parseInt(e.target.value))
 									}}	
 								/>

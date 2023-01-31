@@ -23,6 +23,10 @@ const RateField = ({ target, actual, onChange }) => {
         }
     }, [rate]);
 
+    React.useEffect(() => {
+        console.log("Target: ", target, " Actual: ", actual);
+    }, [target, actual]);
+
     return (
         <div className="my-2">
             <InputGroup>

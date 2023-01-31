@@ -67,7 +67,7 @@ const MFO1 = props => {
 	}
 
 	React.useEffect(() => {
-		// console.log("Other: ", otherField);
+		console.log("Other: ", otherField);
 		console.log("target: ", target);
 		// console.log("actual: ", actual);
 		// console.log("rate: ", rate);
@@ -95,7 +95,7 @@ const MFO1 = props => {
 										
 										return (
 											<BaseInputField
-												key={`${parentIndex}${fieldIndex}${otherIndex}`}
+												key={key}
 												onChange={handleChange(null, key, 'total')}
 												value={otherField[key]?.total}
 												placeHolder={other_field.title}
