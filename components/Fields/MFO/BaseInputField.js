@@ -35,16 +35,10 @@ const BaseInputField = props => {
 	}, [value, dependencyTotalNumber]);
 
 	React.useEffect(() => {
-		console.log(value);
-		if (value !== null) {
-			console.log('here');
+		if (dependencyTotalNumber !== null) {
 			props?.onDepTotalChange?.(selfValue);
 		}
-	}, [value]);
-
-	React.useEffect(() => {
-		console.log(dependencyTotalNumber);
-	}, [dependencyTotalNumber]);
+	}, [selfValue, dependencyTotalNumber]);
 
 	return (
 		<>
@@ -90,10 +84,7 @@ const BaseInputField = props => {
 										isActualField ? "Please enter Actual value" :
 										props?.placeHolder?.length ? props.placeHolder : "Please enter a value"
 									}
-									onChange={e => {
-										console.log('heree')
-										props?.onChange?.(parseInt(e.target.value))
-									}}	
+									onChange={e => props?.onChange?.(parseInt(e.target.value))}	
 								/>
 								{dependencyTotalNumber && 
 								<InputGroupText>

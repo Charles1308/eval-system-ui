@@ -11,7 +11,6 @@ import {
 import TargetField from "../Fields/MFO/TargetField";
 import ActualField from "../Fields/MFO/ActualField";
 import RateField from "../Fields/MFO/RateField";
-import DOM_CONTENTS from "../../utils/consts/domContents";
 import BaseInputField from '../Fields/MFO/BaseInputField';
 
 const MFO1 = props => {
@@ -66,13 +65,6 @@ const MFO1 = props => {
 		}
 	}
 
-	React.useEffect(() => {
-		console.log("Other: ", otherField);
-		console.log("target: ", target);
-		// console.log("actual: ", actual);
-		// console.log("rate: ", rate);
-	}, [otherField, target, actual, rate]);
-
 	return(
 		<>	
 			{props?.contents?.map?.((content, parentIndex) => (
@@ -96,6 +88,7 @@ const MFO1 = props => {
 										return (
 											<BaseInputField
 												key={key}
+												DOMValues={other_field?.dom?.value?.contents?.[other_field?.key]?.values}
 												onChange={handleChange(null, key, 'total')}
 												value={otherField[key]?.total}
 												placeHolder={other_field.title}

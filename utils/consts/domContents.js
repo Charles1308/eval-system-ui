@@ -1048,4 +1048,4 @@ const DOM_CONTENTS = [
     // END MFO 5
 ]
 
-export default DOM_CONTENTS.values();
+export default DOM_CONTENTS.values();   
