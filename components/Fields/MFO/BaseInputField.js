@@ -35,8 +35,8 @@ const BaseInputField = props => {
 	}, [value, dependencyTotalNumber]);
 
 	React.useEffect(() => {
-		if (dependencyTotalNumber !== null) {
-			props?.onDepTotalChange?.(selfValue);
+		if (!isNaN(dependencyTotalNumber) && dependencyTotalNumber > 0) {
+			props?.onDepTotalChange?.(selfValue); // percentage
 		}
 	}, [selfValue, dependencyTotalNumber]);
 
@@ -71,10 +71,12 @@ const BaseInputField = props => {
 						<div className='my-2'>
 							{(props?.placeHolder || type) && <Label size='sm' for={props?.id}>{ props?.placeHolder || type }</Label>}
 							<InputGroup>
-								{dependencyTotalNumber && 
-								<InputGroupText>
-									{`Target: ${selfValue || 0}`}
-								</InputGroupText>}
+								{(!isNaN(dependencyTotalNumber) && dependencyTotalNumber) 
+									?   <InputGroupText>
+											{`Target: ${selfValue || 0}`}
+										</InputGroupText>
+									: null
+								}
 								<Input 
 									id={props?.id}
 									defaultValue={parseInt(value || 0)}
@@ -86,10 +88,12 @@ const BaseInputField = props => {
 									}
 									onChange={e => props?.onChange?.(parseInt(e.target.value))}	
 								/>
-								{dependencyTotalNumber && 
-								<InputGroupText>
-									{`%`}
-								</InputGroupText>}
+								{(!isNaN(dependencyTotalNumber) && dependencyTotalNumber) 
+									?   <InputGroupText>
+											{`%`}
+										</InputGroupText>
+									: null
+								}
 							</InputGroup>
 						</div>
 					)

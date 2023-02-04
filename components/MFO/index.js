@@ -6,8 +6,6 @@ const MFOComponent = props => {
 	const { user } = useUserStore(store => store);
 	const { type, data } = props;
 
-	console.log(user, type, data);
-	// console.log(type,data.getPercentage());
 	return (
 		<div 
 			style={{
