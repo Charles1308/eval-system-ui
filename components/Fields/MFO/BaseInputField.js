@@ -19,6 +19,7 @@ const BaseInputField = props => {
         dependencyTotalNumber = null,
         type = null,
         value = null,
+		disabled,
     } = props;
     
     const [dropdownOpen, setDropdownOpen] = React.useState(false);
@@ -47,7 +48,7 @@ const BaseInputField = props => {
 						<div className='my-2'>
 							{(props?.placeHolder || type) && <Label size='sm'>{ props?.placeHolder || type }</Label>}
 							<br/>
-							<Dropdown isOpen={dropdownOpen} toggle={toggle}>
+							<Dropdown isOpen={dropdownOpen} toggle={toggle} disabled={disabled}>
 								<DropdownToggle
 									caret
 									color="secondary"
@@ -78,6 +79,7 @@ const BaseInputField = props => {
 									: null
 								}
 								<Input 
+									disabled={disabled}
 									id={props?.id}
 									defaultValue={parseInt(value || 0)}
 									type="number" 

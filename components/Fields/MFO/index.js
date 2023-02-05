@@ -5,7 +5,7 @@ import BaseInputField from './BaseInputField';
 import RateField from './RateField';
 import ActualField from './ActualField';
 import QETAComponent from '../QETA';
-
+import uniqid from 'uniqid';
 import { 
     Input, 
     InputGroup, 
@@ -14,21 +14,46 @@ import {
 
 const MFO = (props) => {
     const {
+        id,
         field,
         index,
+        mfoData = {
+            other: {},
+            rate: null,
+            target: null,
+            actual: null,
+            percentage: null,
+            "dep-total": null,
+            total: 0,
+        }, // Form's previous data
+        onChange,
         percentage,
+        editMode = true,
     } = props;
 
-    const [data, setData] = React.useState({
+    const initialTotal = mfoData?.total;
+    const initialOther = mfoData?.other;
+    const initialData = {
         rate: null,
         target: null,
         actual: null,
         percentage: null,
         "dep-total": null,
-    });
+    };
 
-    const [other, setOther] = React.useState({});
-    const [total, setTotal] = React.useState(0);
+    const [data, setData] = React.useState(initialData);
+
+    const [other, setOther] = React.useState(initialOther);
+    const [total, setTotal] = React.useState(initialTotal);
+
+    const [_id, _setId] = React.useState(id);
+
+    const payload = React.useMemo(() => ({
+        id: _id,
+        data: { ...data },
+        other: { ...other },
+        total,
+    }), [_id, data, other, total]);
 
     const isIncentiveTotal = percentage?.type === 'Incentives';
 
@@ -47,7 +72,9 @@ const MFO = (props) => {
 	}
 
     const handleQetaValue = (qetaType) => {
-        const value = field.for === qetaType ? data?.rate : other?.[qetaType];
+        const value = field.for === qetaType 
+            ? data?.rate 
+            : other?.[qetaType];
 
         return value;
     }
@@ -63,7 +90,12 @@ const MFO = (props) => {
 		return isTrue;
 	}
 
-    console.log(percentage?.applyPercentage?.(total));
+    React.useEffect(() => {
+        if (initialData !== data && total !== initialTotal && other !== initialOther) {
+            onChange?.({ ...payload });
+        }
+    }, [data, total, other, payload]);
+
     return(
         <div>
             <div className='mfo-form-content-box'>
@@ -78,6 +110,7 @@ const MFO = (props) => {
                         
                         return (
                             <BaseInputField
+                                disabled={!editMode}
                                 id={`MFO-FIELD-BASE-${index}${otherIndex}`}
                                 key={`MFO-FIELD-BASE-${index}${otherIndex}`}
                                 DOMValues={other_field?.dom?.value?.contents?.[other_field?.key]?.values}
@@ -88,6 +121,7 @@ const MFO = (props) => {
                         )
                     })}
                     <TargetField 
+                        disabled={!editMode}
                         id={`MFO-FIELD-TARGET-${index}`}
                         DOMValues={field?.dom?.value?.contents?.[field?.for]?.values} 
                         dependencyTotalNumber={data["dep-total"]}
@@ -96,6 +130,7 @@ const MFO = (props) => {
                         onChange={handleChange('target')}
                     />
                     <ActualField 
+                        disabled={!editMode}
                         id={`MFO-FIELD-ACTUAL-${index}`}
                         DOMValues={field?.dom?.value?.contents?.[field?.for]?.values} 
                         value={data.actual} 

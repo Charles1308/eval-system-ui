@@ -1,10 +1,18 @@
 import React from 'react';
+import uniqid from 'uniqid';
 import useUserStore from '../../hooks/useUserStore';
 import MFO1 from './MFO1';
 
 const MFOComponent = props => {
 	const { user } = useUserStore(store => store);
 	const { type, data } = props;
+	const [ids, setIds] = React.useState([]);
+
+	React.useEffect(() => {
+		const MFO_IDS = Array(5).fill(null).map(() => uniqid());
+
+		setIds(MFO_IDS);
+	}, []);
 
 	return (
 		<div 
@@ -27,7 +35,7 @@ const MFOComponent = props => {
 				>
 					<strong>{props?.title}</strong>
 				</div>
-				{type === 'MFO1' && <MFO1 {...data}/>}
+				{type === 'MFO1' && ids.length && <MFO1 id={`${type}-${ids[0]}`} {...data}/>}
 				{/*{type === 'MFO2' && <MFO1 {...data}/>}*/}
 				{/*{type === 'MFO3' && <MFO1 {...data}/>}*/}
 				{/*{type === 'MFO4' && <MFO1 {...data}/>}*/}
