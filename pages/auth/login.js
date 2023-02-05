@@ -1,7 +1,8 @@
 import React from "react";
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import useUserStore from '../../hooks/useUserStore';
+import useUserStore from '../../hooks/store/useUserStore';
+import useNotifStore from '../../hooks/store/useNotifStore';
 import { useRouter } from "next/router";
 
 // reactstrap components
@@ -27,6 +28,7 @@ function Login() {
   const router = useRouter();
   const [form, setForm] = React.useState({});
   const setUser = useUserStore(state => state.setUser);
+  const { setNotifs } = useNotifStore(state => state);
 
   const handleFillUp = (fieldName) => (e) => {
     setForm(form => ({
@@ -35,7 +37,8 @@ function Login() {
     }));
   }
 
-  const handleSignIn = async () => {
+  const handleSignIn = async (e) => {
+    e.preventDefault();
     const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-in`;
 
     await axios.post(URL, form)
@@ -52,13 +55,19 @@ function Login() {
         Cookies.set('token', token);
         Cookies.set('type', type);
 
-        console.log(message);
+        setNotifs({ message });
+
         router.push('/admin/dashboard');
       })
       .catch(err => {
         console.log(err);
+        setNotifs({
+          type: 'danger',
+          message: err?.response?.data
+        });
       });
   }
+
 
   return (
     <>
@@ -103,7 +112,7 @@ function Login() {
             <div className="text-center text-muted mb-4">
               Login
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={handleSignIn}>
               <FormGroup className="mb-3">
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -148,7 +157,7 @@ function Login() {
                 </label>
               </div>
               <div className="text-center">
-                <Button onClick={handleSignIn} className="my-4" color="primary" type="button">
+                <Button onClick={handleSignIn} className="my-4" color="primary" type="submit">
                   Sign in
                 </Button>
               </div>

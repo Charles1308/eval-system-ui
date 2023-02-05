@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import Link from "next/link";
 import Cookies from 'js-cookie';
-import useUserStore from '../../hooks/useUserStore';
+import useUserStore from '../../hooks/store/useUserStore';
 import { useRouter } from "next/router";
 
 // reactstrap components
@@ -24,9 +24,10 @@ import {
 } from "reactstrap";
 
 function AdminNavbar({ brandText }) {
-  const clearUser = useUserStore(state => state.clearUser);
+  const { clearUser, firstName, lastName } = useUserStore(state => state);
   const router = useRouter();
 
+  const fullname = `${firstName ?? ''} ${lastName ?? ''}`;
   const handleSignOut = async () => {
     const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-out`;
     const token = Cookies.get('token');
@@ -82,7 +83,7 @@ function AdminNavbar({ brandText }) {
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      Jessica Jones
+                      { fullname }
                     </span>
                   </Media>
                 </Media>

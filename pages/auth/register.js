@@ -1,6 +1,7 @@
 import React from "react";
 import axios from 'axios';
-import useUserStore from '../../hooks/useUserStore';
+import useUserStore from '../../hooks/store/useUserStore';
+import useNotifStore from '../../hooks/store/useNotifStore';
 import Cookies from 'js-cookie';
 import { useRouter } from "next/router";
 
@@ -24,6 +25,7 @@ import Auth from "../../layouts/Auth.js";
 
 function Register() {
   const setUser = useUserStore(state => state.setUser);
+  const { setNotifs } = useNotifStore(state => state);
   const router = useRouter();
   const [form, setForm] = React.useState({});
 
@@ -34,7 +36,9 @@ function Register() {
     }));
   }
 
-  const handleSignUp = async () => {
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+
     const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-up`;
     let payload = null;
 
@@ -59,17 +63,17 @@ function Register() {
         Cookies.set('token', token);
         Cookies.set('type', type);
 
-        console.log(message);
+        setNotifs({ message });
         router.push('/admin/dashboard');
       })
       .catch(err => {
         console.log(err);
+        setNotifs({
+          type: 'danger',
+          message: err?.response?.data
+        });
       });
   }
-
-  React.useEffect(() => {
-    console.log(form);
-  }, [form]);
 
   return (
     <>
@@ -114,7 +118,7 @@ function Register() {
             <div className="text-center text-muted mb-4">
               Register
             </div>
-            <Form role="form">
+            <Form role="form" onSubmit={handleSignUp}>
               {/* first name */}
               <FormGroup>
                 <InputGroup className="input-group-alternative mb-3">
@@ -263,7 +267,7 @@ function Register() {
                 </Col>
               </Row> */}
               <div className="text-center">
-                <Button onClick={handleSignUp} className="mt-4" color="primary" type="button">
+                <Button onClick={handleSignUp} className="mt-4" color="primary" type="submit">
                   Create account
                 </Button>
               </div>

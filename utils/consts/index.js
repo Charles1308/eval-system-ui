@@ -408,6 +408,7 @@ const MFO = [
         data: {
             title: "Research",
             percentage: new mfo_percentages(),        
+            contents: MFO_CONTENTS['MFO2'],
         }
     },
     {
@@ -415,6 +416,7 @@ const MFO = [
         data: {
             title: "Extension",
             percentage: new mfo_percentages(),        
+            contents: MFO_CONTENTS['MFO3'],
         }
     },
     {
@@ -422,6 +424,7 @@ const MFO = [
         data: {
             title: "Support Function",
             percentage: new mfo_percentages(),        
+            contents: MFO_CONTENTS['MFO4'],
         }
     },
     {
@@ -429,6 +432,7 @@ const MFO = [
         data: {
             title: "Admin Function",
             percentage: new mfo_percentages(),        
+            contents: MFO_CONTENTS['MFO5'],
         }
     },  
 ];

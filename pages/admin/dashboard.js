@@ -29,7 +29,6 @@ import {
   chartExample1,
   chartExample2,
 } from "variables/charts.js";
-
 import Header from "../../components/Headers/Header.js";
 
 const Dashboard = (props) => {
@@ -46,8 +45,6 @@ const Dashboard = (props) => {
     setChartExample1Data("data" + index);
   };
 
-
-  
   return (
     <>
       <Header />

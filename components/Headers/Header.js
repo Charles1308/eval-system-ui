@@ -1,5 +1,7 @@
 import React from "react";
 import Link from "next/link";
+import Axios from 'axios';
+import useFormRequestStore from "../../hooks/store/useFormRequestsStore";
 import IpcrForm from "../CardModals/IpcrForm";
 import OpcrForm from "../CardModals/OpcrForm";
 
@@ -20,12 +22,27 @@ import {
 import { useRouter } from "next/router";
 
 function Header() {
+  const formStore = useFormRequestStore(state => state);
+
   const router = useRouter();
-  const [modalID, setModalID] = React.useState(null);
   const [modal, setModal] = React.useState(null);
 
   const toggle = (item) => {
     setModal(item);
+  }
+
+  const handleSubmit = async () => {
+    await Axios({
+      url: formStore.url,
+      method: formStore.method,
+      data: formStore.payload,
+    })
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   return (
@@ -48,7 +65,12 @@ function Header() {
           { modal?.children }
         </ModalBody>
         <ModalFooter>
-          <Button color="primary" onClick={() => toggle(null)}>
+          { modal?.hasSubmit && (
+            <Button color="primary" onClick={handleSubmit}>
+              Submit
+            </Button>
+          )}
+          <Button color="secondary" onClick={() => toggle(null)}>
             Cancel
           </Button>
         </ModalFooter>

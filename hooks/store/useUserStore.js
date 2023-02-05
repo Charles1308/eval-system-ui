@@ -1,9 +1,14 @@
 import { create } from 'zustand';
 
 const useUserStore = create((set) => ({
-    user: {},
+    email: null,
+    course: null,
+    office: null,
+    lastName: null,
+    firstName: null,
+    middleName: null,
     setUser: (key, value) => set(state => ({
-        ...state.user,
+        ...state,
         [key]: value,
     })),
     clearUser: () => set(() => ({})),

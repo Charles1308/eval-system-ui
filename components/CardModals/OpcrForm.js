@@ -10,7 +10,6 @@ import {
 } from 'reactstrap';
 import { OPCR } from '../../utils/consts';
 
-
 const OpcrForm = props => {
 	const formInfo = {
 		title: "OPCR FORM",
@@ -61,7 +60,8 @@ const Children = props => {
 						onClick={() => 
 			            	props?.onClick?.({ 
 			            		title: item.data.title, 
-			            		children: null
+								hasSubmit: true,
+			            		children: null,
 				          	})
 			          	}
                     >

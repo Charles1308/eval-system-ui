@@ -53,23 +53,24 @@ const Children = props => {
 	return (
 		<>
 			<ListGroup>
-        {MFO.map((item, index) => (
-          <ListGroupItem
-            key={index}
-            action
-            tag="button"
-            onClick={() => 
-            	props?.onClick?.({ 
-            		title: item.data.title, 
-            		children: <MFOComponent type={`MFO${index + 1}`} data={item.data}/>
-	          	})
-          	}
-          >
-            { item.label }
-          </ListGroupItem>
-        ))}
-	    </ListGroup>
-    </>
+				{MFO.map((item, index) => (
+					<ListGroupItem
+						key={index}
+						action
+						tag="button"
+						onClick={() => 
+							props?.onClick?.({ 
+								title: item.data.title,
+								hasSubmit: true,
+								children: <MFOComponent type={`MFO${index + 1}`} data={item.data}/>
+							})
+						}
+					>
+						{ item.label }
+					</ListGroupItem>
+				))}
+			</ListGroup>
+		</>
 	);
 }
 
