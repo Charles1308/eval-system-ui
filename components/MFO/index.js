@@ -12,7 +12,7 @@ const MFOComponent = props => {
 
 	const handleSetPayload = _payload => {
 		const tempPayload = { ...reqPayload, ..._payload };
-
+		console.log(tempPayload);
 		setReqPayload({ ...tempPayload });
 	}
 

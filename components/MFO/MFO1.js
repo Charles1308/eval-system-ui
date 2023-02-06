@@ -30,7 +30,7 @@ const MFO1 = ({ mfoData, contents, editMode, onChange }) => {
 								mfoData={mfoData?.[index]}
 								editMode={editMode}
 								onChange={data => onChange?.({
-									[index]: { ...data }
+									[data.id]: { ...data }
 								})}
 							/>
 						)

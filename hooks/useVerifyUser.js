@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../config/axios';
 import Cookies from 'js-cookie';
 import useUserStore from './store/useUserStore';
 
@@ -11,7 +11,7 @@ const useVerifyUser = () => {
     return async () => {
         const token = await Cookies.get('token');
         const pathname = window?.location?.pathname;
-        const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/verify`;
+        const URL = '/v1/auth/verify';
         const config = {
             headers: {
                 'Authorization': `Bearer ${token}`
@@ -37,6 +37,8 @@ const useVerifyUser = () => {
             setUser('firstName', first_name);
             setUser('middleName', middle_name);
 
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            
             if (pathname === LOGIN_PATH || pathname === REGISTER_PATH) {
                 window.location.href = '/';
             }

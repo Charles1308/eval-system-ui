@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import axios from "../../config/axios";
 import useUserStore from '../../hooks/store/useUserStore';
 import useNotifStore from '../../hooks/store/useNotifStore';
 import Cookies from 'js-cookie';
@@ -39,7 +39,7 @@ function Register() {
   const handleSignUp = async (e) => {
     e.preventDefault();
 
-    const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-up`;
+    const URL = '/v1/auth/sign-up';
     let payload = null;
 
     if (form.password === form.confirmPassword) {
@@ -62,6 +62,7 @@ function Register() {
 
         Cookies.set('token', token);
         Cookies.set('type', type);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         setNotifs({ message });
         router.push('/admin/dashboard');
@@ -70,7 +71,7 @@ function Register() {
         console.log(err);
         setNotifs({
           type: 'danger',
-          message: err?.response?.data
+          message: err?.response?.data?.message
         });
       });
   }

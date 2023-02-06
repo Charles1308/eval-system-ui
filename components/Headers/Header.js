@@ -1,9 +1,11 @@
 import React from "react";
-import Link from "next/link";
+import Cookies from 'js-cookie';
 import Axios from 'axios';
 import useFormRequestStore from "../../hooks/store/useFormRequestsStore";
 import IpcrForm from "../CardModals/IpcrForm";
 import OpcrForm from "../CardModals/OpcrForm";
+import IpcrEvaluation from '../CardModals/IpcrEvaluation';
+import OpcrEvaluation from '../CardModals/OpcrEvaluation';
 
 // reactstrap components
 import { 
@@ -20,9 +22,11 @@ import {
   ModalFooter,
 } from "reactstrap";
 import { useRouter } from "next/router";
+import useNotifStore from "../../hooks/store/useNotifStore";
 
 function Header() {
   const formStore = useFormRequestStore(state => state);
+  const { setNotifs } = useNotifStore(state => state);
 
   const router = useRouter();
   const [modal, setModal] = React.useState(null);
@@ -35,13 +39,26 @@ function Header() {
     await Axios({
       url: formStore.url,
       method: formStore.method,
-      data: formStore.payload,
+      data: {
+        payload: formStore.payload,
+      },
+      headers: {
+        Authorization: `Bearer ${Cookies.get('token')}`
+      }
     })
     .then(res => {
-      console.log(res);
+      const { message } = res.data;      
+
+      setNotifs({ message });
+      toggle(null);
     })
     .catch(err => {
       console.log(err);
+      if (err?.response?.data?.message) {
+        const { message } = err.response.data;
+
+        setNotifs({ message });
+      }
     });
   }
 
@@ -55,6 +72,8 @@ function Header() {
               {/* {PORTALS} */}
               <IpcrForm onClick={item => toggle(item)}/>
               <OpcrForm onClick={item => toggle(item)}/>
+              <IpcrEvaluation onClick={item => toggle(item)}/>
+              <OpcrEvaluation onClick={item => toggle(item)}/>
             </Row>
           </div>
         </Container>

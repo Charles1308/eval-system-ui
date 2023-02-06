@@ -1,5 +1,5 @@
 import React from "react";
-import axios from 'axios';
+import axios from "../../config/axios";
 import Cookies from 'js-cookie';
 import useUserStore from '../../hooks/store/useUserStore';
 import useNotifStore from '../../hooks/store/useNotifStore';
@@ -39,7 +39,7 @@ function Login() {
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-in`;
+    const URL = '/v1/auth/sign-in';
 
     await axios.post(URL, form)
       .then(res => {
@@ -54,16 +54,16 @@ function Login() {
 
         Cookies.set('token', token);
         Cookies.set('type', type);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 
         setNotifs({ message });
-
         router.push('/admin/dashboard');
       })
       .catch(err => {
         console.log(err);
         setNotifs({
           type: 'danger',
-          message: err?.response?.data
+          message: err?.response?.data?.message
         });
       });
   }
