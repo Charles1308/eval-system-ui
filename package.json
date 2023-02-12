@@ -46,6 +46,7 @@
     "react-datetime": "3.0.4",
     "react-dom": "17.0.1",
     "reactstrap": "8.9.0",
+    "swr": "^2.0.3",
     "uniqid": "^5.4.0",
     "webpack": "4.44.1",
     "zustand": "^4.3.2"

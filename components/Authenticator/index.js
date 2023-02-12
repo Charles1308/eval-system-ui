@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import useVerifyUser from '../../hooks/useVerifyUser';
+import useVerifyUser from '@hooks/useVerifyUser';
 
 const Authenticator = ({ children }) => {
     const verifyUser = useVerifyUser();

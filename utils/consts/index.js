@@ -396,6 +396,7 @@ const MFO_CONTENTS = {
 
 const MFO = [
     {
+        key: "MFO1",
         label: "MFO 1 - HIGHER EDUCATION",
         data: {
             title: "High Education",
@@ -404,6 +405,7 @@ const MFO = [
         }
     },
     {
+        key: "MFO2",
         label: "MFO 2 - RESEARCH",
         data: {
             title: "Research",
@@ -412,6 +414,7 @@ const MFO = [
         }
     },
     {
+        key: "MFO3",
         label: "MFO 3 - EXTENSION",
         data: {
             title: "Extension",
@@ -420,6 +423,7 @@ const MFO = [
         }
     },
     {
+        key: "MFO4",
         label: "MFO 4 - SUPPORT FUNCTION",
         data: {
             title: "Support Function",
@@ -428,6 +432,7 @@ const MFO = [
         }
     },
     {
+        key: "MFO5",
         label: "MFO 5 - ADMIN FUNCTION",
         data: {
             title: "Admin Function",

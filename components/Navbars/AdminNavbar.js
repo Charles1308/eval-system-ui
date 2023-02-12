@@ -2,7 +2,7 @@ import React from "react";
 import axios from 'axios';
 import Link from "next/link";
 import Cookies from 'js-cookie';
-import useUserStore from '../../hooks/store/useUserStore';
+import useUserStore from '@hooks/store/useUserStore';
 import { useRouter } from "next/router";
 
 // reactstrap components

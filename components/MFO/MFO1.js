@@ -1,8 +1,9 @@
 import React from 'react';
 import uniqid from 'uniqid';
-import MFO from '../Fields/MFO';
+import MFOFieldGroup from '../Fields/MFOFieldGroup';
 import { Badge } from 'reactstrap';
 
+// MFO GROUP FORM
 const MFO1 = ({ mfoData, contents, editMode, onChange }) => {
 	return(
 		<>	
@@ -21,16 +22,15 @@ const MFO1 = ({ mfoData, contents, editMode, onChange }) => {
 					</div>
 					{content.fields.map((field, index) => {
 						return( 
-							<MFO 
-								id={mfoData?.[index]?.id ?? uniqid()}
+							<MFOFieldGroup 
 								key={`MFO-${parentIndex}${index}`} 
 								index={`${parentIndex}${index}`} 
 								percentage={content.percentage}
 								field={field}
-								mfoData={mfoData?.[index]}
+								mfoData={mfoData?.[`${parentIndex}${index}`]}
 								editMode={editMode}
 								onChange={data => onChange?.({
-									[data.id]: { ...data }
+									[`${parentIndex}${index}`]: { ...data }
 								})}
 							/>
 						)

@@ -1,4 +1,4 @@
-import * as smtp from '../../utils/consts/smtpDomains';
+import * as smtp from '@utils/consts/smtpDomains';
 
 const INVALID = false;
 const VALID = true;

@@ -1,4 +1,4 @@
-import axios from '../config/axios';
+import axios from '@config/axios';
 import Cookies from 'js-cookie';
 import useUserStore from './store/useUserStore';
 

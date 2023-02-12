@@ -9,13 +9,55 @@ import {
     ListGroupItem
 } from 'reactstrap';
 import MFOComponent from '../MFO';
-import { MFO } from '../../utils/consts';
+import { MFO } from '@utils/consts';
+import useEvaluation from '@hooks/useEvaluation';
+
 
 const IpcrForm = props => {
+	const {
+		evaluation: mfoData,
+		error,
+		isLoading,
+	} = useEvaluation({ 
+		type: props?.evaluationData?.[0], 
+		id: props?.evaluationData?.[1] 
+	});
+
 	const formInfo = {
 		title: "IPCR FORM",
 		children: <Children onClick={item => props?.onClick?.(item)}/>,
 	};
+
+	React.useEffect(() => {
+		if (mfoData && MFO) {
+			const { index, type, data } = JSON.parse(mfoData?.ipcr?.payload);
+			
+			props?.onClick?.({ 
+				title: MFO[index]?.label,
+				buttonType: 'Edit',
+				children: (
+					<MFOComponent 
+						type={type} 
+						data={{ 
+							id: mfoData?.ipcr?.id,
+							...MFO[index]?.data, 
+							mfoData: data,
+							editMode: true,
+						}}
+					/>
+				)
+			})
+		}
+	}, [mfoData, MFO]);
+
+	React.useEffect(() => {
+		if (error) {
+		  setNotifs({
+			type: 'danger',
+			message: error?.message || error || 'Something went wrong!'
+		  });
+		}
+	  }, [error]);
 
 	return (
 		<>
@@ -61,7 +103,7 @@ const Children = props => {
 						onClick={() => 
 							props?.onClick?.({ 
 								title: item.data.title,
-								hasSubmit: true,
+								buttonType: 'Submit',
 								children: <MFOComponent type={`MFO${index + 1}`} data={item.data}/>
 							})
 						}

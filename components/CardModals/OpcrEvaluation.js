@@ -9,7 +9,7 @@ import {
     ListGroupItem
 } from 'reactstrap';
 import MFOComponent from '../MFO';
-import { MFO } from '../../utils/consts';
+import { MFO } from '@utils/consts';
 
 const OpcrEvaluation = props => {
 	const formInfo = {

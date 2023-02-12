@@ -1,21 +1,31 @@
 import React from 'react';
+import uniqid from 'uniqid';
 import { 
 	Row, 
 	Col, 
 	Card, 
+	Table,
 	CardBody, 
-	CardTitle, 
-	ListGroup,
-    ListGroupItem
+	CardTitle,
 } from 'reactstrap';
-import MFOComponent from '../MFO';
-import { MFO } from '../../utils/consts';
+import useNotifStore from '@hooks/store/useNotifStore';
 
 const IpcrEvaluation = props => {
-	const formInfo = {
+    const { setNotifs } = useNotifStore(store => store);
+
+	const formInfo = React.useMemo(() => ({
 		title: "IPCR EVALUATION",
-		children: <Children onClick={item => props?.onClick?.(item)}/>,
-	};
+		children: <Children data={props?.evaluation} onClick={(item, others) => props?.onClick?.(item, others)}/>,
+	}), [props?.evaluation]);
+
+    // React.useEffect(() => {
+    //     if (error) {
+    //         setNotifs({
+    //             type: "danger",
+    //             message: error.message
+    //         });
+    //     }
+    // }, [error]);
 
 	return (
 		<>
@@ -49,28 +59,38 @@ const IpcrEvaluation = props => {
 	);
 }
 
-const Children = props => {
-	
+
+const Children = ({ data, onClick }) => {
 	return (
 		<>
-			<ListGroup>
-				{MFO.map((item, index) => (
-					<ListGroupItem
-						key={index}
-						action
-						tag="button"
-						onClick={() => 
-							props?.onClick?.({ 
-								title: item.data.title,
-								hasSubmit: true,
-								children: <MFOComponent type={`MFO${index + 1}`} data={item.data}/>
-							})
-						}
-					>
-						{ item.label }
-					</ListGroupItem>
-				))}
-			</ListGroup>
+			<Table bordered>
+                <thead>
+                    <tr>
+                        <th>
+                            Creator
+                        </th>
+                        <th>
+                            Office
+                        </th>
+                        <th>
+                            Course
+                        </th>
+                        <th>
+                            Date Created
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {data?.ipcr?.map?.((item, index) => (
+                        <tr key={index} scope="row" onClick={() => onClick?.(null, ['ipcr', item?.id])}>
+                            <th>{ item?.user?.fullName }</th>
+                            <td>{ item?.user?.office }</td>
+                            <td>{ item?.user?.course }</td>
+                            <td>{ new Date(item?.created_at)?.toDateString?.() }</td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
 		</>
 	);
 }

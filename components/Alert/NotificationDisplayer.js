@@ -1,13 +1,13 @@
 import React from 'react';
 import { Alert } from 'reactstrap';
-import useNotifStore from '../../hooks/store/useNotifStore';
+import useNotifStore from '@hooks/store/useNotifStore';
 
 const NotificationDisplayer = ({ children }) => {
     const { notifs, clearNotifByOne } = useNotifStore(state => state);
 
     React.useEffect(() => {
         if (notifs.length) {
-            setTimeout(() => clearNotifByOne(), 2000);
+            setTimeout(() => clearNotifByOne(), notifs[0]?.timeout || 2000);
         }
     }, [notifs]);
 

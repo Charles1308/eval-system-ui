@@ -3,13 +3,13 @@ import ReactDOM from "react-dom";
 import App from "next/app";
 import Head from "next/head";
 import Router from "next/router";
-import Authenticator from "../components/Authenticator";
-import PageChange from "components/PageChange";
+import Authenticator from "@components/Authenticator";
+import PageChange from "@components/PageChange";
 
 import "assets/plugins/nucleo/css/nucleo.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "assets/scss/nextjs-argon-dashboard.scss";
-import NotificationDisplayer from "../components/Alert/NotificationDisplayer";
+import NotificationDisplayer from "@components/Alert/NotificationDisplayer";
 
 Router.events.on("routeChangeStart", (url) => {
   console.log(`Loading: ${url}`);

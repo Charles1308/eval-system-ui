@@ -1,29 +1,33 @@
 import React from 'react';
+import _ from 'lodash';
 
 import TargetField from './TargetField';
 import BaseInputField from './BaseInputField';
 import RateField from './RateField';
 import ActualField from './ActualField';
 import QETAComponent from '../QETA';
-import uniqid from 'uniqid';
+
 import { 
     Input, 
     InputGroup, 
     InputGroupText, 
 } from 'reactstrap';
 
+
+// MFO FORM
 const MFO = (props) => {
     const {
-        id,
         field,
         index,
         mfoData = {
             other: {},
-            rate: null,
-            target: null,
-            actual: null,
-            percentage: null,
-            "dep-total": null,
+            data: {
+                rate: null,
+                target: null,
+                actual: null,
+                percentage: null,
+                "dep-total": null,
+            },
             total: 0,
         }, // Form's previous data
         onChange,
@@ -31,29 +35,15 @@ const MFO = (props) => {
         editMode = true,
     } = props;
 
-    const initialTotal = mfoData?.total;
-    const initialOther = mfoData?.other;
-    const initialData = {
-        rate: null,
-        target: null,
-        actual: null,
-        percentage: null,
-        "dep-total": null,
-    };
-
-    const [data, setData] = React.useState(initialData);
-
-    const [other, setOther] = React.useState(initialOther);
-    const [total, setTotal] = React.useState(initialTotal);
-
-    const [_id, _setId] = React.useState(id);
+    const [data, setData] = React.useState(mfoData?.data);
+    const [other, setOther] = React.useState(mfoData?.other);
+    const [total, setTotal] = React.useState(mfoData?.total);
 
     const payload = React.useMemo(() => ({
-        id: _id,
         data: { ...data },
         other: { ...other },
         total,
-    }), [_id, data, other, total]);
+    }), [data, other, total]);
 
     const isIncentiveTotal = percentage?.type === 'Incentives';
 
@@ -91,10 +81,10 @@ const MFO = (props) => {
 	}
 
     React.useEffect(() => {
-        if (initialData !== data && total !== initialTotal && other !== initialOther) {
+        if (!_.isEqual(mfoData, payload)) {
             onChange?.({ ...payload });
         }
-    }, [data, total, other, payload]);
+    }, [payload]);
 
     return(
         <div>

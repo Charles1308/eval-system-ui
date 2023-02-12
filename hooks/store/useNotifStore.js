@@ -1,7 +1,13 @@
 import { create } from 'zustand';
 
 const useNotifStore = create((set) => ({
-    notifs: [],
+    notifs: [
+        // {
+        //   type: 'danger' | 'info' | 'success' | 'warning',
+        //   message: string,
+        //   timeout: number,
+        // }, ...
+    ],
     setNotifs: (newNotif) => set(state => ({
         notifs: [...state.notifs, newNotif],
     })),

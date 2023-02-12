@@ -1,8 +1,8 @@
 import React from "react";
-import axios from "../../config/axios";
+import axios from "@config/axios";
 import Cookies from 'js-cookie';
-import useUserStore from '../../hooks/store/useUserStore';
-import useNotifStore from '../../hooks/store/useNotifStore';
+import useUserStore from '@hooks/store/useUserStore';
+import useNotifStore from '@hooks/store/useNotifStore';
 import { useRouter } from "next/router";
 
 // reactstrap components
@@ -22,7 +22,7 @@ import {
 } from "reactstrap";
 
 // layout for this page
-import Auth from "../../layouts/Auth.js";
+import Auth from "layouts/Auth.js";
 
 function Login() {
   const router = useRouter();

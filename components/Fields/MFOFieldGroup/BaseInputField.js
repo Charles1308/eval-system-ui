@@ -48,12 +48,13 @@ const BaseInputField = props => {
 						<div className='my-2'>
 							{(props?.placeHolder || type) && <Label size='sm'>{ props?.placeHolder || type }</Label>}
 							<br/>
-							<Dropdown isOpen={dropdownOpen} toggle={toggle} disabled={disabled}>
+							<Dropdown isOpen={dropdownOpen} toggle={toggle} disabled={disabled} style={{ width: '100%' }}>
 								<DropdownToggle
 									caret
 									color="secondary"
 									id="DOM-dropdown"
 									type="button"
+									style={{ width: '100%' }}
 								>
 								{DOMValues?.filter?.((dom) => dom.value === value)?.[0]?.label ||
 								`Please choose a ${type} value`}

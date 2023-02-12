@@ -1,7 +1,7 @@
 import React from "react";
 import Cookies from 'js-cookie';
 import Axios from 'axios';
-import useFormRequestStore from "../../hooks/store/useFormRequestsStore";
+import useFormRequestStore from "@hooks/store/useFormRequestsStore";
 import IpcrForm from "../CardModals/IpcrForm";
 import OpcrForm from "../CardModals/OpcrForm";
 import IpcrEvaluation from '../CardModals/IpcrEvaluation';
@@ -9,38 +9,52 @@ import OpcrEvaluation from '../CardModals/OpcrEvaluation';
 
 // reactstrap components
 import { 
-  Col, 
   Row, 
-  Card, 
   Modal, 
   Button, 
-  CardBody, 
-  CardTitle, 
   Container, 
   ModalBody, 
   ModalHeader, 
   ModalFooter,
 } from "reactstrap";
-import { useRouter } from "next/router";
-import useNotifStore from "../../hooks/store/useNotifStore";
+import useNotifStore from "@hooks/store/useNotifStore";
+import useEvaluation from "@hooks/useEvaluation";
 
 function Header() {
-  const formStore = useFormRequestStore(state => state);
+  const { url, payload, method } = useFormRequestStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
 
-  const router = useRouter();
   const [modal, setModal] = React.useState(null);
+  const [evaluationData, setEvaluationData] = React.useState(null);
+  const [evaluationType, setEvaluationType] = React.useState('');
+  
+  const {
+		evaluation,
+    error,
+    isLoading,
+    mutate,
+	} = useEvaluation({
+		type: evaluationType
+	});
 
-  const toggle = (item) => {
+  const toggle = (item, others, cb) => {
     setModal(item);
+
+    if (others) {
+      setEvaluationData(others);
+    }
+
+    if (cb) {
+      cb();
+    }
   }
 
-  const handleSubmit = async () => {
+  const handleForm = async () => {
     await Axios({
-      url: formStore.url,
-      method: formStore.method,
+      url: url,
+      method: method,
       data: {
-        payload: formStore.payload,
+        payload: payload,
       },
       headers: {
         Authorization: `Bearer ${Cookies.get('token')}`
@@ -62,6 +76,22 @@ function Header() {
     });
   }
 
+  const modalPrimaryButton = React.useMemo(() => (
+    modal?.buttonType
+      ? {
+          label: modal?.buttonType,
+          onClick: handleForm
+        }
+      : null
+  ), [modal?.buttonType, handleForm, toggle]);
+  
+  React.useEffect(() => {
+    if (evaluationType.length) {
+      mutate()
+      setEvaluationType('');
+    }  
+  }, [evaluationType]);
+
   return (
     <>
       <div className="header bg-gradient-dark pb-8 pt-5 pt-md-8">
@@ -70,10 +100,10 @@ function Header() {
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
-              <IpcrForm onClick={item => toggle(item)}/>
-              <OpcrForm onClick={item => toggle(item)}/>
-              <IpcrEvaluation onClick={item => toggle(item)}/>
-              <OpcrEvaluation onClick={item => toggle(item)}/>
+              <IpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
+              <OpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
+              <IpcrEvaluation evaluation={evaluation} onClick={(item, others) => toggle(item, others, () => setEvaluationType('ipcr'))}/>
+              <OpcrEvaluation evaluation={evaluation} onClick={(item, others) => toggle(item, others, () => setEvaluationType('opcr'))}/>
             </Row>
           </div>
         </Container>
@@ -84,9 +114,9 @@ function Header() {
           { modal?.children }
         </ModalBody>
         <ModalFooter>
-          { modal?.hasSubmit && (
-            <Button color="primary" onClick={handleSubmit}>
-              Submit
+          { modalPrimaryButton && (
+            <Button color="primary" onClick={modalPrimaryButton.onClick}>
+              { modalPrimaryButton.label }
             </Button>
           )}
           <Button color="secondary" onClick={() => toggle(null)}>

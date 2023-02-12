@@ -1,7 +1,7 @@
 import React from "react";
-import axios from "../../config/axios";
-import useUserStore from '../../hooks/store/useUserStore';
-import useNotifStore from '../../hooks/store/useNotifStore';
+import axios from "@config/axios";
+import useUserStore from '@hooks/store/useUserStore';
+import useNotifStore from '@hooks/store/useNotifStore';
 import Cookies from 'js-cookie';
 import { useRouter } from "next/router";
 
@@ -21,7 +21,7 @@ import {
   Col,
 } from "reactstrap";
 // layout for this page
-import Auth from "../../layouts/Auth.js";
+import Auth from "layouts/Auth";
 
 function Register() {
   const setUser = useUserStore(state => state.setUser);
