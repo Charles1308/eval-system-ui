@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useMemo } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import _ from 'lodash';
 
 const cache = {};
@@ -10,23 +10,28 @@ function useFetch(url, fetcher) {
   const [revalidate, setRevalidate] = useState(0);
   const isMounted = useRef(true)
 
-  const mutate = (url = url, data = null, shouldValidate = true) => {
+  const _mutate = (url = url, data = null, shouldValidate = true) => {
     if (url?.length && data) {
       setData(data);
+
       cache[url] = data;
     }
-
+    
     if (shouldValidate) {
       setRevalidate(revalidate => revalidate + 1);
+    } else {
+      return cache[url];
     }
   }
 
-  const response = useMemo(() => ({
+  const mutate = _mutate.bind(this, url);
+
+  const response = {
     data,
     error,
     isLoading,
     mutate,
-  }), [data, error, isLoading, mutate]);
+  };
 
   useEffect(() => {
     setIsLoading(true)
@@ -37,7 +42,16 @@ function useFetch(url, fetcher) {
           .then(result => {
             cache[url] = result;
             
-            setData(result)
+            if (typeof result === 'Object'){
+              if (Array.isArray(result)) {
+                setData([ ...result ]);
+              } else {
+                setData({ ...result });
+              }
+            } else {
+              setData(result);
+            }
+
             setIsLoading(false)
           })
           .catch(err => {

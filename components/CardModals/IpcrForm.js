@@ -34,7 +34,7 @@ const IpcrForm = props => {
 			
 			props?.onClick?.({ 
 				title: MFO[index]?.label,
-				buttonType: 'Edit',
+				buttonType: 'Update',
 				children: (
 					<MFOComponent 
 						type={type} 

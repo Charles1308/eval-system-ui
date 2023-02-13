@@ -1,4 +1,5 @@
 import React from "react";
+import uniqid from "uniqid";
 import Cookies from 'js-cookie';
 import Axios from 'axios';
 import useFormRequestStore from "@hooks/store/useFormRequestsStore";
@@ -6,6 +7,7 @@ import IpcrForm from "../CardModals/IpcrForm";
 import OpcrForm from "../CardModals/OpcrForm";
 import IpcrEvaluation from '../CardModals/IpcrEvaluation';
 import OpcrEvaluation from '../CardModals/OpcrEvaluation';
+import ReactToPrint from 'react-to-print';
 
 // reactstrap components
 import { 
@@ -26,18 +28,12 @@ function Header() {
 
   const [modal, setModal] = React.useState(null);
   const [evaluationData, setEvaluationData] = React.useState(null);
-  const [evaluationType, setEvaluationType] = React.useState('');
-  
-  const {
-		evaluation,
-    error,
-    isLoading,
-    mutate,
-	} = useEvaluation({
-		type: evaluationType
-	});
 
   const toggle = (item, others, cb) => {
+    if (!item) {
+      setEvaluationData(null);
+    }
+
     setModal(item);
 
     if (others) {
@@ -76,6 +72,10 @@ function Header() {
     });
   }
 
+  const handlePrint = () => {
+    // Print the form
+  }
+
   const modalPrimaryButton = React.useMemo(() => (
     modal?.buttonType
       ? {
@@ -84,13 +84,6 @@ function Header() {
         }
       : null
   ), [modal?.buttonType, handleForm, toggle]);
-  
-  React.useEffect(() => {
-    if (evaluationType.length) {
-      mutate()
-      setEvaluationType('');
-    }  
-  }, [evaluationType]);
 
   return (
     <>
@@ -102,8 +95,8 @@ function Header() {
               {/* {PORTALS} */}
               <IpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
               <OpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
-              <IpcrEvaluation evaluation={evaluation} onClick={(item, others) => toggle(item, others, () => setEvaluationType('ipcr'))}/>
-              <OpcrEvaluation evaluation={evaluation} onClick={(item, others) => toggle(item, others, () => setEvaluationType('opcr'))}/>
+              <IpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
+              <OpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
             </Row>
           </div>
         </Container>
@@ -119,6 +112,12 @@ function Header() {
               { modalPrimaryButton.label }
             </Button>
           )}
+
+          {modalPrimaryButton?.label === 'Update' && (
+            <Button color="warning" onClick={handlePrint}>
+              Print
+            </Button>
+          )}
           <Button color="secondary" onClick={() => toggle(null)}>
             Cancel
           </Button>
@@ -127,5 +126,6 @@ function Header() {
     </>
   );
 }
+
 
 export default Header;

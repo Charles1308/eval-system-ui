@@ -9,23 +9,10 @@ import {
 	CardTitle,
 } from 'reactstrap';
 import useNotifStore from '@hooks/store/useNotifStore';
+import useEvaluation from '@hooks/useEvaluation';
 
 const IpcrEvaluation = props => {
-    const { setNotifs } = useNotifStore(store => store);
-
-	const formInfo = React.useMemo(() => ({
-		title: "IPCR EVALUATION",
-		children: <Children data={props?.evaluation} onClick={(item, others) => props?.onClick?.(item, others)}/>,
-	}), [props?.evaluation]);
-
-    // React.useEffect(() => {
-    //     if (error) {
-    //         setNotifs({
-    //             type: "danger",
-    //             message: error.message
-    //         });
-    //     }
-    // }, [error]);
+    // const { setNotifs } = useNotifStore(store => store);
 
 	return (
 		<>
@@ -33,7 +20,10 @@ const IpcrEvaluation = props => {
 				lg="6"
 				xl="3" 
 				className="mb-sm-2" 
-				onClick={() => props?.onClick?.(formInfo)}
+				onClick={() => props?.onClick({
+                    title: "IPCR EVALUATION",
+                    children: <Children onClick={(item, others) => props?.onClick?.(item, others)}/>,
+                })}
 			>
               <Card className="card-stats mb-4 mb-xl-0 portal-card">
                 <CardBody>
@@ -43,7 +33,7 @@ const IpcrEvaluation = props => {
                         tag="h5"
                         className="text-uppercase text-muted mb-0"
                       >
-                      	{ formInfo.title }
+                      	IPCR EVALUATION
                       </CardTitle>
                     </div>
                     <Col className="col-auto">
@@ -60,12 +50,24 @@ const IpcrEvaluation = props => {
 }
 
 
-const Children = ({ data, onClick }) => {
+const Children = ({ onClick }) => {
+    const {
+		evaluation,
+        // error,
+        // isLoading,
+        // mutate,
+	} = useEvaluation({
+		type: 'ipcr',
+	});
+
 	return (
 		<>
 			<Table bordered>
                 <thead>
                     <tr>
+                        <th>
+                            ID
+                        </th>
                         <th>
                             Creator
                         </th>
@@ -81,8 +83,9 @@ const Children = ({ data, onClick }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {data?.ipcr?.map?.((item, index) => (
-                        <tr key={index} scope="row" onClick={() => onClick?.(null, ['ipcr', item?.id])}>
+                    {evaluation?.ipcr?.map?.((item, index) => (
+                        <tr key={uniqid()} scope="row" onClick={() => onClick?.(null, ['ipcr', item?.id])}>
+                            <th>{ item?.id }</th>
                             <th>{ item?.user?.fullName }</th>
                             <td>{ item?.user?.office }</td>
                             <td>{ item?.user?.course }</td>

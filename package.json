@@ -45,6 +45,7 @@
     "react-copy-to-clipboard": "5.0.3",
     "react-datetime": "3.0.4",
     "react-dom": "17.0.1",
+    "react-to-print": "^2.14.11",
     "reactstrap": "8.9.0",
     "swr": "^2.0.3",
     "uniqid": "^5.4.0",
