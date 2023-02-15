@@ -2,8 +2,11 @@ import React from "react";
 
 // reactstrap components
 import { Button, Container, Row, Col } from "reactstrap";
+import { useRouter } from "next/router";
 
 function UserHeader() {
+  const router = useRouter();
+  
   return (
     <>
       <div
@@ -11,7 +14,7 @@ function UserHeader() {
         style={{
           minHeight: "600px",
           backgroundImage:
-            "url(" + require("assets/img/theme/profile-cover.jpg") + ")",
+            "url(" + require("assets/img/theme/user-2517433_1280.png") + ")",
           backgroundSize: "cover",
           backgroundPosition: "center top",
         }}
@@ -22,17 +25,20 @@ function UserHeader() {
         <Container className="d-flex align-items-center" fluid>
           <Row>
             <Col lg="7" md="10">
-              <h1 className="display-2 text-white">Hello Jesse</h1>
+              <h1 className="display-2 text-white">Profile Page</h1>
               <p className="text-white mt-0 mb-5">
-                This is your profile page. You can see the progress you've made
-                with your work and manage your projects or assigned tasks
+                This is your profile page. You can see information about yourself,
+                and you can edit them.
               </p>
               <Button
                 color="info"
                 href="#pablo"
-                onClick={(e) => e.preventDefault()}
+                onClick={(e) => {
+                  e.preventDefault()
+                  router.push("/admin/dashboard")
+                }}
               >
-                Edit profile
+                {'Back to Dashboard'}
               </Button>
             </Col>
           </Row>

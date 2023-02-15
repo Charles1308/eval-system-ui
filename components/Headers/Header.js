@@ -1,5 +1,4 @@
 import React from "react";
-import uniqid from "uniqid";
 import Cookies from 'js-cookie';
 import Axios from 'axios';
 import useFormRequestStore from "@hooks/store/useFormRequestsStore";
@@ -20,7 +19,6 @@ import {
   ModalFooter,
 } from "reactstrap";
 import useNotifStore from "@hooks/store/useNotifStore";
-import useEvaluation from "@hooks/useEvaluation";
 
 function Header() {
   const { url, payload, method } = useFormRequestStore(state => state);
@@ -28,6 +26,10 @@ function Header() {
 
   const [modal, setModal] = React.useState(null);
   const [evaluationData, setEvaluationData] = React.useState(null);
+  const component = React.useRef(null);
+  const printComponent = React.useCallback(() => component.current, [component]);
+
+  const isFormEmpty = _.isEqual(payload, {});
 
   const toggle = (item, others, cb) => {
     if (!item) {
@@ -46,6 +48,12 @@ function Header() {
   }
 
   const handleForm = async () => {
+		if (isFormEmpty && method === 'POST') {
+      setNotifs({ message: "Form is empty", type: "warning" });
+
+      return;
+    }
+    
     await Axios({
       url: url,
       method: method,
@@ -72,10 +80,6 @@ function Header() {
     });
   }
 
-  const handlePrint = () => {
-    // Print the form
-  }
-
   const modalPrimaryButton = React.useMemo(() => (
     modal?.buttonType
       ? {
@@ -93,7 +97,7 @@ function Header() {
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
-              <IpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
+              <IpcrForm ref={component} evaluationData={evaluationData} onClick={item => toggle(item)}/>
               <OpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
               <IpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
               <OpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
@@ -101,22 +105,30 @@ function Header() {
           </div>
         </Container>
       </div>
-      <Modal isOpen={!!modal} toggle={() => toggle(null)} size="xl">
+      <Modal isOpen={!!modal && !!modal?.children} toggle={() => toggle(null)} size="xl">
         <ModalHeader toggle={() => toggle(null)}>{ modal?.title }</ModalHeader>
         <ModalBody>
           { modal?.children }
         </ModalBody>
         <ModalFooter>
           { modalPrimaryButton && (
-            <Button color="primary" onClick={modalPrimaryButton.onClick}>
+            <Button color="primary" disabled={isFormEmpty} onClick={modalPrimaryButton.onClick}>
               { modalPrimaryButton.label }
             </Button>
           )}
 
-          {modalPrimaryButton?.label === 'Update' && (
-            <Button color="warning" onClick={handlePrint}>
+          {component?.current && (
+            <ReactToPrint 
+              content={printComponent}
+              trigger={() => (
+                <Button color="primary">
+                  Print
+                </Button>
+              )}
+              removeAfterPrint
+            >
               Print
-            </Button>
+            </ReactToPrint>
           )}
           <Button color="secondary" onClick={() => toggle(null)}>
             Cancel

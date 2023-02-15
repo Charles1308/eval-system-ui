@@ -14,7 +14,7 @@ const NotificationDisplayer = ({ children }) => {
     return (
         <>
             { !!notifs?.length && 
-            <div className="p-3" style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: 'fit-content', zIndex: '50' }}>
+            <div className="p-3" style={{ position: 'absolute', top: '0', left: '0', width: '100%', height: 'fit-content', zIndex: '9999' }}>
                 <Alert color={notifs[0]?.type}>
                     { notifs[0]?.message }
                 </Alert>

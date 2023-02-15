@@ -10,6 +10,7 @@ import {
 } from 'reactstrap';
 import useNotifStore from '@hooks/store/useNotifStore';
 import useEvaluation from '@hooks/useEvaluation';
+import Pagination from '@components/Pagination';
 
 const IpcrEvaluation = props => {
     // const { setNotifs } = useNotifStore(store => store);
@@ -51,6 +52,8 @@ const IpcrEvaluation = props => {
 
 
 const Children = ({ onClick }) => {
+    const limit = 10;
+    const [page, setPage] = React.useState(1);
     const {
 		evaluation,
         // error,
@@ -58,6 +61,8 @@ const Children = ({ onClick }) => {
         // mutate,
 	} = useEvaluation({
 		type: 'ipcr',
+        page: page,
+        limit: limit,
 	});
 
 	return (
@@ -65,25 +70,15 @@ const Children = ({ onClick }) => {
 			<Table bordered>
                 <thead>
                     <tr>
-                        <th>
-                            ID
-                        </th>
-                        <th>
-                            Creator
-                        </th>
-                        <th>
-                            Office
-                        </th>
-                        <th>
-                            Course
-                        </th>
-                        <th>
-                            Date Created
-                        </th>
+                        <th>ID</th>
+                        <th>Creator</th>
+                        <th>Office</th>
+                        <th>Course</th>
+                        <th>Date Created</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {evaluation?.ipcr?.map?.((item, index) => (
+                    {evaluation?.ipcr?.data?.map?.((item, index) => (
                         <tr key={uniqid()} scope="row" onClick={() => onClick?.(null, ['ipcr', item?.id])}>
                             <th>{ item?.id }</th>
                             <th>{ item?.user?.fullName }</th>
@@ -94,6 +89,9 @@ const Children = ({ onClick }) => {
                     ))}
                 </tbody>
             </Table>
+            <div className="d-flex justify-content-center">
+                <Pagination currentPage={page} limit={limit} totalPages={evaluation?.ipcr?.meta?.total} onPageChange={setPage}/>
+            </div>
 		</>
 	);
 }

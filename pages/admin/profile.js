@@ -1,4 +1,5 @@
 import React from "react";
+import Cookies from "js-cookie";
 
 // reactstrap components
 import {
@@ -17,8 +18,105 @@ import {
 import Admin from "layouts/Admin.js";
 // core components
 import UserHeader from "@components/Headers/UserHeader.js";
+import useUserStore from "@hooks/store/useUserStore";
+import axios from "@config/axios";
+import useNotifStore from "@hooks/store/useNotifStore";
 
-function Profile() {
+function Profile() {  
+  const { 
+    setBulk,
+    clearUser, 
+    firstName,
+    middleName,
+    lastName,
+    fullName,
+    course,
+    office,
+    email,
+    setUser,
+    updateCount,
+  } = useUserStore(state => state);
+  const { setNotifs } = useNotifStore(state => state);
+
+  const [confirmPass, setConfirmPass] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const [newPassword, setNewPassword] = React.useState('');
+
+  // const [oldData, setOldData] = React.useState({});
+
+  const isPasswwordMatched = (confirmPass.length && confirmPass === newPassword);
+  // const hasUpdate = updateCount > oldData?.updateCount;
+
+  const payload = {
+    firstName,
+    middleName,
+    lastName,
+    fullName,
+    course,
+    office,
+    email,
+  };
+
+  // React.useEffect(() => {
+  //   setOldData({ ...payload, updateCount });
+
+  //   return () => {
+  //     if (hasUpdate) {
+  //     }
+  //   }
+  // }, [hasUpdate]);
+
+  const handleIsPasswordCorrect = async () => {
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/password-check`;
+
+    return await axios.post(url, { password })
+    .then(res => res.data)
+    .catch(err => console.error(err));
+  }
+
+  const handleUpdate = async () => {
+    if (newPassword.length && isPasswwordMatched) {
+      const isPasswordCorrect = await handleIsPasswordCorrect();
+
+      if (!isPasswordCorrect) {
+        return setNotifs({
+          message: "Password is incorrect!",
+          type: "danger",
+        });
+      } else {
+        payload.password = newPassword;
+      }
+    }
+
+    const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/update`;
+
+    await axios.put(url, payload)
+    .then(res => {
+      const { user, token, message } = res.data;
+
+      Cookies.set('token', token);
+      setBulk(user);
+
+      console.log(message);
+      setNotifs({ message });
+
+      setConfirmPass('');
+      setNewPassword('');
+      setPassword('');
+    })
+    .catch(err => {
+      console.error(err);
+
+      if (err?.response?.data?.errors?.length) {
+        err.response.data.errors.forEach(error => {
+          setNotifs({ message: err.message || "Please try again", type: "danger" });
+        })
+      } else {
+        setNotifs({ message: "Please try again", type: "danger" });
+      }
+    })
+  }
+
   return (
     <>
       <UserHeader />
@@ -26,7 +124,7 @@ function Profile() {
       <Container className="mt--7" fluid>
         <Row>
           <Col className="order-xl-2 mb-5 mb-xl-0" xl="4">
-            <Card className="card-profile shadow">
+            <Card className="card-profile shadow-lg">
               <Row className="justify-content-center">
                 <Col className="order-lg-2" lg="3">
                   <div className="card-profile-image">
@@ -34,7 +132,7 @@ function Profile() {
                       <img
                         alt="..."
                         className="rounded-circle"
-                        src={require("assets/img/theme/team-4-800x800.jpg")}
+                        src={require("assets/img/theme/user-2517433_1280.png")}
                       />
                     </a>
                   </div>
@@ -42,7 +140,7 @@ function Profile() {
               </Row>
               <CardHeader className="text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
                 <div className="d-flex justify-content-between">
-                  <Button
+                  {/* <Button
                     className="mr-4"
                     color="info"
                     href="#pablo"
@@ -59,14 +157,14 @@ function Profile() {
                     size="sm"
                   >
                     Message
-                  </Button>
+                  </Button> */}
                 </div>
               </CardHeader>
               <CardBody className="pt-0 pt-md-4">
                 <Row>
                   <div className="col">
                     <div className="card-profile-stats d-flex justify-content-center mt-md-5">
-                      <div>
+                      {/* <div>
                         <span className="heading">22</span>
                         <span className="description">Friends</span>
                       </div>
@@ -77,36 +175,32 @@ function Profile() {
                       <div>
                         <span className="heading">89</span>
                         <span className="description">Comments</span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </Row>
                 <div className="text-center">
                   <h3>
-                    Jessica Jones
-                    <span className="font-weight-light">, 27</span>
+                    { fullName }
                   </h3>
                   <div className="h5 font-weight-300">
                     <i className="ni location_pin mr-2" />
-                    Bucharest, Romania
+                    { course }
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    Solution Manager - Creative Tim Officer
+                    { office }
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
-                    University of Computer Science
+                    Batangas State University
                   </div>
-                  <hr className="my-4" />
+                  {/* <hr className="my-4" />
                   <p>
-                    Ryan — the name taken by Melbourne-raised, Brooklyn-based
-                    Nick Murphy — writes, performs and records all of his own
-                    music.
-                  </p>
-                  <a href="#pablo" onClick={(e) => e.preventDefault()}>
-                    Show more
-                  </a>
+                  </p> */}
+                  {/* <a href="#pablo" onClick={(e) => e.preventDefault()}>
+                    
+                  </a> */}
                 </div>
               </CardBody>
             </Card>
@@ -122,10 +216,10 @@ function Profile() {
                     <Button
                       color="primary"
                       href="#pablo"
-                      onClick={(e) => e.preventDefault()}
+                      onClick={handleUpdate}
                       size="sm"
                     >
-                      Settings
+                      Update
                     </Button>
                   </Col>
                 </Row>
@@ -137,36 +231,80 @@ function Profile() {
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
-                      <Col lg="6">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-username"
-                          >
-                            Username
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="lucky.jesse"
-                            id="input-username"
-                            placeholder="Username"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="6">
+                      <Col lg="12">
                         <FormGroup>
                           <label
                             className="form-control-label"
                             htmlFor="input-email"
                           >
-                            Email address
+                            Email Address
                           </label>
                           <Input
                             className="form-control-alternative"
                             id="input-email"
-                            placeholder="jesse@example.com"
                             type="email"
+                            name="email"
+                            value={email}
+                            onChange={e => setUser('email', e.target.value)}
+                          />
+                        </FormGroup>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-first-name"
+                          >
+                            First Name
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-first-name"
+                            placeholder="First name"
+                            type="text"
+                            name="firstName"
+                            value={firstName}
+                            onChange={e => setUser('firstName', e.target.value)}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-middle-name"
+                          >
+                            Middle Name
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-middle-name"
+                            placeholder="Middle name"
+                            type="text"
+                            name="middleName"
+                            value={middleName}
+                            onChange={e => setUser('middleName', e.target.value)}
+                          />
+                        </FormGroup>
+                      </Col>
+                      <Col lg="4">
+                        <FormGroup>
+                          <label
+                            className="form-control-label"
+                            htmlFor="input-last-name"
+                          >
+                            Last Name
+                          </label>
+                          <Input
+                            className="form-control-alternative"
+                            id="input-last-name"
+                            placeholder="Last name"
+                            type="text"
+                            name="lastName"
+                            value={lastName}
+                            onChange={e => setUser('lastName', e.target.value)}
                           />
                         </FormGroup>
                       </Col>
@@ -176,42 +314,47 @@ function Profile() {
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-first-name"
+                            htmlFor="input-course"
                           >
-                            First name
+                            Office
                           </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="Lucky"
-                            id="input-first-name"
-                            placeholder="First name"
-                            type="text"
-                          />
+                          <Input id="exampleFormControlSelect1" type="select" onChange={e => setUser('office', e.target.value)}>
+                            <option> Professor </option>
+                            <option> Instructor </option>
+                            <option> Guest Lecturer </option>
+                            <option> Assistant Professor </option>
+                            <option> Associate Professor </option>
+                            <option> Administrative Staff </option>
+                            <option> Coordinator (Associate Professor/Professor) </option>
+                            <option> Coordinator  (Instructor/Assistant Professor) </option>
+                          </Input>
                         </FormGroup>
                       </Col>
                       <Col lg="6">
                         <FormGroup>
                           <label
                             className="form-control-label"
-                            htmlFor="input-last-name"
+                            htmlFor="input-course"
                           >
-                            Last name
+                            Course
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Jesse"
-                            id="input-last-name"
-                            placeholder="Last name"
+                            id="input-course"
+                            placeholder="Course"
                             type="text"
+                            name="course"
+                            value={course}
+                            onChange={e => setUser('course', e.target.value)}
                           />
                         </FormGroup>
-                      </Col>
+                      </Col>  
                     </Row>
                   </div>
                   <hr className="my-4" />
                   {/* Address */}
                   <h6 className="heading-small text-muted mb-4">
-                    Contact information
+                    Privacy Information
                   </h6>
                   <div className="pl-lg-4">
                     <Row>
@@ -221,73 +364,67 @@ function Profile() {
                             className="form-control-label"
                             htmlFor="input-address"
                           >
-                            Address
+                            New Password
                           </label>
                           <Input
                             className="form-control-alternative"
-                            defaultValue="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                            id="input-address"
-                            placeholder="Home Address"
-                            type="text"
+                            id="input-new-password"
+                            placeholder="Enter new password"
+                            type="password"
+                            name="password"
+                            value={newPassword}
+                            onChange={e => setNewPassword(e.target.value)}
                           />
                         </FormGroup>
                       </Col>
                     </Row>
                     <Row>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-city"
-                          >
-                            City
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="New York"
-                            id="input-city"
-                            placeholder="City"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Country
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            defaultValue="United States"
-                            id="input-country"
-                            placeholder="Country"
-                            type="text"
-                          />
-                        </FormGroup>
-                      </Col>
-                      <Col lg="4">
-                        <FormGroup>
-                          <label
-                            className="form-control-label"
-                            htmlFor="input-country"
-                          >
-                            Postal code
-                          </label>
-                          <Input
-                            className="form-control-alternative"
-                            id="input-postal-code"
-                            placeholder="Postal code"
-                            type="number"
-                          />
-                        </FormGroup>
-                      </Col>
+                      {!!newPassword.length &&
+                        <>
+                          <Col md="12">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-confirm-password"
+                              >
+                                Confirm Password
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                id="input-confirm-password"
+                                placeholder="Confirm new password"
+                                type="password"
+                                value={confirmPass}
+                                onChange={e => setConfirmPass(e.target.value)}
+                              />
+                              {!!confirmPass.length && 
+                              !isPasswwordMatched && 
+                              <small className="text-danger">Doesn't Match</small>}
+                            </FormGroup>
+                          </Col>
+                          <Col md="12">
+                            <FormGroup>
+                              <label
+                                className="form-control-label"
+                                htmlFor="input-verify-password"
+                              >
+                                Password
+                              </label>
+                              <Input
+                                className="form-control-alternative"
+                                id="input-password"
+                                placeholder="Enter password"
+                                type="password"
+                                value={password}
+                                onChange={e => setPassword(e.target.value)}
+                              />
+                            </FormGroup>
+                          </Col>
+                        </>
+                      }
                     </Row>
                   </div>
-                  <hr className="my-4" />
-                  {/* Description */}
+                  {/* <hr className="my-4" />
                   <h6 className="heading-small text-muted mb-4">About me</h6>
                   <div className="pl-lg-4">
                     <FormGroup>
@@ -301,7 +438,7 @@ function Profile() {
                         type="textarea"
                       />
                     </FormGroup>
-                  </div>
+                  </div> */}
                 </Form>
               </CardBody>
             </Card>

@@ -9,8 +9,11 @@ const fetcher = (url) =>
     .then(res => res.data)
     .catch(err => err);
 
-const useEvaluation = ({ type, id = '' }) => {
-    const url = type && `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/form/${type}${id ? `/${id}` : ''}`
+const useEvaluation = ({ type, id = '', page, limit }) => {
+    const url = type && 
+        `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/form/${type}${
+            id ? `/${id}` : ''
+        }/?page=${page}&limit=${limit}`;
 
     const {
         data,

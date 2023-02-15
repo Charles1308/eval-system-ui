@@ -24,10 +24,9 @@ import {
 } from "reactstrap";
 
 function AdminNavbar({ brandText }) {
-  const { clearUser, firstName, lastName } = useUserStore(state => state);
+  const { clearUser, fullName } = useUserStore(state => state);
   const router = useRouter();
 
-  const fullname = `${firstName ?? ''} ${lastName ?? ''}`;
   const handleSignOut = async () => {
     const URL = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/sign-out`;
     const token = Cookies.get('token');
@@ -54,12 +53,12 @@ function AdminNavbar({ brandText }) {
     <>
       <Navbar className="navbar-top navbar-dark" expand="md" id="navbar-main">
         <Container fluid>
-          <Link href="/admin/dashboard">
+          <Link href="#">
             <a className="h4 mb-0 text-white text-uppercase d-none d-lg-inline-block">
               {brandText}
             </a>
           </Link>
-          <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
+          {/* <Form className="navbar-search navbar-search-dark form-inline mr-3 d-none d-md-flex ml-lg-auto">
             <FormGroup className="mb-0">
               <InputGroup className="input-group-alternative">
                 <InputGroupAddon addonType="prepend">
@@ -70,7 +69,7 @@ function AdminNavbar({ brandText }) {
                 <Input placeholder="Search" type="text" />
               </InputGroup>
             </FormGroup>
-          </Form>
+          </Form> */}
           <Nav className="align-items-center d-none d-md-flex" navbar>
             <UncontrolledDropdown nav>
               <DropdownToggle className="pr-0" nav>
@@ -78,12 +77,12 @@ function AdminNavbar({ brandText }) {
                   <span className="avatar avatar-sm rounded-circle">
                     <img
                       alt="..."
-                      src={require("assets/img/theme/team-4-800x800.jpg")}
+                      src={require("assets/img/theme/user-2517433_1280.png")}
                     />
                   </span>
                   <Media className="ml-2 d-none d-lg-block">
                     <span className="mb-0 text-sm font-weight-bold">
-                      { fullname }
+                      { fullName }
                     </span>
                   </Media>
                 </Media>
@@ -98,24 +97,24 @@ function AdminNavbar({ brandText }) {
                     <span>My profile</span>
                   </DropdownItem>
                 </Link>
-                <Link href="/admin/profile">
+                {/* <Link href="/admin/profile">
                   <DropdownItem>
                     <i className="ni ni-settings-gear-65" />
                     <span>Settings</span>
                   </DropdownItem>
-                </Link>
-                <Link href="/admin/profile">
+                </Link> */}
+                {/* <Link href="/admin/profile">
                   <DropdownItem>
                     <i className="ni ni-calendar-grid-58" />
                     <span>Activity</span>
                   </DropdownItem>
-                </Link>
-                <Link href="/admin/profile">
+                </Link> */}
+                {/* <Link href="/admin/profile">
                   <DropdownItem>
                     <i className="ni ni-support-16" />
                     <span>Support</span>
                   </DropdownItem>
-                </Link>
+                </Link> */}
                 <DropdownItem divider />
                 <DropdownItem href="#pablo" onClick={handleSignOut}>
                   <i className="ni ni-user-run" />

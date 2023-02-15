@@ -27,15 +27,19 @@ const useVerifyUser = () => {
                 last_name,
                 first_name,
                 middle_name,
+                fullName,
+                password,
             } = res.data;
             console.info('Authorized User');
 
             setUser('email', email);
             setUser('course', course);
             setUser('office', office);
+            setUser('fullName', fullName);
             setUser('lastName', last_name);
             setUser('firstName', first_name);
             setUser('middleName', middle_name);
+            setUser('password', password);
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             

@@ -4,7 +4,7 @@ import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
 import MFO1 from './MFO1';
 
-const MFOComponent = props => {
+const MFOComponent = React.forwardRef((props, ref) => {
 	const { user } = useUserStore(store => store);
 	const { setUrl, setMethod, setPayload, url, payload } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
@@ -30,7 +30,6 @@ const MFOComponent = props => {
 			index = 4;
 		}
 
-		console.log({ index, type, ...tempPayload }	)
 		if (index === null) {
 			setNotifs({
 				type: 'danger',
@@ -60,6 +59,8 @@ const MFOComponent = props => {
 				height: 'max-height',
 				overflow: 'auto'
 			}}
+
+			ref={ref}
 		>	
 			<div
 				style={{
@@ -82,6 +83,6 @@ const MFOComponent = props => {
 			</div>
 		</div>
 	);
-}
+});
 
 export default MFOComponent;

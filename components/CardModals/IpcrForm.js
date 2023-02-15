@@ -13,7 +13,7 @@ import { MFO } from '@utils/consts';
 import useEvaluation from '@hooks/useEvaluation';
 
 
-const IpcrForm = props => {
+const IpcrForm = React.forwardRef((props, ref) => {
 	const {
 		evaluation: mfoData,
 		error,
@@ -29,7 +29,7 @@ const IpcrForm = props => {
 	};
 
 	React.useEffect(() => {
-		if (mfoData && MFO) {
+		if (!isLoading && mfoData && MFO) {
 			const { index, type, data } = JSON.parse(mfoData?.ipcr?.payload);
 			
 			props?.onClick?.({ 
@@ -37,6 +37,7 @@ const IpcrForm = props => {
 				buttonType: 'Update',
 				children: (
 					<MFOComponent 
+						ref={ref}
 						type={type} 
 						data={{ 
 							id: mfoData?.ipcr?.id,
@@ -48,7 +49,7 @@ const IpcrForm = props => {
 				)
 			})
 		}
-	}, [mfoData, MFO]);
+	}, [mfoData, MFO, isLoading]);
 
 	React.useEffect(() => {
 		if (error) {
@@ -89,7 +90,7 @@ const IpcrForm = props => {
             </Col>
 		</>
 	);
-}
+})
 
 const Children = props => {
 	return (
