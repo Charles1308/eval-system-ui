@@ -79,7 +79,7 @@ const MFO_CONTENTS = {
                     other_fields: []
                 },
             ],
-            percentage: new Percentage("Incorporated", [0.5]),
+            percentage: new Percentage("Incentives", [0.005]),
         },
         {
             title: "Effectiveness of Classroom Instruction",
@@ -93,14 +93,14 @@ const MFO_CONTENTS = {
                     other_fields: []
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("Incorporated", [0.45]),
         },
         {
             title: "Attainment of Student Excellence",
             subtitle: null,
             fields: [
                 {
-                    title: "75% of the total number of students who struggled in any of the assessment tasks were provided with guidance and counselling to support academic performance, progress review, set academic goals, and implement academic interventions",
+                    title: "__% of the total number of students who struggled in any of the assessment tasks were provided with guidance and counselling to support academic performance, progress review, set academic goals, and implement academic interventions",
                     subtitle: null,
                     for: "Efficiency",
                     dom: DOM_CONTENTS.next(),
@@ -121,7 +121,7 @@ const MFO_CONTENTS = {
                     ]
                 },
                 {
-                    title: "90% of the total number of students have passed all the handled courses",
+                    title: "__% of the total number of students have passed all the handled courses",
                     subtitle: null,
                     for: "Efficiency",
                     dom: DOM_CONTENTS.next(),
@@ -149,7 +149,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "Preparation and submission of course syllabi that are compliant to OBE",
@@ -178,7 +178,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "100% of the total number of courses were provided with IMs and such IMs were subjected to review.",
@@ -207,7 +207,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "__% of courses portfolio were submitted to the College Google Drive on deadline",
@@ -237,7 +237,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "80% of moderated final examination papers were submitted within deadline",
@@ -273,7 +273,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "__% of the total number of assessments result with comment and feedback were returned to the students fourteen (14) working days after the submission of assessment tasks",
@@ -302,7 +302,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "100% of the total number of completed student grade sheets were uploaded on or before the set deadline",
@@ -338,7 +338,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "__% of courses with revised CARR submitted on deadline",
@@ -367,7 +367,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
         {
             title: "__ specialized training / seminar was attended and actively participated and the corresponding report was submitted within fourteen (14) days after the activity",
@@ -389,7 +389,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: null,
+            percentage: new Percentage("", []),
         },
     ]
 }
@@ -447,35 +447,35 @@ const OPCR = [
         label: "HIGHER EDUCATION",
         data: {
             title: "High Education",
-            percentage: null,        
+            percentage: new Percentage("", []),        
         }
     },
     {
         label: "RESEARCH",
         data: {
             title: "Research",
-            percentage: null,        
+            percentage: new Percentage("", []),        
         }
     },
     {
         label: "EXTENSION SERVICES",
         data: {
             title: "Extension Services",
-            percentage: null,        
+            percentage: new Percentage("", []),        
         }
     },
     {
         label: "ADMINISTRATIVE/SUPPORT FUNCTIONS",
         data: {
             title: "Administrative/Support Functions",
-            percentage: null,        
+            percentage: new Percentage("", []),        
         }
     },
     {
         label: "OTHER ADMINISTRATIVE FUNCTIONS",
         data: {
             title: "Other Administrative Functions",
-            percentage: null,        
+            percentage: new Percentage("", []),        
         }
     },  
 ];

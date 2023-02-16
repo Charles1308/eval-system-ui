@@ -1,16 +1,7 @@
 const DOM_CONTENTS = [
     // MFO 1
     {
-        contents: {
-            Quality: {
-                label: "Quality measures the latest academic qualification",
-                values: [
-                    { label: "Bachelor's Degree", value: 3.00 },   
-                    { label: "Master's Degree", value: 4.00 },   
-                    { label: "PhD Degree", value: 5.00 },   
-                ]
-            }
-        }
+        
     },
     {
         contents: {
@@ -24,6 +15,14 @@ const DOM_CONTENTS = [
         contents: {
             Efficiency: {
                 label: "Efficiency measures the number of membership to Professional Organization.",
+                values: []
+            }
+        }
+    },
+    {
+        contents: {
+            Quality: {
+                label: "Quality measures pursue of lifelong learning through further studies",
                 values: [
                     { label: "PhD graduate", value: 5.00 },
                     { label: "PhD Units", value: 4.00 },
@@ -39,7 +38,15 @@ const DOM_CONTENTS = [
             Quality: {
                 label: "Quality measures the average score given by the students",
                 values: []
-            }
+            },
+        }
+    },
+    {
+        contents: {
+            Efficiency: {
+                label: "Efficiency measures the % number of students who failed the examinations that were given guidance and counselling.",
+                values: []
+            },
         }
     },
     {
@@ -53,14 +60,6 @@ const DOM_CONTENTS = [
                     { label: "Few Sessions", value: 2.00 },   
                     { label: "None At All", value: 1.00 },   
                 ]
-            },
-        }
-    },
-    {
-        contents: {
-            Efficiency: {
-                label: "Efficiency measures the % number of students who failed the examinations that were given guidance and counselling.",
-                values: []
             },
         }
     },
