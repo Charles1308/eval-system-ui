@@ -69,17 +69,6 @@ const MFO = (props) => {
         return value;
     }
 
-    const onlyOneDependencyField = (fields) => {
-		if (!fields || !fields?.length) return true;
-		const isTrue = fields?.some?.(field => field?.for?.length);
-
-		if (!isTrue) {
-			console.warn('Found more than 1 dependency field');
-		}
-
-		return isTrue;
-	}
-
     React.useEffect(() => {
         if (!_.isEqual(mfoData, payload)) {
             onChange?.({ ...payload });
@@ -94,7 +83,7 @@ const MFO = (props) => {
                     {field?.subtitle && <small className='text-red display-block'>{ field?.subtitle }</small>}
                 </div>
                 <div style={{ width: '400px '}} className="d-flex flex-column justify-content-around">
-                    {onlyOneDependencyField(field.other_fields) && field.other_fields?.map?.((other_field, otherIndex) => {
+                    {field.other_fields?.map?.((other_field, otherIndex) => {
                         const type = other_field?.for === "Target" ? "dep-total" : other_field.key;
                         const isOtherType = type !== "dep-total";
                         
@@ -103,7 +92,7 @@ const MFO = (props) => {
                                 disabled={!editMode}
                                 id={`MFO-FIELD-BASE-${index}${otherIndex}`}
                                 key={`MFO-FIELD-BASE-${index}${otherIndex}`}
-                                DOMValues={other_field?.dom?.value?.contents?.[other_field?.key]?.values}
+                                DOMValues={other_field?.dom?.contents?.[other_field?.key]?.values}
                                 onChange={handleChange(type, isOtherType && "other")}
                                 value={isOtherType ? other[other_field.key] : data['dep-total']}
                                 placeHolder={other_field.title}
@@ -113,7 +102,7 @@ const MFO = (props) => {
                     <TargetField 
                         disabled={!editMode}
                         id={`MFO-FIELD-TARGET-${index}`}
-                        DOMValues={field?.dom?.value?.contents?.[field?.for]?.values} 
+                        DOMValues={field?.dom?.contents?.[field?.for]?.values} 
                         dependencyTotalNumber={data["dep-total"]}
                         value={data.target} 
                         onDepTotalChange={handleChange("percentage")}
@@ -122,7 +111,7 @@ const MFO = (props) => {
                     <ActualField 
                         disabled={!editMode}
                         id={`MFO-FIELD-ACTUAL-${index}`}
-                        DOMValues={field?.dom?.value?.contents?.[field?.for]?.values} 
+                        DOMValues={field?.dom?.contents?.[field?.for]?.values} 
                         value={data.actual} 
                         onChange={handleChange('actual')}	
                     />
@@ -155,10 +144,28 @@ const MFO = (props) => {
                 <div className='display-flex flex-column grow-2' style={{ width: '300px '}}>
                     {/* DOM */}
                     {Object.keys(field?.dom?.contents || {}).map((key, domIndex) => (
-                        <div key={`DOM-${index}${domIndex}`}>
-                            <h5>{field?.dom?.contents[key].label}</h5>
-                            {field?.dom?.contents[key].values.map((dom, valueIndex) => (
-                                <h5 key={valueIndex+dom.label}>{dom.label} = {parseFloat(dom.value).toFixed(2)}</h5>
+                        <React.Fragment key={`DOM-${index}${domIndex}`}>
+                            <div>
+                                <h5>{field?.dom?.contents[key].label}</h5>
+                                {field?.dom?.contents[key].values.map((dom, valueIndex) => (
+                                    <h5 key={valueIndex+dom.label}>{dom.label} = {parseFloat(dom.value).toFixed(2)}</h5>
+                                ))}
+                            </div>
+                            <hr/>
+                        </React.Fragment>
+                    ))}
+                    {field?.other_fields?.map((otherField, otherDomIndex) => (
+                        <div key={`DOM-OTHER-${index}${otherDomIndex}`}>
+                            {Object.keys(otherField?.dom?.contents || {}).map((key, domIndex) => (
+                                <React.Fragment key={`DOM-OTHER-${index}${otherDomIndex}${domIndex}`}>
+                                    <div>
+                                        <h5>{otherField?.dom?.contents[key].label}</h5>
+                                        {otherField?.dom?.contents[key].values.map((dom, valueIndex) => (
+                                            <h5 key={domIndex + '' +valueIndex+dom.label}>{dom.label} = {parseFloat(dom.value).toFixed(2)}</h5>
+                                        ))}
+                                    </div>
+                                    <hr/>
+                                </React.Fragment>
                             ))}
                         </div>
                     ))}

@@ -75,11 +75,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				>
 					<strong>{props?.title}</strong>
 				</div>
-				{type === 'MFO1' && <MFO {...data} onChange={handleSetPayload} />}
-				{type === 'MFO2' && <MFO {...data} onChange={handleSetPayload} />}
-				{/*{type === 'MFO3' && <MFO1 {...data}/>}*/}
-				{/*{type === 'MFO4' && <MFO1 {...data}/>}*/}
-				{/*{type === 'MFO5' && <MFO1 {...data}/>}*/}
+				<MFO {...data} onChange={handleSetPayload} />
 			</div>
 		</div>
 	);

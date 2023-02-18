@@ -4,11 +4,11 @@ import MFOFieldGroup from '../Fields/MFOFieldGroup';
 import { Badge } from 'reactstrap';
 
 // MFO GROUP FORM
-const MFO1 = ({ mfoData, contents, editMode, onChange }) => {
+const MFO = ({ mfoData, contents, editMode, onChange }) => {
 	return(
 		<>	
 			{contents?.map?.((content, parentIndex) => (
-				<div key={parentIndex}>
+				<div key={`MFO-${parentIndex}`}>
 					<div>
 						<h3 className='m-0 p-0'>
 							{content.title}
@@ -23,7 +23,7 @@ const MFO1 = ({ mfoData, contents, editMode, onChange }) => {
 					{content.fields.map((field, index) => {
 						return( 
 							<MFOFieldGroup 
-								key={`MFO-${parentIndex}${index}`} 
+								key={`MFO-FIELD-GROUP-${parentIndex}${index}`} 
 								index={`${parentIndex}${index}`} 
 								percentage={content.percentage}
 								field={field}
@@ -43,4 +43,4 @@ const MFO1 = ({ mfoData, contents, editMode, onChange }) => {
 	);
 }
 
-export default MFO1;
+export default MFO;

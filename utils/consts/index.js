@@ -814,7 +814,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the paper indexing.",
                                         values: [
                                             { label: "Non-indexed", value: 3.00 },
@@ -857,7 +857,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the paper indexing.",
                                         values: [
                                             { label: "Non-indexed", value: 3.00 },
@@ -900,7 +900,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the wards received of the paper presented.",
                                         values: [
                                             { label: "Best Paper Award", value: 5.00 },
@@ -943,7 +943,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the wards received of the paper presented.",
                                         values: [
                                             { label: "Best Paper Award", value: 5.00 },
@@ -986,7 +986,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the wards received of the paper presented.",
                                         values: [
                                             { label: "Resource Speaker", value: 5.00 },
@@ -1025,7 +1025,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the wards received of the paper presented.",
                                         values: [
                                             { label: "96%-100% approved", value: 5.00 },
@@ -1066,7 +1066,7 @@ const MFO_CONTENTS = {
                             subtitle: null,
                             dom: {
                                 contents: {
-                                    Effectiveness: {
+                                    Quality: {
                                         label: "Quality measures the wards received of the paper presented.",
                                         values: [
                                             { label: "96%-100% approved", value: 5.00 },
@@ -1338,7 +1338,749 @@ const MFO_CONTENTS = {
         },
     ],
     "MFO3": [
-        
+        {
+            title: "Involvement of faculty members in the conduct of extension services projects",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Participated/Involved in at least __ of the College/Department extension service project(s)",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the number of extension service participated",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Nature of involvement / participation",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Qualify measures the role of faculty member in the extension project(s).",
+                                        values: [
+                                            { label: "Project Leader", value: 5.00 },
+                                            { label: "Coordinator", value: 4.00 },
+                                            { label: "Extensionist", value: 3.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+            ],
+            percentage: null,
+        },
+    ],
+    "MFO4": [
+        {
+            title: "Assignment to College/ Department Committee(s)",
+            subtitle: "0.5% incentive added to total score",
+            fields: [
+                {
+                    title: "Assigned to at least __ College/Department Committee(s)",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the total number of funded research project(s) where he/she is the principal investigator.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Documents Submitted",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality refers to acceptance of the submitted documents.",
+                                        values: [
+                                            { label: 'Accepted, No Changes', value: 5.00 },
+                                            { label: 'Minor Changes', value: 4.00 },
+                                            { label: 'Major Changes', value: 3.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Mentoring and Coaching",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Mentored/Coached at least __ students during the semester",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the number of students mentored by the faculty.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Satisfied Mentees",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality measures the number of mentees satisfied with the mentoring/coaching of the faculty.",
+                                        values: []
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Attendance and participation to Academic Council, college, and other committee meetings",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% attendance to University/college/department meetings per semester.",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of meetings attendance.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Meetings",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Average Attendance",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality measures the % Attendance to All Sessions",
+                                        values: [
+                                            { label: '96%-100%', value: 5.00 },
+                                            { label: '91%-95%', value: 4.00 },
+                                            { label: '90% attendance', value: 3.00 },
+                                            { label: '61%-89% attendance', value: 2.00 },
+                                            { label: '50%-60% attendance', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Submission of various reports and documents",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of the total number of required / pertinent documents/reports (faculty portfolio, AMTLP, student advising reports, etc.) were submitted within the prescribed period",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of documents submitted.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Documents",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Timely Submission",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness measures the timely uploading of grades",
+                                        values: [
+                                            { label: '3 days or earlier', value: 5.00 },
+                                            { label: '1-2 days earlier', value: 4.00 },
+                                            { label: 'On Due Date', value: 3.00 },
+                                            { label: '1-3 days after', value: 2.00 },
+                                            { label: '4 days after or later', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+    ],
+    "MFO5": [
+        {
+            title: "Acceptable employment rate",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of graduates were engaged in employment within two (2) years from graduation with satisfactory performance",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficency measures the % number of graduates employed within 2 years",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Documents",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Employment Period",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness measures the employability of graduates",
+                                        values: [
+                                            { label: '6-12 months after graduation', value: 5.00 },
+                                            { label: '12-23 months after graduation', value: 4.00 },
+                                            { label: '24 months after graduation', value: 3.00 },
+                                            { label: '25 months or later', value: 2.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Position Acquired",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality measures the acquired position within 2 years from graduation",
+                                        values: [
+                                            { label: 'Management position', value: 5.00 },
+                                            { label: 'Middle-Level position', value: 4.00 },
+                                            { label: 'Entry-Level position', value: 3.00 },
+                                            { label: 'Unemployed', value: 2.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+                {
+                    title: "__ program(s) that had conducted graduate tracer study",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the number of programs that had conducted tracer study.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: []
+                },
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Acceptable licensure examination rate",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Passing rate is __% higher than the immediately preceeding result for all board programs",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % increase in licensure examination result based on previous result.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: []
+                }
+            ],
+            percentage: null,
+        },
+        {
+            title: "Quality assurance of academic programs through accreditation",
+            subtitle: null,
+            fields: [
+                {
+                    title: "For COPC/AACCUP Application\n__% of the total number of required documents were prepared and submitted within the prescribed period",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of documents submitted.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Documents",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Timely Submission",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness measures the timely uploading of grades",
+                                        values: [
+                                            { label: '3 weeks or earlier', value: 5.00 },
+                                            { label: '1-2 weeks or earlier', value: 4.00 },
+                                            { label: 'On Due Date', value: 3.00 },
+                                            { label: '1-3 days after', value: 2.00 },
+                                            { label: '4 weeks after or later', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+                {
+                    title: "For COD/COE Preparations\n__% of the total number of required documents were prepared based on Application Workbook (AW)",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of documents prepared according to AW requirement.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Documents",
+                            subtitle: null,
+                        },
+                    ]
+                },
+                {
+                    title: "For ABET Accreditation\n__% of the total number of required documents were prepared and submitted within the prescribed period",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of documents submitted.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Documents",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Timely Submission",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness measures the timely uploading of grades",
+                                        values: [
+                                            { label: '3 weeks or earlier', value: 5.00 },
+                                            { label: '1-2 weeks or earlier', value: 4.00 },
+                                            { label: 'On Due Date', value: 3.00 },
+                                            { label: '1-3 days after', value: 2.00 },
+                                            { label: '4 weeks after or later', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Implementation of Outcomes-Based Education (OBE) approach in education",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__PAC meeting has been conducted with at least 90% attendance",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of documents submitted.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: null,
+                            key: "Effectiveness",
+                            title: "Attendance",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Effectiveness: {
+                                        label: "Quality measures the % Attendance in PAC Meeting",
+                                        values: [
+                                            { label: '96%-100% attendance', value: 5.00 },
+                                            { label: '91%-95% attendance', value: 4.00 },
+                                            { label: '90% attendance', value: 3.00 },
+                                            { label: '61%-89% attendance', value: 2.00 },
+                                            { label: '50%-60% attendance', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+                {
+                    title: "___% faculty members submitted the Course Analysis and Review Report (CARR)",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of faculty who have submitted the CARR.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Faculty",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Quality of CARR",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality measures the content and analysis of the class performance.",
+                                        values: [
+                                            { label: 'Excellent report', value: 5.00 },
+                                            { label: 'Good report', value: 4.00 },
+                                            { label: 'Satisfactory report', value: 3.00 },
+                                            { label: 'Needs improvement', value: 2.00 },
+                                            { label: 'Poor report', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+                {
+                    title: "__% faculty members submitted the Moderated Final Examination Papers.",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency measures the % number of faculty members who submitted the moderated exam papers.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Faculty",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Timely Submission",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness measures the timely submission of moderated exam papers",
+                                        values: [
+                                            { label: '7 days before or earlier', value: 5.00 },
+                                            { label: '1-6 days earlier', value: 4.00 },
+                                            { label: 'On Due Date', value: 3.00 },
+                                            { label: '1-3 days after', value: 2.00 },
+                                            { label: '14 days after', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Facilitate the assignment of faculty loadings",
+            subtitle: null,
+            fields: [
+                {
+                    title: "___% of the total number of regular courses offered were distributed to faculty members 10 working days before the beginning of classes with no major follow up question / concern",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the%  number of approved course syllabi compliant with OBE",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Courses",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Issues or Concerns",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality measures the concerns relative to the assignment of faculty loading",
+                                        values: [
+                                            { label: 'No concern', value: 5.00 },
+                                            { label: 'Minor concern', value: 4.00 },
+                                            { label: 'Major concern', value: 3.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Issues or Concerns",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness refers to the timely submission of DTRs.",
+                                        values: [
+                                            { label: '16-20 days before classes', value: 5.00 },
+                                            { label: '11-15 days before classes', value: 4.00 },
+                                            { label: '10 days before  classes', value: 3.00 },
+                                            { label: '1-9 days before', value: 2.00 },
+                                            { label: 'after 5 days', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Preparation of class schedule",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of the total number of regular courses offered have class schedules approved and uploaded online three (3) working days before the first day of enrolment",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the%  number ofregular courses  have class schedules  approved",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Courses",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Issues or Concerns",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness refers to the timely uploading of schedule.",
+                                        values: [
+                                            { label: '6 days before', value: 5.00 },
+                                            { label: '4-5 days before', value: 4.00 },
+                                            { label: '3 days before', value: 3.00 },
+                                            { label: 'After 3 days', value: 2.00 },
+                                            { label: '5 days before or later', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
+        {
+            title: "Facilitate the submission of course syllabi that are compliant to OBE",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of the total number of approved and controlled course syllabi compliant to OBE were submitted ten (10) working days before the first day of classes",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the%  number of approved course syllabi compliant with OBE",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: 'Target',
+                            key: null,
+                            title: "Total Number of Courses Offered",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Timeliness of Submission",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "Timeliness refers to the timely submission of syllabus.",
+                                        values: [
+                                            { label: '16 days before or earlier', value: 5.00 },
+                                            { label: '11-15 days before', value: 4.00 },
+                                            { label: '10 days before first day of classes', value: 3.00 },
+                                            { label: '6-9 days before', value: 2.00 },
+                                            { label: '5 days before or later', value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                }
+            ],
+            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
+        },
     ]
 }
 
