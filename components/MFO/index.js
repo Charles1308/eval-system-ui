@@ -2,7 +2,7 @@ import React from 'react';
 import useUserStore from '@hooks/store/useUserStore';
 import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
-import MFO1 from './MFO1';
+import MFO from './MFO';
 
 const MFOComponent = React.forwardRef((props, ref) => {
 	const { user } = useUserStore(store => store);
@@ -75,8 +75,8 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				>
 					<strong>{props?.title}</strong>
 				</div>
-				{type === 'MFO1' && <MFO1 {...data} onChange={handleSetPayload} />}
-				{/*{type === 'MFO2' && <MFO1 {...data}/>}*/}
+				{type === 'MFO1' && <MFO {...data} onChange={handleSetPayload} />}
+				{type === 'MFO2' && <MFO {...data} onChange={handleSetPayload} />}
 				{/*{type === 'MFO3' && <MFO1 {...data}/>}*/}
 				{/*{type === 'MFO4' && <MFO1 {...data}/>}*/}
 				{/*{type === 'MFO5' && <MFO1 {...data}/>}*/}

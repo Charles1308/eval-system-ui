@@ -8,7 +8,7 @@ import {
 	ListGroup,
     ListGroupItem
 } from 'reactstrap';
-import { OPCR } from '@utils/consts';
+import { OPCR } from '@utils/consts/index';
 
 const OpcrForm = props => {
 	const formInfo = {

@@ -154,10 +154,10 @@ const MFO = (props) => {
                 </div>
                 <div className='display-flex flex-column grow-2' style={{ width: '300px '}}>
                     {/* DOM */}
-                    {Object.keys(field?.dom?.value?.contents || {}).map((key, domIndex) => (
+                    {Object.keys(field?.dom?.contents || {}).map((key, domIndex) => (
                         <div key={`DOM-${index}${domIndex}`}>
-                            <h5>{field?.dom?.value?.contents[key].label}</h5>
-                            {field?.dom?.value?.contents[key].values.map((dom, valueIndex) => (
+                            <h5>{field?.dom?.contents[key].label}</h5>
+                            {field?.dom?.contents[key].values.map((dom, valueIndex) => (
                                 <h5 key={valueIndex+dom.label}>{dom.label} = {parseFloat(dom.value).toFixed(2)}</h5>
                             ))}
                         </div>

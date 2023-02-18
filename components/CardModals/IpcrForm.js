@@ -9,7 +9,7 @@ import {
     ListGroupItem
 } from 'reactstrap';
 import MFOComponent from '../MFO';
-import { MFO } from '@utils/consts';
+import { MFO } from '@utils/consts/index';
 import useEvaluation from '@hooks/useEvaluation';
 
 

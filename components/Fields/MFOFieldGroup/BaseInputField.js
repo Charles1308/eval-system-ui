@@ -57,7 +57,7 @@ const BaseInputField = props => {
 									style={{ width: '100%' }}
 								>
 								{DOMValues?.filter?.((dom) => dom.value === value)?.[0]?.label ||
-								`Please choose a ${type} value`}
+								`Please choose a value`}
 								</DropdownToggle>
 								<DropdownMenu aria-labelledby="dropdownMenuButton">
 									{DOMValues.map(item => (
