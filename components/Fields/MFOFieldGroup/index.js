@@ -94,7 +94,7 @@ const MFO = (props) => {
                                 key={`MFO-FIELD-BASE-${index}${otherIndex}`}
                                 DOMValues={other_field?.dom?.contents?.[other_field?.key]?.values}
                                 onChange={handleChange(type, isOtherType && "other")}
-                                value={isOtherType ? other[other_field.key] : data['dep-total']}
+                                value={isOtherType ? mfoData?.other?.[other_field.key] : data['dep-total']}
                                 placeHolder={other_field.title}
                             />
                         )

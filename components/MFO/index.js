@@ -6,7 +6,7 @@ import MFO from './MFO';
 
 const MFOComponent = React.forwardRef((props, ref) => {
 	const { user } = useUserStore(store => store);
-	const { setUrl, setMethod, setPayload, url, payload } = useFormRequestsStore(store => store);
+	const { setUrl, setMethod, setPayload } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data } = props;
 	const { id = null, editMode = false } = data;

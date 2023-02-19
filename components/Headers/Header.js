@@ -7,6 +7,9 @@ import OpcrForm from "../CardModals/OpcrForm";
 import IpcrEvaluation from '../CardModals/IpcrEvaluation';
 import OpcrEvaluation from '../CardModals/OpcrEvaluation';
 import ReactToPrint from 'react-to-print';
+import { MFO } from "@utils/consts";
+import MFOComponent from "@components/MFO";
+import useEvaluation from '@hooks/useEvaluation';
 
 // reactstrap components
 import { 
@@ -21,15 +24,46 @@ import {
 import useNotifStore from "@hooks/store/useNotifStore";
 
 function Header() {
-  const { url, payload, method } = useFormRequestStore(state => state);
+  const { url, payloads, method, setPayloads, clearFormStore } = useFormRequestStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
 
   const [modal, setModal] = React.useState(null);
   const [evaluationData, setEvaluationData] = React.useState(null);
+
+  const {
+		evaluation: mfoData,
+		error,
+		isLoading,
+	} = useEvaluation({ 
+		type: evaluationData?.[0], 
+		id: evaluationData?.[1] 
+	});
+
+  const selectedId = mfoData?.[evaluationData?.[0]]?.id
+  const [selectedMFO, setSelectedMFO] = React.useState(null);
+  const dataIndex = payloads.findIndex(({ type }) => type === selectedMFO);
+  const data = payloads?.[dataIndex];
+
   const component = React.useRef(null);
   const printComponent = React.useCallback(() => component.current, [component]);
 
-  const isFormEmpty = _.isEqual(payload, {});
+	const handleNextOrPrevPage = (move = 'next') => {
+		let mfoNumber = Number(selectedMFO[selectedMFO.length - 1]);
+    if (move === 'next') {
+      if (mfoNumber + 1 <= 5) {
+        mfoNumber += 1;
+      }
+    } else {
+      if (mfoNumber - 1 >= 1) {
+        mfoNumber -= 1;
+      }
+    }
+
+    const mfo = `MFO${mfoNumber}`;
+		setSelectedMFO(mfo);
+	}
+
+  const isFormEmpty = _.isEmpty(payloads);
 
   const toggle = (item, others, cb) => {
     if (!item) {
@@ -58,7 +92,7 @@ function Header() {
       url: url,
       method: method,
       data: {
-        payload: payload,
+        payload: payloads,
       },
       headers: {
         Authorization: `Bearer ${Cookies.get('token')}`
@@ -89,6 +123,15 @@ function Header() {
       : null
   ), [modal?.buttonType, handleForm, toggle]);
 
+  React.useEffect(() => {
+    if (mfoData) {
+      const data = JSON.parse(mfoData?.ipcr?.payload);
+
+      setSelectedMFO('MFO1');
+      setPayloads(data);
+    }
+  }, [mfoData]);
+
   return (
     <>
       <div className="header bg-gradient-dark pb-8 pt-5 pt-md-8">
@@ -97,27 +140,55 @@ function Header() {
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
-              <IpcrForm ref={component} evaluationData={evaluationData} onClick={item => toggle(item)}/>
-              <OpcrForm evaluationData={evaluationData} onClick={item => toggle(item)}/>
+              <IpcrForm onClick={setSelectedMFO}/>
+              <OpcrForm onClick={setSelectedMFO}/>
               <IpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
               <OpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
             </Row>
           </div>
         </Container>
       </div>
-      <Modal isOpen={!!modal && !!modal?.children} toggle={() => toggle(null)} size="xl">
-        <ModalHeader toggle={() => toggle(null)}>{ modal?.title }</ModalHeader>
+      <Modal 
+        isOpen={!!modal || !!selectedMFO} 
+        toggle={() => {
+          toggle(null);
+          clearFormStore();
+          setEvaluationData([]);
+          setSelectedMFO(null);
+        }}
+        size="xl"
+      >
+        <ModalHeader 
+          toggle={() => {
+            toggle(null);
+            clearFormStore();
+            setSelectedMFO(null);
+            setEvaluationData([]);
+          }}>
+          { modal ? modal?.title : selectedMFO }
+        </ModalHeader>
         <ModalBody>
-          { modal?.children }
+          {modal?.children || 
+            <MFOComponent
+              type={selectedMFO}
+              ref={component}
+              data={{
+                ...MFO.filter(({ key }) => key === selectedMFO)?.[0]?.data,
+                id: selectedId,
+                mfoData: data?.data,
+                editMode: !!data,
+              }}
+            />
+          }
         </ModalBody>
         <ModalFooter>
-          { modalPrimaryButton && (
+          {modalPrimaryButton && (
             <Button color="primary" disabled={isFormEmpty} onClick={modalPrimaryButton.onClick}>
               { modalPrimaryButton.label }
             </Button>
           )}
 
-          {component?.current && (
+          {!!component?.current && !!evaluationData.length && (
             <ReactToPrint 
               content={printComponent}
               trigger={() => (
@@ -130,7 +201,25 @@ function Header() {
               Print
             </ReactToPrint>
           )}
-          <Button color="secondary" onClick={() => toggle(null)}>
+          {selectedMFO && (
+            <Button color="secondary" disabled={selectedMFO === 'MFO1'} onClick={() => handleNextOrPrevPage('previous')}>
+              Previous MFO
+            </Button>
+          )}
+          {selectedMFO && (
+            <Button color="secondary" disabled={selectedMFO === 'MFO5'} onClick={() => handleNextOrPrevPage()}>
+              Next MFO
+            </Button>
+          )}
+          <Button 
+            color="secondary" 
+            onClick={() => {
+              toggle(null);
+              clearFormStore();
+              setSelectedMFO(null);
+              setEvaluationData([]);
+            }}
+          >
             Cancel
           </Button>
         </ModalFooter>
