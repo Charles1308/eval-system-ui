@@ -153,7 +153,7 @@ function Header() {
         toggle={() => {
           toggle(null);
           clearFormStore();
-          setEvaluationData([]);
+          setEvaluationData();
           setSelectedMFO(null);
         }}
         size="xl"
@@ -163,7 +163,7 @@ function Header() {
             toggle(null);
             clearFormStore();
             setSelectedMFO(null);
-            setEvaluationData([]);
+            setEvaluationData();
           }}>
           { modal ? modal?.title : selectedMFO }
         </ModalHeader>
@@ -188,7 +188,7 @@ function Header() {
             </Button>
           )}
 
-          {!!component?.current && !!evaluationData.length && (
+          {!!component?.current && !!evaluationData && (
             <ReactToPrint 
               content={printComponent}
               trigger={() => (
@@ -217,7 +217,7 @@ function Header() {
               toggle(null);
               clearFormStore();
               setSelectedMFO(null);
-              setEvaluationData([]);
+              setEvaluationData();
             }}
           >
             Cancel
