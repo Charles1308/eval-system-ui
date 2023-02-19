@@ -1,4 +1,3 @@
-import DOM_CONTENTS from "./domContents";
 import Percentage from "@modules/percentage";
 
 function mfo_percentages () {
@@ -97,7 +96,7 @@ const MFO_CONTENTS = {
                     other_fields: []
                 },
             ],
-            percentage: new Percentage("Incentives", [0.005]),
+            percentage: new Percentage("Incentives", [0.5]),
         },
         {
             title: "Effectiveness of Classroom Instruction",
@@ -118,7 +117,7 @@ const MFO_CONTENTS = {
                     other_fields: []
                 },
             ],
-            percentage: new Percentage("Incorporated", [0.45]),
+            percentage: new Percentage("Incorporated", [45]),
         },
         {
             title: "Attainment of Student Excellence",
@@ -208,7 +207,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incorporated", [0.15]),
+            percentage: new Percentage("Incorporated", [15]),
         },
         {
             title: "Preparation and submission of course syllabi that are compliant to OBE",
@@ -257,7 +256,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: "Development of Instructional Materials (IM)",
@@ -304,7 +303,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: "Submission of Course Portfolio",
@@ -354,7 +353,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: "Submission of Moderated Final Examination Paper",
@@ -422,7 +421,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: "Timely feedback of assessments result",
@@ -434,7 +433,7 @@ const MFO_CONTENTS = {
                     dom: {
                         contents: {
                             Effectiveness: {
-                                label: "Efficency measures the % assessment results returned to the students.",
+                                label: "Efficiency measures the % assessment results returned to the students.",
                                 values: []
                             }
                         }
@@ -470,7 +469,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: " Timely and proper submission of student grades",
@@ -538,7 +537,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: "Submission of Course Analysis and Review Report (CARR)",
@@ -587,7 +586,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
         {
             title: "Training and development of faculty members",
@@ -627,13 +626,13 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Integrated", [0.05]),
+            percentage: new Percentage("Incorporated", [5]),
         },
     ],
     "MFO2": [
         {
             title: "Funded Research as Principal Investigator Incentive added to total score ",
-            subtitle: "Inst./Asst. Prof./GL 2.00%. Assoc. Prof/Prof. 1.00%",
+            subtitle: "Inst./Asst. Prof./GL 2.00%. | Assoc. Prof/Prof. 1.00%",
             fields: [
                 {
                     title: "Principal investigator of ___ funded research project(s) sponsored by international/national/LGU/ Institutiona funding agency",
@@ -669,14 +668,14 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
+            percentage: new Percentage("Incentives", [2.0, 1.0], null, {
                 '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
                 '1': ['Associate Professor', 'Professor'],
             }),
         },
         {
             title: "Funded Research as Principal Investigator Incentive added to total score ",
-            subtitle: "Inst./Asst. Prof./GL 2.00%. Assoc. Prof/Prof. 1.00%",
+            subtitle: "Inst./Asst. Prof./GL 1.00%. Assoc. Prof/Prof. 0.50%",
             fields: [
                 {
                     title: "Co-investigator of ___ funded research project(s) sponsored by internationa/national/LGU/ Institutiona funding agency",
@@ -712,7 +711,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.01, 0.050], null, {
+            percentage: new Percentage("Incentives", [1.00, 0.50], null, {
                 '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
                 '1': ['Associate Professor', 'Professor'],
             }),
@@ -750,11 +749,11 @@ const MFO_CONTENTS = {
                     other_fields: []
                 },
             ],
-            percentage: new Percentage("Incentives", [0.5]),
+            percentage: new Percentage("Incentives", [0.50]),
         },
         {
             title: "Graduate Students Advising",
-            subtitle: "Incentive added to total score 0.50%. Asst Professor 0.30%. Assoc Prof., Prof. 0.15%",
+            subtitle: "Incentive added to total score. Asst Professor 0.30%. | Assoc Prof., Prof. 0.15%",
             fields: [
                 {
                     title: "Supervised at least __ Master's Student",
@@ -792,7 +791,7 @@ const MFO_CONTENTS = {
         },
         {
             title: "Papers published as Main Author",
-            subtitle: "Incentive added to total score 1.00%. Asst Professor 0.30%. Assoc Prof., Prof. 0.50%",
+            subtitle: "Incentive added to total score. Asst Professor 0.30%. | Assoc Prof., Prof. 0.50%",
             fields: [
                 {
                     title: "Published at least __ Research paper(s)",
@@ -800,7 +799,7 @@ const MFO_CONTENTS = {
                     dom: {
                         contents: {
                             Effectiveness: {
-                                label: "Efficency refers to the number of papers published",
+                                label: "Efficiency refers to the number of papers published",
                                 values: []
                             }
                         }
@@ -828,14 +827,14 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.01, 0.005], null, {
-                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+            percentage: new Percentage("Incentives", [0.30, 0.50], null, {
+                '0': ['Assistant Professor'],
                 '1': ['Associate Professor', 'Professor'],
             }),
         },
         {
             title: "Papers published as Co-Author",
-            subtitle: "Incentive added to total score 0.50%. Assoc Prof., Prof. 0.25%.",
+            subtitle: "Incentive added to total score. Inst./Asst. Prof./GL 0.50% | Assoc. Prof./Prof. 0.25%.",
             fields: [
                 {
                     title: "Published at least __ Research paper(s)",
@@ -871,7 +870,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.01, 0.005], null, {
+            percentage: new Percentage("Incentives", [0.50, 0.25], null, {
                 '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
                 '1': ['Associate Professor', 'Professor'],
             }),
@@ -914,7 +913,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.004, 0.0020], null, {
+            percentage: new Percentage("Incentives", [0.40, 0.20], null, {
                 '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
                 '1': ['Associate Professor', 'Professor'],
             }),
@@ -957,7 +956,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.002, 0.001], null, {
+            percentage: new Percentage("Incentives", [0.20, 0.10], null, {
                 '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
                 '1': ['Associate Professor', 'Professor'],
             }),
@@ -999,7 +998,8 @@ const MFO_CONTENTS = {
                         }
                     ]
                 },
-            ]
+            ],
+            percentage: new Percentage("Incentives", [0.25])
         },
         {
             title: "Thesis/Project Topic Abstract Submission as Main Author",
@@ -1040,7 +1040,11 @@ const MFO_CONTENTS = {
                         }
                     ]
                 },
-            ]
+            ],
+            percentage: new Percentage("Incentives", [0.40, 0.20], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
         },
         {
             title: "Thesis/Project Topic Abstract Submission as Co-Author",
@@ -1081,11 +1085,15 @@ const MFO_CONTENTS = {
                         }
                     ]
                 },
-            ]
+            ],
+            percentage: new Percentage("Incentives", [0.20, 0.10], null, {
+                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
+                '1': ['Associate Professor', 'Professor'],
+            }),
         },
-        {
+        { // needs callback
             title: "Member of Defense Panel for Undergraduate Researches",
-            subtitle: "Incentive added to total score 0.25% | Member/Facilitator 0.10%",
+            subtitle: "Incentive added to total score. As chairman 0.25% | Member/Facilitator 0.10%",
             fields: [
                 {
                     title: "__ of Thesis defense sessions attended(either Proposal or Final Defense)",
@@ -1121,10 +1129,11 @@ const MFO_CONTENTS = {
                         }
                     ]
                 },
-            ]
+            ],
+            percentage: new Percentage("Incentives", [0.25, 0.10]),
         },
-        {
-            title: "Member of Defense Panel for Undergraduate Researches",
+        { // needs callback
+            title: "Member of Defense Panel for graduate Researches",
             subtitle: "Incentive added to total score 0.30% | Member/Facilitator 0.15%",
             fields: [
                 {
@@ -1161,7 +1170,8 @@ const MFO_CONTENTS = {
                         }
                     ]
                 },
-            ]
+            ],
+            percentage: new Percentage("Incentives", [0.25, 0.10]),
         },
         {
             title: "Undergraduate Students Thesis/Project Advising",
@@ -1220,7 +1230,8 @@ const MFO_CONTENTS = {
                         }
                     ]
                 },
-            ]
+            ],
+            percentage: null,
         },
         {
             title: "Research and development culture in the academy",
@@ -1289,7 +1300,8 @@ const MFO_CONTENTS = {
                     for: "Effectiveness",
                     other_fields: []
                 }
-            ]
+            ],
+            percentage: null,
         },
         {
             title: "Development of research capabilities of researchers through participation in research workshops, trainings and conferences",
@@ -1331,10 +1343,7 @@ const MFO_CONTENTS = {
                     ]
                 },
             ],
-            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
-                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
-                '1': ['Associate Professor', 'Professor'],
-            }),
+            percentage: null,
         },
     ],
     "MFO3": [
@@ -1418,10 +1427,7 @@ const MFO_CONTENTS = {
                     ]
                 }
             ],
-            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
-                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
-                '1': ['Associate Professor', 'Professor'],
-            }),
+            percentage: new Percentage("Incentives", [0.05]),
         },
         {
             title: "Mentoring and Coaching",
@@ -1457,10 +1463,7 @@ const MFO_CONTENTS = {
                     ]
                 }
             ],
-            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
-                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
-                '1': ['Associate Professor', 'Professor'],
-            }),
+            percentage: null,
         },
         {
             title: "Attendance and participation to Academic Council, college, and other committee meetings",
@@ -1508,10 +1511,7 @@ const MFO_CONTENTS = {
                     ]
                 }
             ],
-            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
-                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
-                '1': ['Associate Professor', 'Professor'],
-            }),
+            percentage: null,
         },
         {
             title: "Submission of various reports and documents",
@@ -1559,10 +1559,7 @@ const MFO_CONTENTS = {
                     ]
                 }
             ],
-            percentage: new Percentage("Incentives", [0.02, 0.01], null, {
-                '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
-                '1': ['Associate Professor', 'Professor'],
-            }),
+            percentage: null,
         },
     ],
     "MFO5": [
@@ -2061,7 +2058,7 @@ const MFO_CONTENTS = {
                             dom: {
                                 contents: {
                                     Timeliness: {
-                                        label: "Timeliness refers to the timely submission of syllabus.",
+                                        label: "Timelexiness refers to the timely submission of syllabus.",
                                         values: [
                                             { label: '16 days before or earlier', value: 5.00 },
                                             { label: '11-15 days before', value: 4.00 },
@@ -2080,6 +2077,201 @@ const MFO_CONTENTS = {
                 '0': ['Instructor', 'Assistant Professor', 'Guest Lecturer'],
                 '1': ['Associate Professor', 'Professor'],
             }),
+        },
+        {
+            title: "Conduct Department Faculty Meetings",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__ meetings with Department Chairs with at least 90% attendance were conducted",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficeincy refers to number of meeting held with at least 90% attendance.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: []
+                }
+            ],
+            percentage: null,
+        },
+        {
+            title: "Department Research Publications",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__ publications in at least refereed journals",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficeincy refers to number of publications in the deartment",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: null,
+                            key: "Quality",
+                            title: "Indexing",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Quality: {
+                                        label: "Quality refers to the indexing of paper publications",
+                                        values: [
+                                            { label: 'ISI Indexed', value: 5.00 },
+                                            { label: 'Scopus Indexed', value: 4.00 },
+                                            { label: 'Peer Reviewed', value: 3.00 },
+                                            { label: 'Non-indexed', value: 2.00 },
+                                        ]
+                                    }
+                                }
+                            }
+                        }
+                    ]
+                }
+            ],
+            percentage: null,
+        },
+        {
+            title: "Attendance and participation to Academic Council, college, and other committee meetings",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of faculty members attended and actively participated in meetings.",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficeincy refers to number of faculty members who attended in meetings",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Faculty Members",
+                            subtitle: null
+                        }
+                    ]
+                }
+            ],
+            percentage: null,
+        },
+        {
+            title: "Maintain an acceptable graduation rate per program",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of the total number of applicants for graduation have graduated",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the % number of applicants who graduated",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Applicants",
+                            subtitle: null
+                        }
+                    ]
+                },
+                {
+                    title: "__% of these graduates finished on time (GOT)",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the % number of graduates who finished on time (GOT)",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Applicants",
+                            subtitle: null
+                        }
+                    ]
+                },
+            ],
+            percentage: null,
+        },
+        {
+            title: "Maintain an acceptable enrolment rate",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of the total number of students re-enrolled",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the % number of enrolled students during the semester.",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Students re-enrolled",
+                            subtitle: null
+                        }
+                    ]
+                }
+            ],
+            percentage: null,
+        },
+        {
+            title: "Approval of AMTLP for faculty members",
+            subtitle: null,
+            fields: [
+                {
+                    title: "__% of the total number of AMTLP were evaluated and approved within three (3) working days before the first day of classes",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficiency refers to the % number of applicants who graduated",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Effectiveness",
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of AMTLP",
+                            subtitle: null
+                        }
+                    ]
+                }
+            ],
+            percentage: null,
         },
     ]
 }

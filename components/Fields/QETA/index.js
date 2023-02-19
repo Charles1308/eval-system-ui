@@ -32,7 +32,8 @@ const QETAComponent = (props) => {
         quality ?? 0,
         efficiency ?? 0,
         timeliness ?? 0,
-    ]
+    ];
+
     const qet = qetRaw.map(getResult);
 
     const sum = (prev, curr) => {

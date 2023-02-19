@@ -123,7 +123,7 @@ const MFO = (props) => {
                     />
                     <QETAComponent
                         quality={handleQetaValue('Quality')}
-                        efficiency={handleQetaValue('Efficiency')}
+                        efficiency={handleQetaValue('Effectiveness')}
                         timeliness={handleQetaValue('Timeliness')}
                         onAverageChange={setTotal}
                     />
