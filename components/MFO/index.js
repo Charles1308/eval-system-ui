@@ -1,11 +1,9 @@
 import React from 'react';
-import useUserStore from '@hooks/store/useUserStore';
 import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
 import MFO from './MFO';
 
 const MFOComponent = React.forwardRef((props, ref) => {
-	const { user } = useUserStore(store => store);
 	const { setUrl, setMethod, setPayload } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data } = props;
@@ -38,7 +36,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
             return console.error("Invalid MFO type");
         }
 
-		setReqPayload({ index, type, ...tempPayload });
+		setReqPayload({ ...tempPayload, index, type });
 	}
 
 	React.useEffect(() => {
@@ -75,7 +73,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				>
 					<strong>{props?.title}</strong>
 				</div>
-				<MFO {...data} onChange={handleSetPayload} />
+				<MFO {...data} type={type} onChange={handleSetPayload} />
 			</div>
 		</div>
 	);

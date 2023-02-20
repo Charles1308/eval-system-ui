@@ -4,7 +4,7 @@ import MFOFieldGroup from '../Fields/MFOFieldGroup';
 import { Badge } from 'reactstrap';
 
 // MFO GROUP FORM
-const MFO = ({ mfoData, contents, editMode, onChange }) => {
+const MFO = ({ mfoData, type, contents, editMode, onChange }) => {
 	return(
 		<>	
 			{contents?.map?.((content, parentIndex) => (
@@ -23,7 +23,8 @@ const MFO = ({ mfoData, contents, editMode, onChange }) => {
 					{content.fields.map((field, index) => {
 						return( 
 							<MFOFieldGroup 
-								key={`MFO-FIELD-GROUP-${parentIndex}${index}`} 
+								key={`${type}-FIELD-GROUP-${parentIndex}${index}`} 
+								type={type}
 								index={`${parentIndex}${index}`} 
 								percentage={content.percentage}
 								field={field}

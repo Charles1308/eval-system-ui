@@ -10,6 +10,7 @@ import ReactToPrint from 'react-to-print';
 import { MFO } from "@utils/consts";
 import MFOComponent from "@components/MFO";
 import useEvaluation from '@hooks/useEvaluation';
+import useIsAllMFOCompleted from '@hooks/useIsAllMFOCompleted';
 
 // reactstrap components
 import { 
@@ -26,6 +27,7 @@ import useNotifStore from "@hooks/store/useNotifStore";
 function Header() {
   const { url, payloads, method, setPayloads, clearFormStore } = useFormRequestStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
+  const isAllMFOCompleted = useIsAllMFOCompleted();
 
   const [modal, setModal] = React.useState(null);
   const [evaluationData, setEvaluationData] = React.useState(null);
@@ -82,8 +84,14 @@ function Header() {
   }
 
   const handleForm = async () => {
+    if (!isAllMFOCompleted) {
+      setNotifs({ message: "All field is required", type: "danger" });
+
+      return;
+    }
+
 		if (isFormEmpty && method === 'POST') {
-      setNotifs({ message: "Form is empty", type: "warning" });
+      setNotifs({ message: "Form is empty", type: "danger" });
 
       return;
     }
@@ -131,6 +139,14 @@ function Header() {
       setPayloads(data);
     }
   }, [mfoData]);
+
+  React.useEffect(() => {
+    if (selectedMFO && mfoData) {
+      setModal(modal => ({...modal, buttonType: 'Update' }));
+    } else if (selectedMFO) {
+      setModal(modal => ({...modal, buttonType: 'Submit' }));
+    }
+  }, [selectedMFO, mfoData])
 
   return (
     <>
@@ -182,8 +198,8 @@ function Header() {
           }
         </ModalBody>
         <ModalFooter>
-          {modalPrimaryButton && (
-            <Button color="primary" disabled={isFormEmpty} onClick={modalPrimaryButton.onClick}>
+          {modalPrimaryButton && selectedMFO === 'MFO5' && (
+            <Button color="primary" onClick={modalPrimaryButton.onClick}>
               { modalPrimaryButton.label }
             </Button>
           )}

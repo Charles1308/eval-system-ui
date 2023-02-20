@@ -12,12 +12,13 @@ import {
     InputGroup, 
     InputGroupText, 
 } from 'reactstrap';
-
+import useMFOMonitor from '@hooks/store/useMFOMonitor';
 
 // MFO FORM
 const MFO = (props) => {
     const {
         field,
+        type,
         index,
         mfoData = {
             other: {},
@@ -35,15 +36,33 @@ const MFO = (props) => {
         editMode = true,
     } = props;
 
+    const { setAddMFOField } = useMFOMonitor(state => state);
     const [data, setData] = React.useState(mfoData?.data);
     const [other, setOther] = React.useState(mfoData?.other);
     const [total, setTotal] = React.useState(mfoData?.total);
 
+    const [otherKeys, setOtherKeys] = React.useState([])
     const payload = React.useMemo(() => ({
         data: { ...data },
         other: { ...other },
         total,
     }), [data, other, total]);
+
+    const isFieldsCompleted = React.useMemo(() => {
+        let isOtherFilled = true;
+        
+        if (otherKeys.length) {
+            isOtherFilled = otherKeys.some(key => 
+                key === 'Target' || !_.isEmpty(other?.[key]?.toString?.())
+            );
+        }
+        
+        const isDataFilled = 
+            (data?.target && data?.target !== 0) && 
+            (data?.actual && data?.actual !== 0)
+
+        return Boolean(isOtherFilled && isDataFilled);
+    }, [otherKeys, data, other]);
 
     const isIncentiveTotal = percentage?.type === 'Incentives';
 
@@ -75,6 +94,20 @@ const MFO = (props) => {
         }
     }, [payload]);
 
+    // Collects other-field keys
+    React.useEffect(() => {
+        field.other_fields?.forEach((otherField) => {
+            setOtherKeys(otherKeys => [...otherKeys, otherField?.for || otherField.key]);
+        })
+    }, [field.other_fields]);
+
+    React.useEffect(() => {
+        if (index && type) {
+            setAddMFOField(`${type}-${index}`, isFieldsCompleted);
+        }
+
+    }, [isFieldsCompleted, index, type]);
+
     return(
         <div>
             <div className='mfo-form-content-box'>
@@ -86,7 +119,7 @@ const MFO = (props) => {
                     {field.other_fields?.map?.((other_field, otherIndex) => {
                         const type = other_field?.for === "Target" ? "dep-total" : other_field.key;
                         const isOtherType = type !== "dep-total";
-                        
+
                         return (
                             <BaseInputField
                                 disabled={!editMode}
