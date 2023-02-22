@@ -72,7 +72,7 @@ const Children = ({ onClick }) => {
                     <tr>
                         <th>ID</th>
                         <th>Creator</th>
-                        <th>Role</th>
+                        <th>Roles</th>
                         <th>Course</th>
                         <th>Date Created</th>
                     </tr>
@@ -82,7 +82,7 @@ const Children = ({ onClick }) => {
                         <tr key={uniqid()} scope="row" onClick={() => onClick?.(null, ['ipcr', item?.id])}>
                             <th>{ item?.id }</th>
                             <th>{ item?.user?.fullName }</th>
-                            <td>{ item?.user?.role }</td>
+                            <td>{ item?.user?.roles?.map?.(role => role.name)?.join?.(', ') }</td>
                             <td>{ item?.user?.course }</td>
                             <td>{ new Date(item?.created_at)?.toDateString?.() }</td>
                         </tr>

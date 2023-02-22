@@ -1,14 +1,12 @@
 import useUserStore from "./store/useUserStore"
 
 const usePermission = () => {
-    const { role } = useUserStore(store => store)
+    const { roles } = useUserStore(store => store)
     
     const hasPermission = (permission) => {
-        if (!role) return false
+        if (!roles) return false
 
-        if (role.permissions) {
-            return role.permissions.includes(permission)
-        }
+        return roles.some(role => role.includes(permission))
     }
 
     return hasPermission

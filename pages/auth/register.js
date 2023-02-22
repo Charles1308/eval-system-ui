@@ -59,7 +59,7 @@ function Register() {
         setUser('middleName', user.firstName);
         setUser('lastName', user.firstName);
         setUser('course', user.course);
-        setUser('role', user.role);
+        setUser('roles', user.roles);
 
         Cookies.set('token', token);
         Cookies.set('type', type);
@@ -194,7 +194,7 @@ function Register() {
                       <i className="ni ni-collection" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input id="exampleFormControlSelect1" type="select" onChange={handleFillUp('role')}>
+                  <Input id="exampleFormControlSelect1" type="select" onChange={handleFillUp('roles')}>
                     {/* <option> Professor </option>
                     <option> Instructor </option>
                     <option> Guest Lecturer </option>

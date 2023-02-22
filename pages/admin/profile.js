@@ -32,13 +32,13 @@ function Profile() {
     lastName,
     fullName,
     course,
-    role,
+    roles,
     email,
     setUser,
     updateCount,
   } = useUserStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
-
+  console.log(roles);
   const [confirmPass, setConfirmPass] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
@@ -54,7 +54,7 @@ function Profile() {
     lastName,
     fullName,
     course,
-    role,
+    roles: roles?.map?.(role => role.name)?.[0] || '',
     email,
   };
 
@@ -190,7 +190,7 @@ function Profile() {
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    { role }
+                    { roles?.[0]?.name || roles }
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -317,9 +317,16 @@ function Profile() {
                             className="form-control-label"
                             htmlFor="input-course"
                           >
-                            role
+                            roles
                           </label>
-                          <Input id="exampleFormControlSelect1" type="select" onChange={e => setUser('role', e.target.value)}>
+                          <Input 
+                            id="exampleFormControlSelect1" 
+                            type="select" 
+                            onChange={e => setUser('roles', [{
+                             name: e.target.value,
+                             permissions: PERMISSIONS[e.target.value]
+                            }])}
+                          >
                             {Object.keys(PERMISSIONS).map(key => (
                               <option key={key}>{key}</option>
                             ))}

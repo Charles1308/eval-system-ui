@@ -23,7 +23,7 @@ const useVerifyUser = () => {
             const {
                 email,
                 course,
-                role,
+                roles,
                 last_name,
                 first_name,
                 middle_name,
@@ -34,7 +34,7 @@ const useVerifyUser = () => {
 
             setUser('email', email);
             setUser('course', course);
-            setUser('role', role);
+            setUser('roles', roles);
             setUser('fullName', fullName);
             setUser('lastName', last_name);
             setUser('firstName', first_name);
