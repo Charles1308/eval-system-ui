@@ -4,6 +4,7 @@ import useUserStore from '@hooks/store/useUserStore';
 import useNotifStore from '@hooks/store/useNotifStore';
 import Cookies from 'js-cookie';
 import { useRouter } from "next/router";
+import PERMISSIONS from "@utils/consts/permissions";
 
 // reactstrap components
 import {
@@ -58,7 +59,7 @@ function Register() {
         setUser('middleName', user.firstName);
         setUser('lastName', user.firstName);
         setUser('course', user.course);
-        setUser('office', user.office);
+        setUser('role', user.role);
 
         Cookies.set('token', token);
         Cookies.set('type', type);
@@ -185,7 +186,7 @@ function Register() {
                 </InputGroup>
               </FormGroup>
 
-              {/* Office */}
+              {/* role */}
               <FormGroup>
                 <InputGroup className="input-group-alternative">
                   <InputGroupAddon addonType="prepend">
@@ -193,15 +194,18 @@ function Register() {
                       <i className="ni ni-collection" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input id="exampleFormControlSelect1" type="select" onChange={handleFillUp('office')}>
-                    <option> Professor </option>
+                  <Input id="exampleFormControlSelect1" type="select" onChange={handleFillUp('role')}>
+                    {/* <option> Professor </option>
                     <option> Instructor </option>
                     <option> Guest Lecturer </option>
                     <option> Assistant Professor </option>
                     <option> Associate Professor </option>
                     <option> Administrative Staff </option>
                     <option> Coordinator (Associate Professor/Professor) </option>
-                    <option> Coordinator  (Instructor/Assistant Professor) </option>
+                    <option> Coordinator  (Instructor/Assistant Professor) </option> */}
+                    {Object.keys(PERMISSIONS).map(key => (
+                      <option key={key}>{key}</option>
+                    ))}
                   </Input>
                 </InputGroup>
               </FormGroup>

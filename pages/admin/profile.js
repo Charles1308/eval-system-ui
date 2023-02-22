@@ -21,6 +21,7 @@ import UserHeader from "@components/Headers/UserHeader.js";
 import useUserStore from "@hooks/store/useUserStore";
 import axios from "@config/axios";
 import useNotifStore from "@hooks/store/useNotifStore";
+import PERMISSIONS from "@utils/consts/permissions";
 
 function Profile() {  
   const { 
@@ -31,7 +32,7 @@ function Profile() {
     lastName,
     fullName,
     course,
-    office,
+    role,
     email,
     setUser,
     updateCount,
@@ -53,7 +54,7 @@ function Profile() {
     lastName,
     fullName,
     course,
-    office,
+    role,
     email,
   };
 
@@ -189,7 +190,7 @@ function Profile() {
                   </div>
                   <div className="h5 mt-4">
                     <i className="ni business_briefcase-24 mr-2" />
-                    { office }
+                    { role }
                   </div>
                   <div>
                     <i className="ni education_hat mr-2" />
@@ -316,17 +317,12 @@ function Profile() {
                             className="form-control-label"
                             htmlFor="input-course"
                           >
-                            Office
+                            role
                           </label>
-                          <Input id="exampleFormControlSelect1" type="select" onChange={e => setUser('office', e.target.value)}>
-                            <option> Professor </option>
-                            <option> Instructor </option>
-                            <option> Guest Lecturer </option>
-                            <option> Assistant Professor </option>
-                            <option> Associate Professor </option>
-                            <option> Administrative Staff </option>
-                            <option> Coordinator (Associate Professor/Professor) </option>
-                            <option> Coordinator  (Instructor/Assistant Professor) </option>
+                          <Input id="exampleFormControlSelect1" type="select" onChange={e => setUser('role', e.target.value)}>
+                            {Object.keys(PERMISSIONS).map(key => (
+                              <option key={key}>{key}</option>
+                            ))}
                           </Input>
                         </FormGroup>
                       </Col>

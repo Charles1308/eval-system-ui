@@ -3,7 +3,7 @@ import { create } from 'zustand';
 const useUserStore = create((set) => ({
     email: null,
     course: null,
-    office: null,
+    role: null,
     fullName: null,
     lastName: null,
     firstName: null,

@@ -50,7 +50,7 @@ function Login() {
         setUser('middleName', user.firstName);
         setUser('lastName', user.firstName);
         setUser('course', user.course);
-        setUser('office', user.office);
+        setUser('role', user.role);
 
         Cookies.set('token', token);
         Cookies.set('type', type);
