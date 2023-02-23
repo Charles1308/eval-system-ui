@@ -38,15 +38,11 @@ function Profile() {
     updateCount,
   } = useUserStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
-  console.log(roles);
   const [confirmPass, setConfirmPass] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [newPassword, setNewPassword] = React.useState('');
 
-  // const [oldData, setOldData] = React.useState({});
-
   const isPasswwordMatched = (confirmPass.length && confirmPass === newPassword);
-  // const hasUpdate = updateCount > oldData?.updateCount;
 
   const payload = {
     firstName,
@@ -57,15 +53,6 @@ function Profile() {
     roles: roles?.map?.(role => role.name)?.[0] || '',
     email,
   };
-
-  // React.useEffect(() => {
-  //   setOldData({ ...payload, updateCount });
-
-  //   return () => {
-  //     if (hasUpdate) {
-  //     }
-  //   }
-  // }, [hasUpdate]);
 
   const handleIsPasswordCorrect = async () => {
     const url = `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/auth/password-check`;
@@ -322,6 +309,7 @@ function Profile() {
                           <Input 
                             id="exampleFormControlSelect1" 
                             type="select" 
+                            value={roles?.[0]?.name}
                             onChange={e => setUser('roles', [{
                              name: e.target.value,
                              permissions: PERMISSIONS[e.target.value]

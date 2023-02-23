@@ -23,10 +23,12 @@ import {
   ModalFooter,
 } from "reactstrap";
 import useNotifStore from "@hooks/store/useNotifStore";
+import usePermission from "@hooks/usePermission";
 
 function Header() {
   const { url, payloads, method, setPayloads, clearFormStore } = useFormRequestStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
+  const hasPermission = usePermission()
   const isAllMFOCompleted = useIsAllMFOCompleted();
 
   const [modal, setModal] = React.useState(null);
@@ -156,10 +158,10 @@ function Header() {
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
-              <IpcrForm onClick={setSelectedMFO}/>
-              <OpcrForm onClick={setSelectedMFO}/>
-              <IpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
-              <OpcrEvaluation onClick={(item, others) => toggle(item, others)}/>
+              {hasPermission('create-ipcr') && <IpcrForm onClick={setSelectedMFO}/>}
+              {hasPermission('create-opcr') && <OpcrForm onClick={setSelectedMFO}/>}
+              {hasPermission('view-ipcr') && <IpcrEvaluation onClick={(item, others) => toggle(item, others)}/>}
+              {hasPermission('view-opcr') && <OpcrEvaluation onClick={(item, others) => toggle(item, others)}/>}
             </Row>
           </div>
         </Container>
@@ -204,8 +206,8 @@ function Header() {
             </Button>
           )}
 
-          {!!component?.current && !!evaluationData && (
-            <ReactToPrint 
+          {hasPermission('print-ipcr') && hasPermission('print-opcr') && !!component?.current && !!evaluationData && (
+            <ReactToPrint
               content={printComponent}
               trigger={() => (
                 <Button color="primary">
@@ -213,9 +215,7 @@ function Header() {
                 </Button>
               )}
               removeAfterPrint
-            >
-              Print
-            </ReactToPrint>
+            />
           )}
           {selectedMFO && (
             <Button color="secondary" disabled={selectedMFO === 'MFO1'} onClick={() => handleNextOrPrevPage('previous')}>

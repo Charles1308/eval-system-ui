@@ -2,12 +2,15 @@ import React from 'react';
 import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
 import MFO from './MFO';
+import useIsAllMFOCompleted from '@hooks/useIsAllMFOCompleted';
+import Result from './Result';
 
 const MFOComponent = React.forwardRef((props, ref) => {
 	const { setUrl, setMethod, setPayload } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data } = props;
 	const { id = null, editMode = false } = data;
+	const isAllMFOCompleted = useIsAllMFOCompleted();
 
 	const [reqPayload, setReqPayload] = React.useState({});
 	
@@ -74,6 +77,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
 					<strong>{props?.title}</strong>
 				</div>
 				<MFO {...data} type={type} onChange={handleSetPayload} />
+				<Result/>
 			</div>
 		</div>
 	);

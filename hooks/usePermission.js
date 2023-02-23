@@ -6,7 +6,7 @@ const usePermission = () => {
     const hasPermission = (permission) => {
         if (!roles) return false
 
-        return roles.some(role => role.includes(permission))
+        return roles.some(role => role.permissions.includes(permission))
     }
 
     return hasPermission

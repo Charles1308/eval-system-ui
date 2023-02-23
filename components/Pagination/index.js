@@ -39,7 +39,7 @@ const _Pagination = props => {
                     previous
                 />
             </PaginationItem>
-            {totalPages && currentPage && Array.from({ length: offset }, (_, index) => (
+            {!!totalPages && currentPage && Array.from({ length: offset }, (_, index) => (
                 <PaginationItem 
                     key={uniqid()} 
                     onClick={() => onPageChange(pageNumber[index])} 

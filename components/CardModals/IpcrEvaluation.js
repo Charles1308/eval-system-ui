@@ -22,30 +22,30 @@ const IpcrEvaluation = props => {
 				xl="3" 
 				className="mb-sm-2" 
 				onClick={() => props?.onClick({
-                    title: "IPCR EVALUATION",
-                    children: <Children onClick={(item, others) => props?.onClick?.(item, others)}/>,
-                })}
+            title: "IPCR EVALUATION",
+            children: <Children onClick={(item, others) => props?.onClick?.(item, others)}/>,
+        })}
 			>
-              <Card className="card-stats mb-4 mb-xl-0 portal-card">
-                <CardBody>
-                  <Row>
-                    <div className="col">
-                      <CardTitle
-                        tag="h5"
-                        className="text-uppercase text-muted mb-0"
-                      >
-                      	IPCR EVALUATION
-                      </CardTitle>
-                    </div>
-                    <Col className="col-auto">
-						<div className="icon icon-shape bg-warning text-white rounded-circle shadow">
-		                    <i className="fas fa-file-invoice" />
-		                </div>
-                    </Col>
-                  </Row>
-                </CardBody>
-              </Card>
-            </Col>
+        <Card className="card-stats mb-4 mb-xl-0 portal-card">
+          <CardBody>
+            <Row>
+              <div className="col">
+                <CardTitle
+                  tag="h5"
+                  className="text-uppercase text-muted mb-0"
+                >
+                  IPCR EVALUATION
+                </CardTitle>
+              </div>
+              <Col className="col-auto">
+                  <div className="icon icon-shape bg-warning text-white rounded-circle shadow">
+                  <i className="fas fa-file-invoice" />
+              </div>
+              </Col>
+            </Row>
+          </CardBody>
+        </Card>
+      </Col>
 		</>
 	);
 }

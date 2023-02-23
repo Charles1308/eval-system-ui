@@ -13,6 +13,7 @@ import {
     InputGroupText, 
 } from 'reactstrap';
 import useMFOMonitor from '@hooks/store/useMFOMonitor';
+import useResultStore from '@hooks/store/useResultStore';
 
 // MFO FORM
 const MFO = (props) => {
@@ -36,10 +37,15 @@ const MFO = (props) => {
         editMode = true,
     } = props;
 
+    const { setResult, incentives, incorporated } = useResultStore(state => state)
     const { setAddMFOField } = useMFOMonitor(state => state);
     const [data, setData] = React.useState(mfoData?.data);
     const [other, setOther] = React.useState(mfoData?.other);
     const [total, setTotal] = React.useState(mfoData?.total);
+
+    const computedResult = React.useMemo(() => 
+        percentage?.applyPercentage?.(total)
+    , [total, percentage]);
 
     const [otherKeys, setOtherKeys] = React.useState([])
     const payload = React.useMemo(() => ({
@@ -108,6 +114,14 @@ const MFO = (props) => {
 
     }, [isFieldsCompleted, index, type]);
 
+    React.useEffect(() => {
+        setResult(
+            percentage?.type?.toLowerCase(),
+            percentage?.type + index,
+            computedResult
+        )
+    },[percentage, computedResult])
+
     return(
         <div>
             <div className='mfo-form-content-box'>
@@ -165,11 +179,9 @@ const MFO = (props) => {
                         <InputGroupText>
                             Total With {isIncentiveTotal ? "Incentives" : "Incorporated Percentage"}: 
                         </InputGroupText>
-								
                         <Input 
                             disabled
-                            value={percentage?.applyPercentage?.(total)}
-                            onChange={null}
+                            value={computedResult}
                         />
                     </InputGroup>
                     <br/>
