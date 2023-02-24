@@ -1,14 +1,35 @@
 import Percentage from "@modules/percentage";
 
 function mfo_percentages () {
-    this["Professor"] = this["Instructor"]; // Same
-    this["Instructor"] = [ 75, 10, 10, 5, 0 ];
-    this["Administrative Staff"] = [ 0, 0, 0, 5, 95 ];
-    this["Assistant Professor"] = [ 65, 20, 10, 5, 0 ]; 
-    this["Associate Professor"] = this["Assistant Professor"];
-    this["Guest Lecturer"] = this["Administrative Staff"].reverse(); // Same in reversed version
-    this["Coordinator (Associate Professor/Professor)"] = [ 40, 20, 10, 5, 25 ];
-    this["Coordinator  (Instructor/Assistant Professor)"] = [ 50, 10, 10, 5, 25 ];
+    this['Ratee'] = [0, 0, 0, 0, 0]
+    this['Vice President'] = [95, 0, 0, 5, 0]
+    this['Chancellor'] = [95, 0, 0, 5, 0]
+    this['Vice Chancellor for Academic Affairs'] = [80, 10, 5, 5, 0]
+    this['Vice Chancellor for Administration and Finance'] = [80, 10, 5, 5, 0]
+    this['Vice Chancellor for Research, Development and Extension Services'] = [80, 10, 5, 5, 0]
+    this['Vice Chancellor for Development and External Affairs'] = [80, 10, 5, 5, 0]
+    this['Director'] = [80, 10, 5, 5, 0]
+    this['Campus Director'] = [true, 10, 5, 5, 0]
+    this['Assistant Director (Admin and Finance)'] = [80, 10, 5, 5, 0]
+    this['Assistant Director (Academic Affairs)'] = [80, 10, 5, 5, 0]
+    this['Dean'] = [80, 10, 5, 5, 0]
+    this['Faculty Researcher, Not Designated (1 project)'] = [60, 30, 5, 5, 0]
+    this['Faculty Researcher, Not Designated (2 projects)'] = [30, 60, 5, 5, 0]
+    this['Faculty with Special Administrative Assignment'] = [20, 0, 0, 5, 75]
+    this['Faculty Researcher, Designated (1 project)'] = [50, 15, 5, 5, 25]
+    this['Faculty Researcher, Designated (2 projects)'] = [35, 30, 5, 5, 25]
+    this['Department Chair (Instructor/Assistant Professor)'] = [50, 10, 10, 5, 25]
+    this['Department Chair (Associate Professor/Professor)'] = [40, 20, 10, 5, 25]
+    this['Program Chair (Instructor/Assistant Professor)'] = [50, 10, 10, 5, 25]
+    this['Program Chair (Associate Professor/Professor)'] = [40, 20, 10, 5, 25]
+    this['Coordinator  (Instructor/Assistant Professor)'] = [50, 10, 10, 5, 25]
+    this['Coordinator (Associate Professor/Professor)'] = [40, 20, 10, 5, 25]
+    this['Instructor'] = [75, 10, 10, 5, 0]
+    this['Assistant Professor'] = [75, 10, 10, 5, 0]
+    this['Associate Professor'] = [65, 20, 10, 5, 0]
+    this['Professor'] = [65, 20, 10, 5, 0]
+    this['Administrative Staff'] = [0, 0, 0, 5, 95]
+    this['Guest Lecturer'] = [95, 0, 0, 5, 0]
 
     this.mapper = {
         'MFO1': 0,
@@ -18,12 +39,16 @@ function mfo_percentages () {
         'MFO5': 4,
     }
 
-    this.getPercentage = function (userType, mfoKey) {
-        return this[userType][this.mapper[mfoKey]];
+    this.getPercentage = (designation, mfoKey) => {
+        if (designation && mfoKey) {
+            return this?.[designation]?.[this.mapper[mfoKey]] ?? '-';
+        } else {
+            return '-'
+        }
     }
 }
 
-const MFO_CONTENTS = {
+const MFO_CONTENTS_1 = {
     "MFO1": [
         {
             title: "Academic and Professional Qualification",
@@ -2276,6 +2301,1241 @@ const MFO_CONTENTS = {
     ]
 }
 
+const MFO_CONTENTS_2 = {
+    "MFO1": [
+        {
+            title: "Induction and orientation program for University leaders, faculty, staff and students",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of new faculty members and staff have actively participated in the orientation program",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96% or higher", value: 5 },   
+                                    { label: "4 - 91 - 95%", value: 4 },   
+                                    { label: "3 - 90% attendance", value: 3 },
+                                    { label: "2 - 61% - 89% ", value: 2 },   
+                                    { label: "1 - 50% - 60%", value: 1 }, 
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Adherence to the Quality Policy of the University for continuing professional and service excellence",
+            subtitle: null,
+            fields: [
+                {
+                    title: "At least 3.49 (Satisfactory) rating on customer satisfaction survey (CSS) with no unsatisfied customer",
+                    subtitle: null,
+                    dom: { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - not one unsatisfied  customer ", value: 5 },   
+                                    { label: " 4 - 1 unsatisfied customer", value: 4 },   
+                                    { label: "3 - 2-3 unsatisfied customers", value: 3 },
+				    { label: "2 - 4 unsatisfied customers ", value: 2 },   
+                                    { label: "1 - 5 unsatisfied customers or more", value: 1 },   
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "100% of the total number of required documents for Institutional Accreditation were prepared and submitted within 15 working days before the end of the rating period",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 22 days before or earlier", value: 5 },   
+                                    { label: " 4 - 16-21 days before", value: 4 },   
+                                    { label: "3 - 15 days before", value: 3 },
+				    { label: "2 - 8-14 days before ", value: 2 },   
+                                    { label: "1 - 7 days before or later", value: 1 },
+				]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "Two (2) programs have prepared the requirements for a higher level of AACCUP accreditation",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 75% or higher ", value: 5 },   
+                                    { label: "  4 - 51% - 74%", value: 4 },   
+                                    { label: "50% of all requirements", value: 3 },
+				    { label: "2 - 26% - 49% ", value: 2 },   
+                                    { label: "1 - 25% or lower", value: 1 },
+				]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "Two (2) programs have prepared COPC documents for submission to CHED-TPET",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 75% or higher", value: 5.00 },
+                                    { label: "4 - 51% - 74%", value: 4.00 },
+                                    { label: " 3 - 50% of all requirements", value: 3.00 },
+                                    { label: " 2 - 26% - 49%", value: 2.00 },
+                                    { label: "1 - 25% or lower", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Outcomes-based / Industry-oriented accreditation for engineering, technology and computing sciences",
+            subtitle: null,
+            fields: [
+                {
+                    title: "2 programs have prepared Student Outcomes Assessment Report within ten (10) working days after the end of semester",
+                    subtitle: null,
+                    dom: { // Remarks
+                        contents: {
+                            Timeliness: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 5 days after or earlier", value: 5 },   
+                                    { label: "4 - 6-9 days after", value: 4 },   
+                                    { label: "3 - 10 days after semester end", value: 3 },
+				    { label: "2 - 11-15 days after", value: 2 },   
+                                    { label: " 1 - 16 days after or later", value: 1 },   
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+                {
+                    title: "75% of the total number of final examinations were moderated before the scheduled final examination",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 4 days before or earlier", value: 5 },   
+                                    { label: "  4 - 2-3 days before", value: 4 },   
+                                    { label: "3 - 0-1 day before due date ", value: 3 },
+				    { label: "2 - 1-2 days after ", value: 2 },   
+                                    { label: "1 - 3 days after or later ", value: 1 },
+				]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "100% of the total number of course syllabi were compliant to OBE and were submitted to QAM within ten (10) working days before the first day of classes",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 15 days before or earlier", value: 5 },   
+                                    { label: "4 - 11-14 days before", value: 4 },   
+                                    { label: "3 - 10 days before due date", value: 3 },
+				    { label: "2 - 6-9 days before", value: 2 },   
+                                    { label: "1 - 5 days before or later", value: 1 },
+				]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+	    ],
+        },
+        {
+            title: "Comprehensive graduate tracer program",
+            subtitle: null,
+            fields: [
+                {
+                    title: "75% of the total number of programs have conducted graduate tracer study",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: []
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Academic laboratories and facilities responsive to Industry 4.0",
+            subtitle: null,
+            fields: [
+                {
+                    title: "75% of the total number of programs have increased the number of laboratory equipment and devices",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 50% or higher", value: 5 },   
+                                    { label: "4 - 16% - 49% ", value: 4 },   
+                                    { label: " 3 - 15% increase ", value: 3 },
+                                    { label: "2 - 8% - 14% ", value: 2 },   
+                                    { label: "1 - 7% or lower", value: 1 }, 
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Attainment of teaching and learning excellence",
+            subtitle: null,
+            fields: [
+                {
+                    title: "90% of the total number of students have passed all enrolled courses",
+                    subtitle: null,
+                    dom: { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 75% or higher", value: 5 },   
+                                    { label: " 4 - 51% - 74%", value: 4 },   
+                                    { label: "3 - 50% have attained ILO", value: 3 },
+				    { label: "2 - 26% - 49%", value: 2 },   
+                                    { label: "1 - 25% or lower", value: 1 },   
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "100% of the total number of students who failed the Midterm Examination were provided with guidance and counseling services to pass the course",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 75% or higher", value: 5 },   
+                                    { label: "4 - 51% - 74%", value: 4 },   
+                                    { label: "3 - 50% passed courses", value: 3 },
+                                    { label: "2 - 26% - 49%", value: 2 },   
+                                    { label: "1 - 25% or lower", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "90% of the total number of students have re-enrolled",
+                    subtitle: null,
+                    for: null,
+                    dom: {
+                        contents: {
+                            null: {
+                                label: null,
+                                values: []
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "75% of the total number of candidates for graduation have graduated",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 90% or higher", value: 5.00 },
+                                    { label: "4 - 76% - 89%", value: 4.00 },
+                                    { label: "3 - 75% graduated on time", value: 3.00 },
+                                    { label: "2 - 51% - 74%", value: 2.00 },
+                                    { label: "1 - 50% or lower", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "50% of the total number of faculty members have implemented MUD Card System in all their classes",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 75% or higher", value: 5.00 },
+                                    { label: " 4 - 51%-75%", value: 4.00 },
+                                    { label: "3 - 50% positive feedback", value: 3.00 },
+                                    { label: "2 - 26%-49%", value: 2.00 },
+                                    { label: "1 - 25% or lower", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Comprehensive internationalization program for colleges",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Five (5) students have participated in International Student Mobility Program",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96% or higher", value: 5 },   
+                                    { label: "4 - 91%-95%", value: 4 },   
+                                    { label: "3 - 81%-90%", value: 3 },
+                                    { label: "2 - 51%-79%", value: 2 },   
+                                    { label: "1 - 50% or lower", value: 1 }, 
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Visibility of the University in the international community",
+            subtitle: null,
+            fields: [
+                {
+                    title: "One (1) new membership in international network was established",
+                    subtitle: null,
+                    dom: { // Remarks
+                        contents: null
+                    },
+                    for: null,
+                    other_fields: []
+                },
+                {
+                    title: "One (1) new partnership with foreign university was established",
+                    subtitle: null,
+                    for: null,
+                    dom: {
+                        contents: null
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "One (1) international linkage was established",
+                    subtitle: null,
+                    for: null,
+                    dom: {
+                        contents: null
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "One (1) activity with international partners was conducted and actively participated",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 91% or higher", value: 5.00 },
+                                    { label: "4 - 76%-90%", value: 4.00 },
+                                    { label: "3 - 75% of all partners", value: 3.00 },
+                                    { label: "2 - 61%-74%", value: 2.00 },
+                                    { label: "1 - 60% or lower", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "50% of the total number of faculty members (permanent and temporary) have participated in scholarly activities",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96%-100% attendance", value: 5.00 },
+                                    { label: "4 - 91%-95% attendance", value: 4.00 },
+                                    { label: "3 - 90% attendance", value: 3.00 },
+                                    { label: "2 - 61%-89% attendance", value: 2.00 },
+                                    { label: "1 - 50%-60% attendance", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Engagement of foreign professors in specialized field of studies and academic activities",
+            subtitle: null,
+            fields: [
+                {
+                    title: "One (1) new foreign lecturer was engaged",
+                    subtitle: null,
+                    for: null,
+                    dom:  { // Remarks
+                        contents: null
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Support to student societies and organizations",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Two (2) student activities with at least 90% attendance were conducted",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96% or higher", value: 5 },   
+                                    { label: "4 - 91 - 95%", value: 4 },   
+                                    { label: "3 - 90% attendance", value: 3 },
+                                    { label: "2 - 61% - 89% ", value: 2 },   
+                                    { label: "1 - 60% or lower", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Conducive and creative learning spaces",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of laboratory rooms were ready for limited face-to-face classes with strict compliance with safety and health protocols before the start of classes",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - with CHED approval", value: 5 },   
+                                    { label: "4 - with LGU approval", value: 4 },   
+                                    { label: "3 - rooms with adequate markings and signages", value: 3 },
+                                    { label: "2 - rooms with mimimal markings and signages", value: 2 },   
+                                    { label: "1 - rooms with less markings and signages", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    dom:  { // Remarks
+                        contents: {
+                            Timeliness: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 3 days before or earlier", value: 5 },   
+                                    { label: "4 - 1-2 days before", value: 4 },   
+                                    { label: "3 - first day classes", value: 3 },
+                                    { label: "2 - 1-2 days after", value: 2 },   
+                                    { label: "1 - 3 days after or later", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Partnership, collaboration and engagement with stakeholders",
+            subtitle: null,
+            fields: [
+                {
+                    title: "One (1) collaborative activity was conducted and participants rated such activity/program as Satisfactory in terms of quality and timeliness",
+                    subtitle: null,
+                    for: "Quality",
+                    dom:  { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - Outstanding", value: 5 },   
+                                    { label: "4 - Very Satisfatory", value: 4 },   
+                                    { label: "3 - Satisfatory", value: 3 },
+                                    { label: "2 - Unsatisfactory", value: 2 },   
+                                    { label: "1 - Poor", value: 1 }, 
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+        {
+            title: "Implementation of faculty development program",
+            subtitle: null,
+            fields: [
+                {
+                    title: "5% increase in the percentage of faculty members with doctorate degree",
+                    subtitle: null,
+                    dom: { // Remarks
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 41% or higher", value: 5 },   
+                                    { label: "4 - 26% - 40%", value: 4 },   
+                                    { label: "3 - 25% graduated on time", value: 3 },
+                                    { label: "2 - 11% - 24%", value: 2 },   
+                                    { label: "1 - 10% or lower", value: 1 },   
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "10% increase in the percentage of faculty members with masters degree",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 41% or higher", value: 5 },   
+                                    { label: "4 - 26% - 40%", value: 4 },   
+                                    { label: "3 - 25% graduated on time", value: 3 },
+                                    { label: "2 - 11% - 24%", value: 2 },   
+                                    { label: "1 - 10% or lower", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "20 faculty members have pursued post graduate studies",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 76% or higher ", value: 5 },   
+                                    { label: "4 - 51%-75%", value: 4 },   
+                                    { label: "3 - 50%", value: 3 },
+                                    { label: "2 - 26% - 49%", value: 2 },   
+                                    { label: "1 - 25% or lower", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+        },
+    ],
+    "MFO2": [
+        {
+            title: "Establishment of priority niche areas of research",
+            subtitle: null,
+            fields: [
+                {
+                    title: "75% of the total number of faculty members have participated in research activities (seminars, workshops, trainings, and conferences)",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 50% international or more", value: 5.00 },   
+                                    { label: "4 - 35% - 49% international", value: 4.00  },
+                                    { label: "3 - 25% - 34% international", value: 3.00  },
+                                    { label: "2 - 11% - 24% international", value: 2.00  },
+                                    { label: "1 - 10% international or less", value: 1.00  },
+                                ]
+                            }
+                        }
+                    },
+                }
+            ],
+            for: "Quality",
+            other_fields: []
+        },
+        {
+            title: "Research productivity through efficient research management",
+            subtitle: null,
+            fields: [
+                {
+                    title: "One (1) research proposals were submitted for institutional/external funding",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 5 approved or more", value: 5.00  },   
+                                    { label: "4 - 4 approved", value: 4.00 },   
+                                    { label: "3 - 3 approved proposals", value: 3.00 },   
+                                    { label: "2 - 2 approved", value: 2.00 },
+                                    { label: "1 - 1 approved or less", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "One (1) institutionally/externally funded research output was completed",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 1 external, 1 institutional", value: 5.00  },   
+                                    { label: "4 - 1 external", value: 4.00 },   
+                                    { label: "3 - 1 institutional", value: 3.00  }, 
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "One (1) research paper was presented in regional / national / international conferences",
+                    subtitle: null,
+                    for: "Effectiveness",
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 50% international or more", value: 5.00},   
+                                    { label: "4 - 35% - 49% international", value: 4.00 },   
+                                    { label: "3 - 25% - 34% international", value: 3.00 },
+                                    { label: "2 - 11% - 24% international", value: 2.00 },   
+                                    { label: "1 - 10% international or less", value: 1.00},
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "One (1) research paper was published in ISI or Scopus Journal",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: []
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "Enhancement of research culture among faculty members",
+                    subtitle: null,
+                    fields: [
+                        {
+                            title: "3 faculty members were engaged in funded research projects",
+                            subtitle: null,
+                            for: "Quality",
+                            dom: {
+                                contents: {
+                                    Effectiveness: {
+                                        label: "For Quality",
+                                        values: [
+                                            { label: "5 - 50% external or more", value: 5.00},   
+                                            { label: "4 - 49% or less external", value: 4.00 },   
+                                            { label: "3 - 100% institutional", value: 3.00},
+                                        ]
+                                    }
+                                }
+                            },
+                            other_fields: []
+                        },
+                    ]
+                },
+                {
+                    title: "Intellectual Property (IP) Rights",
+                    subtitle: null,
+                    fields: [
+                        {
+                            title: "Four (4) patents/copyrights were submitted to Research Office for filing ",
+                            subtitle: null,
+                            for: "Effectiveness",
+                            dom: {
+                                contents: {
+                                    Effectiveness: {
+                                        label: "For Quality",
+                                        values: [
+                                            { label: "5 - 76% or above", value: 5.00 },   
+                                            { label: "4 - 51%-75%", value: 4.00  },   
+                                            { label: "3 - 50% approved for IPO filing", value: 3.00 },
+                                            { label: "2 -26% - 49% ", value: 2.00 },   
+                                            { label: "1 - 25% or below", value: 1.00 },
+                                        ]
+                                    }
+                                }
+                            },
+                        }
+                    ]
+                },
+            ]
+        }
+    ],
+    "MFO3": [
+        {
+            title: "Attainment of Sustainable Development Goals (SDG)",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Seven (7) capacity building and livelihood trainings and projects were conducted and implemented",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - Outstanding", value: 5 },   
+                                    { label: "4 - Very Satisfactory", value: 4 },   
+                                    { label: "3 - Satisfactory", value: 3 },
+                                    { label: "2 - Unsatisfactory", value: 2 },
+                                    { label: "1 - Poor", value: 1 },   
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+                {
+                    title: "182 persons were trained weighted by length of training and/or provided with technical advice",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: null
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "One (1) new adopter was engaged in profitable enterprises and viable demonstration projects",
+                    subtitle: null,
+                    for: "Quality",
+                    dom: {
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "31% higher Increase in income", value: 5 },
+                                    { label: "11-30% Increase in income", value: 4 },
+                                    { label: "1-10% Increase in income", value: 3 },
+                                ]
+                            }
+                        }
+                    },
+                },
+                {
+                    title: "Partnerships, collaboration and engagement with stakeholders",
+                    subtitle: null,
+                    fields: [
+                        {
+                            title: "One (1) new partnership with the industry and Government and Non-Government Organizations were established",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Effectiveness: {
+                                        label: "Efficency refers to the number of papers published",
+                                        values: []
+                                    }
+                                }
+                            },
+                        },
+                    ]
+                },
+            ]
+        },
+        {
+            title: "Trainings, community-oriented services and research collaborations with institutional partners",
+            subtitle: null,
+            fields: [
+                {
+                    title: "50% of the total number of faculty members have participated in the conduct of livelihood or skills training",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Effectiveness: {
+                                label: "Efficency refers to the number of papers published",
+                                values: []
+                            }
+                        }
+                    },
+                 },
+            ]
+        }
+    ],
+    "MFO4": [
+        {
+            title: "Attainment of Sustainable Development Goals (SDG)",
+            subtitle: null,
+            fields: [
+                {
+                    title: "75% of the total number of GAD meetings/activities were actively attended/participated",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96%-100% attendance", value: 5.00 },   
+                                    { label: "4 - 91%-95% attendance", value: 4.00  },   
+                                    { label: "3 - 90% attendance", value: 3.00  },   
+                                    { label: "2 - 61%-89% attendance", value: 2.00  },
+                                    { label: "1 - 50%-60% attendance", value: 1.00  },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Bids and Awards Committee (BAC)",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of BAC meetings/activities were actively attended/participated",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96%-100% attendance", value: 5.00 },   
+                                    { label: "4 - 91%-95% attendance ", value: 4.00  },   
+                                    { label: "3 - 90% attendance", value: 3.00  },   
+                                    { label: "2 - 61%-89% attendance", value: 2.00  },
+                                    { label: "1 - 50%-60% attendance", value: 1.00  },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Preparation of room utilization and class schedule",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of regular courses have class schedules approved and uploaded online within three (3) working days before the first day of enrolment",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 6 days before or earlier  ", value: 5.00 },   
+                                    { label: "4 - 4-5 days before ", value: 4.00  },   
+                                    { label: "3 - 3 days before enrolment ", value: 3.00  },   
+                                    { label: "2 - 2 days before", value: 2.00   },
+                                    { label: "1 - 50%-60% attendance", value: 1.00  },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+
+            title: "Assignment / Distribution of teaching load",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of regular courses were distributed to faculty members within ten (10) working days before the scheduled start of classes",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 16 days before or earlier", value: 5.00 },   
+                                    { label: "4 - 11-15 days before", value: 4.00  },   
+                                    { label: "3 - 10 days before start of class", value: 3.00  },   
+				    { label: "2 - 6-9 days before", value: 2.00   },
+				    { label: "1 - 5 days before or later", value: 1.00  },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Alternative Mode of Teaching and Learning (AMTL)",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of AMTL plans were evaluated and approved within three (3) working days upon receipt",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 1 day after or earlier   ", value: 5.00 },   
+                                    { label: "4 - 2 days after   ", value: 4.00  },   
+                                    { label: "3 - 3 days after  ", value: 3.00  },   
+				    { label: "2 - 4-5 days after  ", value: 2.00   },
+				    { label: "1 - 6 days after or later", value: 1.00  },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Development of Instructional Materials (IM)",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of courses offered have approved IMs within one (1) working day before the scheduled start of classes",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 4 days before or earlier ", value: 5.00  },   
+                                    { label: "4 - 2-3 days before  ", value: 4.00 },   
+                                    { label: "3 - 0-1 day before   ", value: 3.00 },   
+				    { label: "2 - 1-2 days after  ", value: 2.00 },
+				    { label: "1 - 3 days after or later", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Timely and proper submission of student grades",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of grading sheets were approved for uploading within the prescribed due date",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Timeliness",
+                                values: [
+                                    { label: "5 - 3 days before or earlier ", value: 5.00  },   
+                                    { label: "4 - 2 days before   ", value: 4.00 },   
+                                    { label: "3 - 0-1 day before   ", value: 3.00 },   
+                                    { label: "2 - 1-2 days after ", value: 2.00 },
+                                    { label: "1 - 3 days after or later", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Attendance, participation and representation to institutional meetings and conferences ",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of meetings/conferences were attended and actively participated",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96%-100% attendance", value: 5.00  },   
+                                    { label: "4 - 91%-95% attendance ", value: 4.00 },   
+                                    { label: "3 - 90% attendance", value: 3.00 },   
+				    { label: "2 - 61%-89% attendance ", value: 2.00 },
+				    { label: "1 - 50%-60% attendance", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ]
+        },
+        {
+            title: "Conduct of meetings",
+            subtitle: null,
+            fields: [
+                {
+                    title: "Two (2) meetings with 90% attendance were conducted",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                            Quality: {
+                                label: "For Quality",
+                                values: [
+                                    { label: "5 - 96%-100%  ", value: 5.00  },   
+                                    { label: "4 - 91%-95%    ", value: 4.00 },   
+                                    { label: "3 - 90%       ", value: 3.00 },   
+				    { label: "2 - 61%-89%   ", value: 2.00 },
+				    { label: "1 - 50%-60%", value: 1.00 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Quality",
+                    other_fields: []
+                },
+            ]
+        },
+    ],
+    "MFO5": [
+        {
+            title: "Submission of daily time record (DTR)",
+            subtitle: "An incentive of 0.5% is added to the total score",
+            fields: [
+                {
+                    title: "100% of the total number of DTR were submitted to HR one (1) working day after every cut-off period",
+                    subtitle: null,
+                    dom: { // Details of Measurement
+                        contents: {
+                           Timeliness: {
+                                label: "5 - 3 hours after or earlier 4 - 4-7 hours after 3 - 8 hours after 2 - 9-12 hours after 1 - 13 hours after or later ",
+                                values: [
+                                    {label: "5 - 3 hours after or earlier", value: 5 },
+                                    {label: "4 - 7 hours after or earlier", value: 4 },
+                                    {label: "3 - 8 hours after or earlier", value: 3 },
+                                    {label: "9 - 12 hours after or earlier", value: 2 },
+                                    {label: "13 hours after or earlier", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+                {
+                    title: "Submission of OPCR Forms",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: "OPCR form (Jul-Dec 2021 Accomplishment) was submitted 15 working days after the start of the Jan-June 2022 rating period",
+                                values: []
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "Submission of OPCR Forms",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: "OPCR form (Jul-Dec 2022 targets) was submitted 15 working days before the end of the Jan-Jun 2022 rating period",
+                                values: []
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+                {
+                    title: "Submission of OPCR Forms",
+                    subtitle: null,
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: "5 - 7 days after or earlier 4 - 8-14 days after 3 - 15 days after 2 - 16-20 days after 1 - 21 days after or later",
+                                values: [
+                                    	{label: "7 days after or earlier", value: 5 },
+                                        {label: "8-14 days after", value: 4 },
+                                        {label: "15 days after ", value: 3 },
+                                        {label: "16-20 days after", value: 2 },
+                                        {label: "21 days after or later", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    for: "Timeliness",
+                    other_fields: []
+                },
+            ],
+            percentage: new Percentage("Incentives", [0.005]),
+        },
+        {
+            title: "Submission of various reports and documents",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of reports and documents were submitted on the prescribed due date",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: " - 3 days before or earlier 4 - 1-2 days before 3 - prescribed due date 2 - 1-2 days after 1 - 3 days after or later",
+                                values: [
+                                    {label: "18 days before or earlier ", value: 5 },
+                                    {label: "16-17 days before", value: 4 },
+                                    {label: "15 days before ", value: 3 },
+                                    {label: "8-14 days before", value: 2 },
+                                    {label: "7 days after or later", value: 1 },
+                                ]
+                            }
+                        }
+                    },
+                    other_fields: []
+                },
+            ],
+            percentage: new Percentage("Incorporated", [0.45]),
+        },
+        {
+            title: "Response to requests and communications",
+            subtitle: null,
+            fields: [
+                {
+                    title: "100% of the total number of requests and communications received were acknowledged and received and/or advised on action taken within eight (8) hours after receipt",
+                    subtitle: null,
+                    for: "Timeliness",
+                    dom: {
+                        contents: {
+                            Timeliness: {
+                                label: "5 - 3 hours after or earlier 4 - 4-7 hours after 3 - 8 hours after 2 - 9-12 hours after 1 - 13 hours after or later ",
+                                values: []
+                            }
+                        }
+                    },
+                    other_fields: [
+                        {
+                            for: "Target",
+                            key: null,
+                            title: "Total Number of Students",
+                            subtitle: null,
+                        },
+                        {
+                            for: null,
+                            key: "Timeliness",
+                            title: "Timeliness of Advising",
+                            subtitle: null,
+                            dom: {
+                                contents: {
+                                    Timeliness: {
+                                        label: "5 - 3 hours after or earlier 4 - 4-7 hours after 3 - 8 hours after 2 - 9-12 hours after 1 - 13 hours after or later ",
+                                        values: [
+                                            {label: "5 - 3 hours after or earlier", value: 5 },
+                                            {label: "4 - 7 hours after or earlier", value: 4 },
+                                            {label: "3 - 8 hours after or earlier", value: 3 },
+                                            {label: "9 - 12 hours after or earlier", value: 2 },
+                                            {label: "13 hours after or earlier", value: 1 },
+                                        ]
+                                    }
+                                }
+                            },
+                        },
+                    ]
+                },
+            ]
+        },
+    ],
+}
+
 const MFO = [
     {
         key: "MFO1",
@@ -2283,7 +3543,8 @@ const MFO = [
         data: {
             title: "High Education",
             percentage: new mfo_percentages(),
-            contents: MFO_CONTENTS['MFO1'],
+            IPCR: MFO_CONTENTS_1['MFO1'],
+            OPCR: MFO_CONTENTS_2['MFO1'],
         }
     },
     {
@@ -2292,7 +3553,8 @@ const MFO = [
         data: {
             title: "Research",
             percentage: new mfo_percentages(),        
-            contents: MFO_CONTENTS['MFO2'],
+            IPCR: MFO_CONTENTS_1['MFO2'],
+            OPCR: MFO_CONTENTS_2['MFO2'],
         }
     },
     {
@@ -2301,7 +3563,8 @@ const MFO = [
         data: {
             title: "Extension",
             percentage: new mfo_percentages(),        
-            contents: MFO_CONTENTS['MFO3'],
+            IPCR: MFO_CONTENTS_1['MFO3'],
+            OPCR: MFO_CONTENTS_2['MFO3'],
         }
     },
     {
@@ -2310,7 +3573,8 @@ const MFO = [
         data: {
             title: "Support Function",
             percentage: new mfo_percentages(),        
-            contents: MFO_CONTENTS['MFO4'],
+            IPCR: MFO_CONTENTS_1['MFO4'],
+            OPCR: MFO_CONTENTS_2['MFO4'],
         }
     },
     {
@@ -2319,59 +3583,10 @@ const MFO = [
         data: {
             title: "Admin Function",
             percentage: new mfo_percentages(),        
-            contents: MFO_CONTENTS['MFO5'],
+            IPCR: MFO_CONTENTS_1['MFO5'],
+            OPCR: MFO_CONTENTS_2['MFO5'],
         }
     },  
 ];
 
-const OPCR = [
-    {
-        label: "HIGHER EDUCATION",
-        data: {
-            title: "High Education",
-            percentage: new Percentage("", []),        
-        }
-    },
-    {
-        label: "RESEARCH",
-        data: {
-            title: "Research",
-            percentage: new Percentage("", []),        
-        }
-    },
-    {
-        label: "EXTENSION SERVICES",
-        data: {
-            title: "Extension Services",
-            percentage: new Percentage("", []),        
-        }
-    },
-    {
-        label: "ADMINISTRATIVE/SUPPORT FUNCTIONS",
-        data: {
-            title: "Administrative/Support Functions",
-            percentage: new Percentage("", []),        
-        }
-    },
-    {
-        label: "OTHER ADMINISTRATIVE FUNCTIONS",
-        data: {
-            title: "Other Administrative Functions",
-            percentage: new Percentage("", []),        
-        }
-    },  
-];
-
-const EVAL_METRICS = {
-    "1": 1, // 50% and below - Needs development 
-    "2": 2, // 51% - 89%     - Needs mentoring
-    "3": 3, // 90% - 114%    - Satisfactory
-    "4": 4, // 115% - 129%   - Very Satisfactory
-    "5": 5, // 130% and above - Outstanding
-};
-
-export { 
-    MFO, 
-    OPCR,
-    EVAL_METRICS,
-};
+export { MFO };

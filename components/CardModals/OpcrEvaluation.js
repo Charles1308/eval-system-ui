@@ -52,18 +52,18 @@ const OpcrEvaluation = props => {
 
 
 const Children = ({ onClick }) => {
-    const limit = 10;
-    const [page, setPage] = React.useState(1);
-    const {
-		evaluation,
-        // error,
-        // isLoading,
-        // mutate,
-	} = useEvaluation({
-		type: 'opcr',
-        page: page,
-        limit: limit,
-	});
+  const limit = 10;
+  const [page, setPage] = React.useState(1);
+  const {
+    evaluation,
+    // error,
+    // isLoading,
+    // mutate,
+  } = useEvaluation({
+    type: 'opcr',
+    page: page,
+    limit: limit,
+  });
 
 	return (
 		<>
@@ -78,7 +78,7 @@ const Children = ({ onClick }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {evaluation?.ipcr?.data?.map?.((item, index) => (
+                    {evaluation?.opcr?.data?.map?.((item, index) => (
                         <tr key={uniqid()} scope="row" onClick={() => onClick?.(null, ['opcr', item?.id])}>
                             <th>{ item?.id }</th>
                             <th>{ item?.user?.fullName }</th>

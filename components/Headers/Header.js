@@ -21,6 +21,7 @@ import {
   ModalBody, 
   ModalHeader, 
   ModalFooter,
+  Badge,
 } from "reactstrap";
 import useNotifStore from "@hooks/store/useNotifStore";
 import usePermission from "@hooks/usePermission";
@@ -45,6 +46,7 @@ function Header() {
 
   const selectedId = mfoData?.[evaluationData?.[0]]?.id
   const [selectedMFO, setSelectedMFO] = React.useState(null);
+  const [formType, setFormType] = React.useState(null);
   const dataIndex = payloads.findIndex(({ type }) => type === selectedMFO);
   const data = payloads?.[dataIndex];
 
@@ -69,11 +71,11 @@ function Header() {
 
   const isFormEmpty = _.isEmpty(payloads);
 
-  const toggle = (item, others, cb) => {
+  const toggle = (item, others, cb, _formType) => {
     if (!item) {
       setEvaluationData(null);
     }
-
+    
     setModal(item);
 
     if (others) {
@@ -83,14 +85,18 @@ function Header() {
     if (cb) {
       cb();
     }
+
+    if (_formType) {
+      setFormType(_formType);
+    }
   }
 
   const handleForm = async () => {
-    if (!isAllMFOCompleted) {
-      setNotifs({ message: "All field is required", type: "danger" });
+    // if (!isAllMFOCompleted) {
+    //   setNotifs({ message: "All field is required", type: "danger" });
 
-      return;
-    }
+    //   return;
+    // }
 
 		if (isFormEmpty && method === 'POST') {
       setNotifs({ message: "Form is empty", type: "danger" });
@@ -135,12 +141,12 @@ function Header() {
 
   React.useEffect(() => {
     if (mfoData) {
-      const data = JSON.parse(mfoData?.ipcr?.payload);
+      const data = JSON.parse(mfoData?.[formType?.toLowerCase?.()]?.payload);
 
       setSelectedMFO('MFO1');
       setPayloads(data);
     }
-  }, [mfoData]);
+  }, [mfoData, formType]);
 
   React.useEffect(() => {
     if (selectedMFO && mfoData) {
@@ -150,6 +156,11 @@ function Header() {
     }
   }, [selectedMFO, mfoData])
 
+  const handleSetSelectedMFO = (formType) => (mfo) => {
+    setSelectedMFO(mfo);
+    setFormType(formType);
+  }
+
   return (
     <>
       <div className="header bg-gradient-dark pb-8 pt-5 pt-md-8">
@@ -158,10 +169,10 @@ function Header() {
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
-              {hasPermission('create-ipcr') && <IpcrForm onClick={setSelectedMFO}/>}
-              {hasPermission('create-opcr') && <OpcrForm onClick={setSelectedMFO}/>}
-              {hasPermission('view-ipcr') && <IpcrEvaluation onClick={(item, others) => toggle(item, others)}/>}
-              {hasPermission('view-opcr') && <OpcrEvaluation onClick={(item, others) => toggle(item, others)}/>}
+              {hasPermission('create-ipcr') && <IpcrForm onClick={handleSetSelectedMFO('IPCR')}/>}
+              {hasPermission('create-opcr') && <OpcrForm onClick={handleSetSelectedMFO('OPCR')}/>}
+              {hasPermission('view-ipcr') && <IpcrEvaluation onClick={(item, others) => toggle(item, others, null, 'IPCR')}/>}
+              {hasPermission('view-opcr') && <OpcrEvaluation onClick={(item, others) => toggle(item, others, null, 'OPCR')}/>}
             </Row>
           </div>
         </Container>
@@ -182,13 +193,17 @@ function Header() {
             clearFormStore();
             setSelectedMFO(null);
             setEvaluationData();
-          }}>
-          { modal ? modal?.title : selectedMFO }
+          }}
+        >
+          <Badge color="warning" style={{ width: '200px' }}>
+            <h3>{(modal && modal?.title) || selectedMFO }</h3>
+          </Badge>
         </ModalHeader>
         <ModalBody>
           {modal?.children || 
             <MFOComponent
               type={selectedMFO}
+              formType={formType}
               ref={component}
               data={{
                 ...MFO.filter(({ key }) => key === selectedMFO)?.[0]?.data,

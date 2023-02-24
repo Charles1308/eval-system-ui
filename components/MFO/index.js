@@ -2,15 +2,27 @@ import React from 'react';
 import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
 import MFO from './MFO';
-import useIsAllMFOCompleted from '@hooks/useIsAllMFOCompleted';
 import Result from './Result';
 
+import { 
+	FormGroup,
+	InputGroup,
+	Input,
+	Label,
+	Badge,
+} from 'reactstrap';
+
 const MFOComponent = React.forwardRef((props, ref) => {
-	const { setUrl, setMethod, setPayload } = useFormRequestsStore(store => store);
+	const { setUrl, setMethod, setPayload, payloads } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
-	const { type, data } = props;
+	const { type, data, formType } = props;
 	const { id = null, editMode = false } = data;
-	const isAllMFOCompleted = useIsAllMFOCompleted();
+	const [designation, setDesignation] = React.useState('Ratee');
+	const [facultyRank , setFacultyRank] = React.useState('Professor');
+
+	const successIndicators = React.useMemo(() => 
+		data?.percentage?.getPercentage(designation, type), 
+	[type, data, designation])
 
 	const [reqPayload, setReqPayload] = React.useState({});
 	
@@ -39,19 +51,24 @@ const MFOComponent = React.forwardRef((props, ref) => {
             return console.error("Invalid MFO type");
         }
 
-		setReqPayload({ ...tempPayload, index, type });
+		setReqPayload({ ...tempPayload, index, type, designation, facultyRank });
 	}
 
 	React.useEffect(() => {
-		const url = `/api/v1/form/ipcr${editMode ? `/${id}` : ''}`;
+		const url = `/api/v1/form/${formType?.toLowerCase?.()}${editMode ? `/${id}` : ''}`;
 
 		setUrl(url);
 		setMethod(editMode ? 'PUT' : 'POST');
-	}, [id, editMode]);
+	}, [id, editMode, formType]);
 
 	React.useEffect(() => {
 		setPayload(reqPayload);
 	}, [reqPayload]);
+
+	React.useEffect(() => {
+		setDesignation(() => payloads?.[0]?.designation || 'Ratee');
+		setFacultyRank(() => payloads?.[0]?.facultyRank || 'Professor');
+	}, [payloads]);
 
 	return (
 		<div 
@@ -76,7 +93,63 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				>
 					<strong>{props?.title}</strong>
 				</div>
-				<MFO {...data} type={type} onChange={handleSetPayload} />
+				<FormGroup>
+					<Label for='designation-select'>Designation</Label>
+					<InputGroup className="input-group-alternative">
+						<Input id="designation-select" type="select" placeholder="Designation" value={designation} onChange={(e) => setDesignation(e.target.value)}>
+							<option> Ratee </option>
+							<option> Vice President </option>
+							<option> Chancellor </option>
+							<option> Vice Chancellor for Academic Affairs </option>
+							<option> Vice Chancellor for Administration and Finance </option>
+							<option> Vice Chancellor for Research, Development and Extension Services </option>
+							<option> Vice Chancellor for Development and External Affairs </option>
+							<option> Director </option>
+							<option> Campus Director </option>
+							<option> Assistant Director (Admin and Finance) </option>
+							<option> Assistant Director (Academic Affairs) </option>
+							<option> Dean </option>
+							<option> Faculty Researcher, Not Designated (1 project) </option>
+							<option> Faculty Researcher, Not Designated (2 projects) </option>
+							<option> Faculty with Special Administrative Assignment </option>
+							<option> Faculty Researcher, Designated (1 project) </option>
+							<option> Faculty Researcher, Designated (2 projects) </option>
+							<option> Department Chair (Instructor/Assistant Professor) </option>
+							<option> Department Chair (Associate Professor/Professor) </option>
+							<option> Program Chair (Instructor/Assistant Professor) </option>
+							<option> Program Chair (Associate Professor/Professor) </option>
+							<option> Coordinator  (Instructor/Assistant Professor) </option>
+							<option> Coordinator (Associate Professor/Professor) </option>
+							<option> Instructor </option>
+							<option> Assistant Professor </option>
+							<option> Associate Professor </option>
+							<option> Professor </option>
+							<option> Administrative Staff </option>
+							<option> Guest Lecturer </option>
+						</Input>
+					</InputGroup>
+				</FormGroup>
+				<FormGroup>
+					<Label for='faculty-rank-select'>Faculty Rank</Label>
+					<InputGroup className="input-group-alternative">
+						<Input id="faculty-rank-select" placeholder="Faculty Rank" type="select" value={facultyRank} onChange={(e) => setFacultyRank(e.target.value)}>
+							<option> Professor </option>
+							<option> Instructor </option>
+							<option> Assistant Professor </option>
+							<option> Associate Professor </option>
+							{/* <option> Guest Lecturer </option> */}
+							{/* <option> Administrative Staff </option> */}
+							{/* <option> Coordinator (Associate Professor/Professor) </option> */}
+							{/* <option> Coordinator  (Instructor/Assistant Professor) </option> */}
+						</Input>
+					</InputGroup>
+				</FormGroup>
+				<hr/>
+				<Badge color="info" style={{ width: '100%' }}>
+					<h5 className='p-0'>{ "Success Indicator: " + successIndicators + '%' }</h5>
+				</Badge>
+				<hr/>
+				<MFO {...data} formType={formType} type={type} onChange={handleSetPayload} />
 				<Result/>
 			</div>
 		</div>

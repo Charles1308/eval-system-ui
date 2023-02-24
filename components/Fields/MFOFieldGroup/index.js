@@ -37,7 +37,7 @@ const MFO = (props) => {
         editMode = true,
     } = props;
 
-    const { setResult, incentives, incorporated } = useResultStore(state => state)
+    const { setResult } = useResultStore(state => state)
     const { setAddMFOField } = useMFOMonitor(state => state);
     const [data, setData] = React.useState(mfoData?.data);
     const [other, setOther] = React.useState(mfoData?.other);

@@ -1,13 +1,13 @@
 import React from 'react';
-import uniqid from 'uniqid';
 import MFOFieldGroup from '../Fields/MFOFieldGroup';
 import { Badge } from 'reactstrap';
 
 // MFO GROUP FORM
-const MFO = ({ mfoData, type, contents, editMode, onChange }) => {
+const MFO = (props) => {
+	const { mfoData, type, editMode, onChange, formType } = props
 	return(
 		<>	
-			{contents?.map?.((content, parentIndex) => (
+			{props?.[formType]?.map?.((content, parentIndex) => (
 				<div key={`MFO-${parentIndex}`}>
 					<div>
 						<h3 className='m-0 p-0'>
