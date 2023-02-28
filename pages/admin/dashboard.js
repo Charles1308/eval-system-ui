@@ -53,7 +53,7 @@ const Dashboard = (props) => {
     error,
     isLoading,
     mutate
-  } = useData(5);
+  } = useData(10000);
   
   const readyData = React.useMemo(() => {
     if (data) {
