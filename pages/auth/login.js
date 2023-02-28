@@ -144,7 +144,7 @@ function Login() {
                 </InputGroup>
               </FormGroup>
               <div className="custom-control custom-control-alternative custom-checkbox">
-                <input
+                {/* <input
                   className="custom-control-input"
                   id="customCheckLogin"
                   type="checkbox"
@@ -154,7 +154,7 @@ function Login() {
                   htmlFor="customCheckLogin"
                 >
                   <span className="text-muted">Remember me</span>
-                </label>
+                </label> */}
               </div>
               <div className="text-center">
                 <Button onClick={handleSignIn} className="my-4" color="primary" type="submit">
@@ -177,8 +177,11 @@ function Login() {
           <Col className="text-right" xs="6">
             <a
               className="text-light"
-              href="#pablo"
-              onClick={(e) => e.preventDefault()}
+              href="#"
+              onClick={(e) => {
+                e.preventDefault()
+                router.push('/auth/register');
+              }}
             >
               <small>Create new account?</small>
             </a>

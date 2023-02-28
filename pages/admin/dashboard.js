@@ -31,10 +31,74 @@ import {
   chartExample2,
 } from "variables/charts.js";
 import Header from "@components/Headers/Header.js";
+import useData from "@hooks/useData";
+
+
+const options = {
+  responsive: true,
+  plugins: {
+    legend: {
+      position: 'top',
+    },
+    title: {
+      display: true,
+      text: 'OPCR & IPCR Information',
+    },
+  },
+};
 
 const Dashboard = (props) => {
-  const [activeNav, setActiveNav] = React.useState(1);
-  const [chartExample1Data, setChartExample1Data] = React.useState("data1");
+  const {
+    data,
+    error,
+    isLoading,
+    mutate
+  } = useData(5);
+  
+  const readyData = React.useMemo(() => {
+    if (data) {
+      return { ...data }
+    } else if (isLoading) {
+      return {
+        totalSubmitted: 'Loading...',
+        totalUsers: 'Loading...',
+        graphData: null,
+      }
+    } else if (error) {
+      return {
+        totalSubmitted: 'Please reload the page!',
+        totalUsers: 'Please reload the page!',
+      }
+    }
+  }, [data, error, isLoading]);
+
+  const graphMonthsData = React.useMemo(() => {
+    if (data) {
+      const sorted = data.graphData.sort((a, b) => a.month.localeCompare(b.month));
+      const groupedByMonth = sorted.reduce((acc, { month, count }) => {
+        const monthKey = month.slice(0, 7); // extract year and month part of the string
+        acc[monthKey] = { month: monthKey, count };
+        return acc;
+      }, {});
+
+      const newGraphData = Array.from({ length: 12 }, (_, i) => {
+        const month = `${new Date().getFullYear()}-${String(i + 1).padStart(2, '0')}`;
+        return groupedByMonth[month] || { month, count: 0 };
+      });
+
+      return {
+        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+        datasets: [
+          {
+            label: "Total Submission For Each Month",
+            data: newGraphData.map(datum => datum.count),
+            maxBarThickness: 10,
+          },
+        ],
+      }
+    }
+  }, [data])
+  console.log(readyData)
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
@@ -60,60 +124,7 @@ const Dashboard = (props) => {
                     <h6 className="text-uppercase text-light ls-1 mb-1">
                       Overview
                     </h6>
-                    <h2 className="mb-0">OPCR / IPCR Information</h2>
-                  </div>
-                  {/* <div className="col">
-                    <Nav className="justify-content-end" pills>
-                      <NavItem>
-                        <NavLink
-                          className={classnames("py-2 px-3", {
-                            active: activeNav === 1,
-                          })}
-                          href="#pablo"
-                          onClick={(e) => toggleNavs(e, 1)}
-                        >
-                          <span className="d-none d-md-block">Month</span>
-                          <span className="d-md-none">M</span>
-                        </NavLink>
-                      </NavItem>
-                      <NavItem>
-                        <NavLink
-                          className={classnames("py-2 px-3", {
-                            active: activeNav === 2,
-                          })}
-                          data-toggle="tab"
-                          href="#pablo"
-                          onClick={(e) => toggleNavs(e, 2)}
-                        >
-                          <span className="d-none d-md-block">Week</span>
-                          <span className="d-md-none">W</span>
-                        </NavLink>
-                      </NavItem>
-                    </Nav>
-                  </div> */}
-                </Row>
-              </CardHeader>
-              <CardBody>
-                {/* Chart */}
-                <div className="chart">
-                  <Doughnut
-                    data={chartExample1[chartExample1Data]}
-                    options={chartExample1.options}
-                    getDatasetAtEvent={(e) => console.log(e)}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
-          <Col xl="4">
-            <Card className="shadow">
-              <CardHeader className="bg-transparent">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h6 className="text-uppercase text-muted ls-1 mb-1">
-                      Submitted IPCR Forms
-                    </h6>
-                    <h2 className="mb-0">Total submitted</h2>
+                    <h2 className="mb-0">OPCR / IPCR submissions for {new Date().getFullYear()}</h2>
                   </div>
                 </Row>
               </CardHeader>
@@ -121,12 +132,37 @@ const Dashboard = (props) => {
                 {/* Chart */}
                 <div className="chart">
                   <Bar
-                    data={chartExample2.data}
-                    options={chartExample2.options}
+                    data={graphMonthsData}
+                    options={options}
                   />
                 </div>
               </CardBody>
             </Card>
+          </Col>
+          <Col xl="4">
+            <div className="bg-white p-5 rounded">
+              <Row className="align-items-center">
+                <div className="col">
+                  <h6 className="text-uppercase text-muted ls-1 mb-1">
+                    System Information
+                  </h6>
+                  <h2 className="mb-0">Total submissions</h2>
+                </div>
+              </Row>
+              <h1>{readyData.totalSubmitted}</h1>
+              <p>Forms</p>
+              <hr/>
+              <Row className="align-items-center">
+                <div className="col">
+                  <h6 className="text-uppercase text-muted ls-1 mb-1">
+                    
+                  </h6>
+                  <h2 className="mb-0">Total users</h2>
+                </div>
+              </Row>
+              <h1>{readyData.totalUsers}</h1>
+              <p>Users</p>
+            </div>
           </Col>
         </Row>
       </Container>

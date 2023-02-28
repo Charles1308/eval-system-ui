@@ -55,6 +55,7 @@ function useFetch(url, fetcher) {
             setIsLoading(false)
           })
           .catch(err => {
+            console.err(`System's Error: `, err);
             setError(err)
             setIsLoading(false)
           })
