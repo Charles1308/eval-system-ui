@@ -98,7 +98,6 @@ const Dashboard = (props) => {
       }
     }
   }, [data])
-  console.log(readyData)
 
   if (window.Chart) {
     parseOptions(Chart, chartOptions());
