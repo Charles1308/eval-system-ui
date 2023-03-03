@@ -73,7 +73,7 @@ const Dashboard = (props) => {
   }, [data, error, isLoading]);
 
   const graphMonthsData = React.useMemo(() => {
-    if (data) {
+    if (data && data?.graphData) {
       const sorted = data.graphData.sort((a, b) => a.month.localeCompare(b.month));
       const groupedByMonth = sorted.reduce((acc, { month, count }) => {
         const monthKey = month.slice(0, 7); // extract year and month part of the string
