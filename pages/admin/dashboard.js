@@ -73,6 +73,17 @@ const Dashboard = (props) => {
   }, [data, error, isLoading]);
 
   const graphMonthsData = React.useMemo(() => {
+    const payload = {
+      labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+      datasets: [
+        {
+          label: "Total Submission For Each Month",
+          data: Array(11).fill(0),
+          maxBarThickness: 10,
+        },
+      ],
+    }
+
     if (data && data?.graphData) {
       const sorted = data.graphData.sort((a, b) => a.month.localeCompare(b.month));
       const groupedByMonth = sorted.reduce((acc, { month, count }) => {
@@ -86,17 +97,12 @@ const Dashboard = (props) => {
         return groupedByMonth[month] || { month, count: 0 };
       });
 
-      return {
-        labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-        datasets: [
-          {
-            label: "Total Submission For Each Month",
-            data: newGraphData.map(datum => datum.count),
-            maxBarThickness: 10,
-          },
-        ],
-      }
+      payload.datasets[0].data = newGraphData.map(({ count }) => count);
+
+      return payload
     }
+
+    return payload;
   }, [data])
 
   if (window.Chart) {
