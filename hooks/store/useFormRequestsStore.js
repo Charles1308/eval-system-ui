@@ -8,28 +8,33 @@ const useFormRequestStore = create((set) => ({
     setUrl: (value) => set(() => ({
         url: process.env.NEXT_PUBLIC_API_BASE_URL + value,
     })),
-    setPayload: (value) => set(({ payloads }) => {
-        if (_.isEmpty(value)) return { payloads };
+    setPayload: (value) => set((state) => {
+        if (_.isEmpty(value)) return { ...state };
 
-        const index = payloads.findIndex(item => item.index === value.index);
+        const index = state.payloads.findIndex(item => item.index === value.index);
 
         if (index >= 0) {
-            payloads[index] = {...payloads[index], ...value};
-            return payloads;
+            const tempPayloads = [...state.payloads];
+            tempPayloads[index] = {...tempPayloads[index], ...value};
+            return { ...state, payloads: tempPayloads };
         }
 
         return {
-            payloads: [...payloads, value],
+            ...state,
+            payloads: [...state.payloads, value],
         };
     }),
-    setPayloads: (value) => set(({ payloads }) => ({
-            payloads: [...payloads, ...value],
+    setPayloads: (value) => set((state) => ({
+        ...state,
+        payloads: [...payloads, ...value],
     })),
-    setMethod: (value) => set(() => ({
+    setMethod: (value) => set((state) => ({
+        ...state,
         method: value
     })),
     clearFormStore: () => set(() => ({
         url: null,
+        method: null,
         payloads: []
     })),
 }));

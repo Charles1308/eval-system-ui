@@ -50,7 +50,6 @@ function Header() {
   const dataIndex = payloads.findIndex(({ type }) => type === selectedMFO);
   const data = payloads?.[dataIndex];
 
-  console.log(selectedId)
   const component = React.useRef(null);
   const printComponent = React.useCallback(() => component.current, [component]);
 
