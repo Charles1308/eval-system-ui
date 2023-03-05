@@ -26,7 +26,7 @@ const useFormRequestStore = create((set) => ({
     }),
     setPayloads: (value) => set((state) => ({
         ...state,
-        payloads: [...payloads, ...value],
+        payloads: [...state.payloads, ...value],
     })),
     setMethod: (value) => set((state) => ({
         ...state,
