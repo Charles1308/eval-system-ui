@@ -171,6 +171,8 @@ function Header() {
       <div className="header bg-gradient-dark pb-8 pt-5 pt-md-8">
         <Container fluid>
           <div className="header-body">
+
+
             {/* Card stats */}
             <Row>
               {/* {PORTALS} */}
@@ -237,16 +239,22 @@ function Header() {
               removeAfterPrint
             />
           )}
-          {selectedMFO && (
-            <Button color="secondary" disabled={selectedMFO === 'MFO1'} onClick={() => handleNextOrPrevPage('previous')}>
-              Previous MFO
-            </Button>
-          )}
-          {selectedMFO && (
-            <Button color="secondary" disabled={selectedMFO === 'MFO5'} onClick={() => handleNextOrPrevPage()}>
-              Next MFO
-            </Button>
-          )}
+          {
+            (modalPrimaryButton?.label === 'Submit' || modalPrimaryButton?.label === 'Update') && (
+              <>
+                {selectedMFO && (
+                  <Button color="secondary" disabled={selectedMFO === 'MFO1'} onClick={() => handleNextOrPrevPage('previous')}>
+                    Previous MFO
+                  </Button>
+                )}
+                {selectedMFO && (
+                  <Button color="secondary" disabled={selectedMFO === 'MFO5'} onClick={() => handleNextOrPrevPage()}>
+                    Next MFO
+                  </Button>
+                )}
+              </>
+            )
+          }
           <Button 
             color="secondary" 
             onClick={() => {
