@@ -57,6 +57,9 @@ function useFetch(url, fetcher, options = null) {
             setIsLoading(false)
           })
           .catch(err => {
+            // set back the previous state
+            setData(cache[url])
+            
             console.err(`System's Error: `, err);
             setError(err)
             setIsLoading(false)
