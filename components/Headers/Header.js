@@ -50,6 +50,7 @@ function Header() {
   const dataIndex = payloads.findIndex(({ type }) => type === selectedMFO);
   const data = payloads?.[dataIndex];
 
+  console.log(selectedId)
   const component = React.useRef(null);
   const printComponent = React.useCallback(() => component.current, [component]);
 
@@ -92,11 +93,11 @@ function Header() {
   }
 
   const handleForm = async () => {
-    // if (!isAllMFOCompleted) {
-    //   setNotifs({ message: "All field is required", type: "danger" });
+    if (!isAllMFOCompleted) {
+      setNotifs({ message: "All field is required", type: "danger" });
 
-    //   return;
-    // }
+      return;
+    }
 
 		if (isFormEmpty && method === 'POST') {
       setNotifs({ message: "Form is empty", type: "danger" });
@@ -209,7 +210,7 @@ function Header() {
                 ...MFO.filter(({ key }) => key === selectedMFO)?.[0]?.data,
                 id: selectedId,
                 mfoData: data?.data,
-                editMode: !!data,
+                editMode: !!selectedId,
               }}
             />
           }

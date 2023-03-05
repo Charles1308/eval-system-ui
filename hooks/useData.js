@@ -1,6 +1,5 @@
 import useFetch from "./useFetch";
 import axios from "@config/axios";
-import React from "react";
 
 const fetcher = (url) => 
     axios
