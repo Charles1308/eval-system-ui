@@ -18,8 +18,8 @@ const MFOComponent = React.forwardRef((props, ref) => {
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data, formType } = props;
 	const { id = null, editMode = false } = data;
-	const [designation, setDesignation] = React.useState('Ratee');
-	const [facultyRank , setFacultyRank] = React.useState('Professor');
+	const [designation, setDesignation] = React.useState('');
+	const [facultyRank , setFacultyRank] = React.useState('');
 
 	const successIndicators = React.useMemo(() => 
 		data?.percentage?.getPercentage(designation, type), 
@@ -66,24 +66,42 @@ const MFOComponent = React.forwardRef((props, ref) => {
 		setPayload(reqPayload);
 	}, [reqPayload]);
 
+	// React.useEffect(() => {
+	// 	if (payloads.length) {
+	// 		setDesignation(() => payloads?.[0]?.designation);
+	// 		setFacultyRank(() => payloads?.[0]?.facultyRank);
+	// 	}
+	// }, [payloads]);
+
 	React.useEffect(() => {
 		if (payloads.length) {
-			setDesignation(() => payloads?.[0]?.designation);
-			setFacultyRank(() => payloads?.[0]?.facultyRank);
-		}
-	}, [payloads]);
+			console.log(payloads, designation, payloads?.[0]?.designation);
+			if (designation !== payloads?.[0]?.designation || facultyRank !== payloads?.[0]?.facultyRank) {
+				const selectedDesignation = !designation.length && payloads?.[0]?.designation?.length 
+					? payloads?.[0]?.designation 
+					: designation.length 
+						? designation 
+						: 'Ratee';
+				
+				const selectedFacultyRank = !facultyRank.length && payloads?.[0]?.facultyRank?.length 
+					? payloads?.[0]?.facultyRank 
+					: facultyRank.length 
+						? facultyRank 
+						: 'Professor';
+						
+				const tempPayloads = payloads.map(payload => ({
+					...payload,
+					designation: selectedDesignation,
+					facultyRank: selectedFacultyRank,
+				}))
 
-	React.useEffect(() => {
-		if (payloads) {
-			const tempPayloads = payloads.map(payload => ({
-				...payload,
-				designation,
-				facultyRank,
-			}))
+				if (facultyRank !== selectedFacultyRank) setFacultyRank(() => selectedFacultyRank);
+				if (designation !== selectedDesignation) setDesignation(() => selectedDesignation);
 
-			setPayloads(tempPayloads);
+				setPayloads(tempPayloads);
+			}
 		}
-	}, [designation, facultyRank]);
+	}, [designation, facultyRank, payloads]);
 
 	return (
 		<div 
