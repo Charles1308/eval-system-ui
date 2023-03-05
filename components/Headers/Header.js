@@ -119,6 +119,9 @@ function Header() {
 
       setNotifs({ message });
       toggle(null);
+      clearFormStore();
+      setEvaluationData();
+      setSelectedMFO(null);
     })
     .catch(err => {
       console.log(err);
@@ -141,10 +144,12 @@ function Header() {
 
   React.useEffect(() => {
     if (mfoData) {
-      const data = JSON.parse(mfoData?.[formType?.toLowerCase?.()]?.payload);
-
-      setSelectedMFO('MFO1');
-      setPayloads(data);
+      if (mfoData?.[formType?.toLowerCase?.()]) {
+        const data = JSON.parse(mfoData?.[formType?.toLowerCase?.()]?.payload);
+  
+        setSelectedMFO('MFO1');
+        setPayloads(data);
+      }
     }
   }, [mfoData, formType]);
 
@@ -215,7 +220,7 @@ function Header() {
           }
         </ModalBody>
         <ModalFooter>
-          {modalPrimaryButton && selectedMFO === 'MFO5' && (
+          {modalPrimaryButton && ((!selectedId && selectedMFO === 'MFO5') || selectedId) && (
             <Button color="primary" onClick={modalPrimaryButton.onClick}>
               { modalPrimaryButton.label }
             </Button>

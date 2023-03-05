@@ -3,6 +3,7 @@ import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
 import MFO from './MFO';
 import Result from './Result';
+import _ from 'lodash';
 
 import { 
 	FormGroup,
@@ -13,7 +14,7 @@ import {
 } from 'reactstrap';
 
 const MFOComponent = React.forwardRef((props, ref) => {
-	const { setUrl, setMethod, setPayload, payloads } = useFormRequestsStore(store => store);
+	const { setUrl, setMethod, setPayload, setPayloads, payloads } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data, formType } = props;
 	const { id = null, editMode = false } = data;
@@ -66,9 +67,23 @@ const MFOComponent = React.forwardRef((props, ref) => {
 	}, [reqPayload]);
 
 	React.useEffect(() => {
-		setDesignation(() => payloads?.[0]?.designation || 'Ratee');
-		setFacultyRank(() => payloads?.[0]?.facultyRank || 'Professor');
+		if (payloads.length) {
+			setDesignation(() => payloads?.[0]?.designation);
+			setFacultyRank(() => payloads?.[0]?.facultyRank);
+		}
 	}, [payloads]);
+
+	React.useEffect(() => {
+		if (payloads) {
+			const tempPayloads = payloads.map(payload => ({
+				...payload,
+				designation,
+				facultyRank,
+			}))
+
+			setPayloads(tempPayloads);
+		}
+	}, [designation, facultyRank]);
 
 	return (
 		<div 
@@ -77,7 +92,6 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				height: 'max-height',
 				overflow: 'auto'
 			}}
-
 			ref={ref}
 		>	
 			<div
