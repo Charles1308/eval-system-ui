@@ -52,17 +52,18 @@ const IpcrEvaluation = props => {
 
 
 const Children = ({ onClick }) => {
-    const limit = 10;
-    const [page, setPage] = React.useState(1);
-    const {
+  const limit = 10;
+  const [page, setPage] = React.useState(1);
+  const {
 		evaluation,
         // error,
         // isLoading,
         // mutate,
 	} = useEvaluation({
 		type: 'ipcr',
-        page: page,
-        limit: limit,
+    page: page,
+    limit: limit,
+    refresh: 3000,
 	});
 
 	return (

@@ -63,6 +63,7 @@ const Children = ({ onClick }) => {
     type: 'opcr',
     page: page,
     limit: limit,
+    refresh: 3000,
   });
 
 	return (

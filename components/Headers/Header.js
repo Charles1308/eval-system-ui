@@ -41,7 +41,7 @@ function Header() {
 		isLoading,
 	} = useEvaluation({ 
 		type: evaluationData?.[0], 
-		id: evaluationData?.[1] 
+		id: evaluationData?.[1],
 	});
 
   const selectedId = mfoData?.[evaluationData?.[0]]?.id
