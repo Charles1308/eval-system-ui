@@ -309,6 +309,7 @@ function Profile() {
                           <Input 
                             id="exampleFormControlSelect1" 
                             type="select" 
+                            disabled
                             value={roles?.[0]?.name}
                             onChange={e => setUser('roles', [{
                              name: e.target.value,

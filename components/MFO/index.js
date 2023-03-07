@@ -4,6 +4,7 @@ import useNotifStore from '@hooks/store/useNotifStore';
 import MFO from './MFO';
 import Result from './Result';
 import _ from 'lodash';
+import usePermission from '@hooks/usePermission';
 
 import { 
 	FormGroup,
@@ -20,6 +21,11 @@ const MFOComponent = React.forwardRef((props, ref) => {
 	const { id = null, editMode = false } = data;
 	const [designation, setDesignation] = React.useState('');
 	const [facultyRank , setFacultyRank] = React.useState('');
+	const hasPermission = usePermission()
+
+    const isFieldsDisabled = React.useMemo(() => {
+        return editMode && (!hasPermission('edit-ipcr') || !hasPermission('edit-opcr'))
+    }, [editMode])
 
 	const successIndicators = React.useMemo(() => 
 		data?.percentage?.getPercentage(designation, type), 
@@ -66,16 +72,8 @@ const MFOComponent = React.forwardRef((props, ref) => {
 		setPayload(reqPayload);
 	}, [reqPayload]);
 
-	// React.useEffect(() => {
-	// 	if (payloads.length) {
-	// 		setDesignation(() => payloads?.[0]?.designation);
-	// 		setFacultyRank(() => payloads?.[0]?.facultyRank);
-	// 	}
-	// }, [payloads]);
-
 	React.useEffect(() => {
 		if (payloads.length) {
-			console.log(payloads, designation, payloads?.[0]?.designation);
 			if (designation !== payloads?.[0]?.designation || facultyRank !== payloads?.[0]?.facultyRank) {
 				const selectedDesignation = !designation.length && payloads?.[0]?.designation?.length 
 					? payloads?.[0]?.designation 
@@ -128,7 +126,14 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				<FormGroup>
 					<Label for='designation-select'>Designation</Label>
 					<InputGroup className="input-group-alternative">
-						<Input id="designation-select" type="select" placeholder="Designation" value={designation} onChange={(e) => setDesignation(e.target.value)}>
+						<Input 
+							id="designation-select" 
+							type="select" 
+							placeholder="Designation" 
+							value={designation} 
+							disabled={isFieldsDisabled}
+							onChange={(e) => setDesignation(e.target.value)}
+						>
 							<option> Ratee </option>
 							<option> Vice President </option>
 							<option> Chancellor </option>
@@ -164,7 +169,14 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				<FormGroup>
 					<Label for='faculty-rank-select'>Faculty Rank</Label>
 					<InputGroup className="input-group-alternative">
-						<Input id="faculty-rank-select" placeholder="Faculty Rank" type="select" value={facultyRank} onChange={(e) => setFacultyRank(e.target.value)}>
+						<Input 
+							id="faculty-rank-select" 
+							placeholder="Faculty Rank" 
+							type="select" 
+							disabled={isFieldsDisabled}
+							value={facultyRank} 
+							onChange={(e) => setFacultyRank(e.target.value)}
+						>
 							<option> Professor </option>
 							<option> Instructor </option>
 							<option> Assistant Professor </option>

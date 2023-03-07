@@ -5,6 +5,7 @@ import { Badge } from 'reactstrap';
 // MFO GROUP FORM
 const MFO = (props) => {
 	const { mfoData, type, editMode, onChange, formType } = props
+
 	return(
 		<>	
 			{props?.[formType]?.map?.((content, parentIndex) => (

@@ -2,21 +2,23 @@ const PERMISSIONS = {
     'DEAN': [
         'create-opcr',
         'view-opcr',
+        'edit-opcr',
+        'print-opcr',
     ],
     'FACULTY': [
         'create-ipcr',
+        'edit-ipcr',
         'view-ipcr',
-        'create-opcr',
-        'view-opcr',
     ],
     'DEPARTMENT-CHAIRPERSON': [
         'create-ipcr',
+        'edit-ipcr',
         'view-ipcr',
-        'view-opcr',
         'print-ipcr',
-        'print-opcr',
     ],
     'STAFF': [
+        'view-ipcr',
+        'view-opcr',
         'print-ipcr',
         'print-opcr',
     ]

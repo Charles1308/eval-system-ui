@@ -14,6 +14,7 @@ import {
 } from 'reactstrap';
 import useMFOMonitor from '@hooks/store/useMFOMonitor';
 import useResultStore from '@hooks/store/useResultStore';
+import usePermission from '@hooks/usePermission';
 
 // MFO FORM
 const MFO = (props) => {
@@ -34,14 +35,19 @@ const MFO = (props) => {
         }, // Form's previous data
         onChange,
         percentage,
-        editMode = true,
+        editMode = false,
     } = props;
 
+	const hasPermission = usePermission()
     const { setResult } = useResultStore(state => state)
     const { setAddMFOField } = useMFOMonitor(state => state);
     const [data, setData] = React.useState(mfoData?.data);
     const [other, setOther] = React.useState(mfoData?.other);
     const [total, setTotal] = React.useState(mfoData?.total);
+
+    const isFieldsDisabled = React.useMemo(() => {
+        return editMode && (!hasPermission('edit-ipcr') || !hasPermission('edit-opcr'))
+    }, [editMode])
 
     const computedResult = React.useMemo(() => 
         percentage?.applyPercentage?.(total)
@@ -136,7 +142,7 @@ const MFO = (props) => {
 
                         return (
                             <BaseInputField
-                                disabled={!editMode}
+                                disabled={isFieldsDisabled}
                                 id={`MFO-FIELD-BASE-${index}${otherIndex}`}
                                 key={`MFO-FIELD-BASE-${index}${otherIndex}`}
                                 DOMValues={other_field?.dom?.contents?.[other_field?.key]?.values}
@@ -147,7 +153,7 @@ const MFO = (props) => {
                         )
                     })}
                     <TargetField 
-                        disabled={!editMode}
+                        disabled={isFieldsDisabled}
                         id={`MFO-FIELD-TARGET-${index}`}
                         DOMValues={field?.dom?.contents?.[field?.for]?.values} 
                         dependencyTotalNumber={data["dep-total"]}
@@ -156,7 +162,7 @@ const MFO = (props) => {
                         onChange={handleChange('target')}
                     />
                     <ActualField 
-                        disabled={!editMode}
+                        disabled={isFieldsDisabled}
                         id={`MFO-FIELD-ACTUAL-${index}`}
                         DOMValues={field?.dom?.contents?.[field?.for]?.values} 
                         value={data.actual} 

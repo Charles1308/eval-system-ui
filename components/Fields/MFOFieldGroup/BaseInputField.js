@@ -48,7 +48,7 @@ const BaseInputField = props => {
 						<div className='my-2'>
 							{(props?.placeHolder || type) && <Label size='sm'>{ props?.placeHolder || type }</Label>}
 							<br/>
-							<Dropdown isOpen={dropdownOpen} toggle={toggle} style={{ width: '100%' }}>
+							<Dropdown isOpen={dropdownOpen} toggle={toggle} style={{ width: '100%' }} disabled={disabled}>
 								<DropdownToggle
 									caret
 									color="secondary"
@@ -80,8 +80,8 @@ const BaseInputField = props => {
 									: null
 								}
 								<Input 
-									// disabled={disabled}
 									id={props?.id}
+									disabled={disabled}
 									defaultValue={parseInt(value || 0)}
 									type="number" 
 									placeholder={

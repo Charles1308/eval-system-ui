@@ -72,7 +72,7 @@ const Dashboard = (props) => {
     }
   }, [data, error, isLoading]);
 
-  const graphMonthsData = React.useMemo(() => {
+  const monthsData = React.useCallback((type) => {
     const payload = {
       labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
       datasets: [
@@ -84,8 +84,8 @@ const Dashboard = (props) => {
       ],
     }
 
-    if (data && data?.graphData) {
-      const sorted = data.graphData.sort((a, b) => a.month.localeCompare(b.month));
+    if (data && data?.[type]) {
+      const sorted = data[type].sort((a, b) => a.month.localeCompare(b.month));
       const groupedByMonth = sorted.reduce((acc, { month, count }) => {
         const monthKey = month.slice(0, 7); // extract year and month part of the string
         acc[monthKey] = { month: monthKey, count };
@@ -121,29 +121,6 @@ const Dashboard = (props) => {
       {/* Page content */}
       <Container className="mt--7" fluid>
         <Row>
-          <Col className="mb-5 mb-xl-0" xl="8">
-            <Card className="shadow">
-              <CardHeader className="bg-transparent">
-                <Row className="align-items-center">
-                  <div className="col">
-                    <h6 className="text-uppercase text-light ls-1 mb-1">
-                      Overview
-                    </h6>
-                    <h2 className="mb-0">OPCR / IPCR submissions for {new Date().getFullYear()}</h2>
-                  </div>
-                </Row>
-              </CardHeader>
-              <CardBody>
-                {/* Chart */}
-                <div className="chart">
-                  <Bar
-                    data={graphMonthsData}
-                    options={options}
-                  />
-                </div>
-              </CardBody>
-            </Card>
-          </Col>
           <Col xl="4">
             <div className="bg-white p-5 rounded">
               <Row className="align-items-center">
@@ -168,6 +145,55 @@ const Dashboard = (props) => {
               <h1>{readyData.totalUsers}</h1>
               <p>Users</p>
             </div>
+          </Col>
+          <Col className="mb-5 mb-xl-0" xl="8">
+            <Card className="shadow">
+              <CardHeader className="bg-transparent">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h6 className="text-uppercase text-light ls-1 mb-1">
+                      Overview
+                    </h6>
+                    <h2 className="mb-0">IPCR submissions for {new Date().getFullYear()}</h2>
+                  </div>
+                </Row>
+              </CardHeader>
+              <CardBody>
+                {/* Chart */}
+                <div className="chart">
+                  <Bar
+                    data={monthsData('ipcrs')}
+                    options={options}
+                  />
+                </div>
+              </CardBody>
+            </Card>
+          </Col>
+        </Row>
+        <br/>
+        <Row>
+          <Col className="mb-5 mb-xl-0" xl="12">
+            <Card className="shadow">
+              <CardHeader className="bg-transparent">
+                <Row className="align-items-center">
+                  <div className="col">
+                    <h6 className="text-uppercase text-light ls-1 mb-1">
+                      Overview
+                    </h6>
+                    <h2 className="mb-0">OPCR submissions for {new Date().getFullYear()}</h2>
+                  </div>
+                </Row>
+              </CardHeader>
+              <CardBody>
+                {/* Chart */}
+                <div className="chart">
+                  <Bar
+                    data={monthsData('opcrs')}
+                    options={options}
+                  />
+                </div>
+              </CardBody>
+            </Card>
           </Col>
         </Row>
       </Container>

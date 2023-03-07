@@ -154,12 +154,12 @@ function Header() {
   }, [mfoData, formType]);
 
   React.useEffect(() => {
-    if (selectedMFO && mfoData) {
+    if (selectedMFO && mfoData && selectedId) {
       setModal(modal => ({...modal, buttonType: 'Update' }));
     } else if (selectedMFO) {
       setModal(modal => ({...modal, buttonType: 'Submit' }));
     }
-  }, [selectedMFO, mfoData])
+  }, [selectedMFO, mfoData, selectedId])
 
   const handleSetSelectedMFO = (formType) => (mfo) => {
     setSelectedMFO(mfo);
@@ -223,7 +223,11 @@ function Header() {
         </ModalBody>
         <ModalFooter>
           {modalPrimaryButton && ((!selectedId && selectedMFO === 'MFO5') || selectedId) && (
-            <Button color="primary" onClick={modalPrimaryButton.onClick}>
+            <Button 
+              color="primary" 
+              disabled={modalPrimaryButton.label === 'Update' && !hasPermission(`edit-${formType?.toLowerCase?.()}`)}
+              onClick={modalPrimaryButton.onClick}
+            >
               { modalPrimaryButton.label }
             </Button>
           )}
