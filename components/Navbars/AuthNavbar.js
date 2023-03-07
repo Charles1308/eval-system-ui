@@ -41,7 +41,7 @@ function AdminNavbar() {
             <div className="navbar-collapse-header d-md-none">
               <Row>
                 <Col className="collapse-brand" xs="6">
-                  <Link href="/admin/dashboard">
+                  <Link href="/">
                     <img
                       alt="..."
                       src={require("assets/img/brand/app-logo.png")}
