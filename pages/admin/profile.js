@@ -334,6 +334,7 @@ function Profile() {
                             className="form-control-alternative"
                             id="input-course"
                             placeholder="Course"
+                            disabled
                             type="text"
                             name="course"
                             value={course}

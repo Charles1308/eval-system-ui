@@ -72,7 +72,7 @@ function Register() {
         console.log(err);
         setNotifs({
           type: 'danger',
-          message: err?.response?.data?.message
+          message: err?.response?.data?.message || 'Please try again after some time.',
         });
       });
   }
@@ -147,7 +147,10 @@ function Register() {
                       <i className="ni ni-books" />
                     </InputGroupText>
                   </InputGroupAddon>
-                  <Input placeholder="Course" type="text" onChange={handleFillUp('course')}/>
+                  <Input id="exampleFormControlSelect1" type="select" placeholder="Course" onChange={handleFillUp('course')}>
+                    <option> BSIT </option>
+                    <option> COMSCI </option>
+                  </Input>
                 </InputGroup>
               </FormGroup>
 

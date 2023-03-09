@@ -63,7 +63,7 @@ function Login() {
         console.log(err);
         setNotifs({
           type: 'danger',
-          message: err?.response?.data?.message
+          message: err?.response?.data?.message || 'Please try again after some time.'
         });
       });
   }
