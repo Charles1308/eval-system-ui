@@ -60,11 +60,19 @@ function Login() {
         router.push('/admin/dashboard');
       })
       .catch(err => {
-        console.log(err);
-        setNotifs({
-          type: 'danger',
-          message: err?.response?.data?.message || 'Please try again after some time.'
-        });
+        if (err?.response?.data?.errors) {
+          err.response.data.errors.foreach(error => {
+            setNotifs({
+              type: 'danger',
+              message: error.message || 'Please try again after some time.',
+            });
+          })
+        } else {
+          setNotifs({
+            type: 'danger',
+            message: err?.response?.data?.message || 'Please try again after some time.',
+          });
+        }
       });
   }
 
