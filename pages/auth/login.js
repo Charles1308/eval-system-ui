@@ -60,7 +60,7 @@ function Login() {
         router.push('/admin/dashboard');
       })
       .catch(err => {
-        if (err?.response?.data?.errors) {
+        if (err?.response?.data?.errors?.length) {
           err.response.data.errors.foreach(error => {
             setNotifs({
               type: 'danger',

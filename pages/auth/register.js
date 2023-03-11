@@ -28,7 +28,7 @@ function Register() {
   const setUser = useUserStore(state => state.setUser);
   const { setNotifs } = useNotifStore(state => state);
   const router = useRouter();
-  const [form, setForm] = React.useState({ roles: 'DEAN' });
+  const [form, setForm] = React.useState({ roles: 'DEAN', course: 'BSIT' });
 
   const handleFillUp = (fieldName) => (e) => {
     setForm(form => ({
@@ -70,7 +70,7 @@ function Register() {
       })
       .catch(err => {
         console.log(err);
-        if (err?.response?.data?.errors) {
+        if (err?.response?.data?.errors?.length) {
           err.response.data.errors.foreach(error => {
             setNotifs({
               type: 'danger',
