@@ -71,7 +71,7 @@ function Register() {
       .catch(err => {
         console.log(err);
         if (err?.response?.data?.errors?.length) {
-          err.response.data.errors.foreach(error => {
+          err.response.data.errors.forEach(error => {
             setNotifs({
               type: 'danger',
               message: error.message || 'Please try again after some time.',
