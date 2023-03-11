@@ -57,14 +57,6 @@ function AdminNavbar() {
               </Row>
             </div>
             <Nav className="ml-auto" navbar>
-              {/* <NavItem>
-                <Link href="/admin/dashboard">
-                  <NavLink href="#pablo" className="nav-link-icon">
-                    <i className="ni ni-planet" />
-                    <span className="nav-link-inner--text">Dashboard</span>
-                  </NavLink>
-                </Link>
-              </NavItem> */}
               <NavItem>
                 <Link href="/auth/register">
                   <NavLink href="#pablo" className="nav-link-icon">
@@ -81,15 +73,6 @@ function AdminNavbar() {
                   </NavLink>
                 </Link>
               </NavItem>
-              {/* 
-              <NavItem>
-                <Link href="/admin/profile">
-                  <NavLink href="#pablo" className="nav-link-icon">
-                    <i className="ni ni-single-02" />
-                    <span className="nav-link-inner--text">Profile</span>
-                  </NavLink>
-                </Link>
-              </NavItem> */}
             </Nav>
           </UncontrolledCollapse>
         </Container>

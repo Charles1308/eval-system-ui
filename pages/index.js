@@ -7,13 +7,7 @@ export default function Index() {
   
   React.useEffect(() => {
     const verify = async () => {
-      try{
-        await verifyUser()
-        Router.push("/admin/dashboard");
-      } catch (error) {
-        console.error(error)
-        Router.push("/auth/login");
-      }
+      await verifyUser()
     }
 
     verify()

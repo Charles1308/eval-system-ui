@@ -4,7 +4,6 @@ import useNotifStore from '@hooks/store/useNotifStore';
 import MFO from './MFO';
 import Result from './Result';
 import _ from 'lodash';
-import usePermission from '@hooks/usePermission';
 
 import { 
 	FormGroup,
@@ -18,18 +17,13 @@ const MFOComponent = React.forwardRef((props, ref) => {
 	const { setUrl, setMethod, setPayload, setPayloads, payloads } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data, formType } = props;
-	const { id = null, editMode = false } = data;
-	const [designation, setDesignation] = React.useState('');
-	const [facultyRank , setFacultyRank] = React.useState('');
-	const hasPermission = usePermission()
-
-    const isFieldsDisabled = React.useMemo(() => {
-        return editMode && (!hasPermission('edit-ipcr') || !hasPermission('edit-opcr'))
-    }, [editMode])
+	const { id = null, editMode = false, disabled } = data;
+	const [designation, setDesignation] = React.useState('Ratee');
+	const [facultyRank , setFacultyRank] = React.useState('Professor');
 
 	const successIndicators = React.useMemo(() => 
 		data?.percentage?.getPercentage(designation, type), 
-	[type, data, designation])
+	[type, data, designation]);
 
 	const [reqPayload, setReqPayload] = React.useState({});
 	
@@ -73,33 +67,29 @@ const MFOComponent = React.forwardRef((props, ref) => {
 	}, [reqPayload]);
 
 	React.useEffect(() => {
-		if (payloads.length) {
-			if (designation !== payloads?.[0]?.designation || facultyRank !== payloads?.[0]?.facultyRank) {
-				const selectedDesignation = !designation.length && payloads?.[0]?.designation?.length 
-					? payloads?.[0]?.designation 
-					: designation.length 
-						? designation 
-						: 'Ratee';
-				
-				const selectedFacultyRank = !facultyRank.length && payloads?.[0]?.facultyRank?.length 
-					? payloads?.[0]?.facultyRank 
-					: facultyRank.length 
-						? facultyRank 
-						: 'Professor';
-						
-				const tempPayloads = payloads.map(payload => ({
-					...payload,
-					designation: selectedDesignation,
-					facultyRank: selectedFacultyRank,
-				}))
+		const isAllUpdated = payloads.every((item) => item.designation === designation && item.facultyRank === facultyRank);
 
-				if (facultyRank !== selectedFacultyRank) setFacultyRank(() => selectedFacultyRank);
-				if (designation !== selectedDesignation) setDesignation(() => selectedDesignation);
-
-				setPayloads(tempPayloads);
-			}
+		if (!isAllUpdated) {
+			const tempPayloads = payloads.map(payload => ({
+				...payload,
+				designation,
+				facultyRank,
+			}))
+		
+			setPayloads(tempPayloads);
 		}
 	}, [designation, facultyRank, payloads]);
+
+	React.useEffect(() => {
+		if (editMode) {
+			const hydratedItem = payloads.find(item => item.designation.length && item.facultyRank.length)
+
+			if (hydratedItem) {
+				setDesignation(hydratedItem.designation);
+				setFacultyRank(hydratedItem.facultyRank);
+			}
+		}
+	}, [editMode]);
 
 	return (
 		<div 
@@ -131,7 +121,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
 							type="select" 
 							placeholder="Designation" 
 							value={designation} 
-							disabled={isFieldsDisabled}
+							disabled={disabled}
 							onChange={(e) => setDesignation(e.target.value)}
 						>
 							<option> Ratee </option>
@@ -173,7 +163,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
 							id="faculty-rank-select" 
 							placeholder="Faculty Rank" 
 							type="select" 
-							disabled={isFieldsDisabled}
+							disabled={disabled}
 							value={facultyRank} 
 							onChange={(e) => setFacultyRank(e.target.value)}
 						>

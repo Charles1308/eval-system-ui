@@ -24,15 +24,15 @@ const MFO = (props) => {
 					{content.fields.map((field, index) => {
 						return( 
 							<MFOFieldGroup 
-								key={`${type}-FIELD-GROUP-${parentIndex}${index}`} 
+								key={`${content.title}-${field.title}-${index}`} 
 								type={type}
-								index={`${parentIndex}${index}`} 
+								index={`${content.title}-${field.title}-${index}`}
 								percentage={content.percentage}
 								field={field}
-								mfoData={mfoData?.[`${parentIndex}${index}`]}
+								mfoData={mfoData?.[`${content.title}-${field.title}-${index}`]}
 								editMode={editMode}
 								onChange={data => onChange?.({
-									[`${parentIndex}${index}`]: { ...data }
+									[`${content.title}-${field.title}-${index}`]: { ...data }
 								})}
 							/>
 						)

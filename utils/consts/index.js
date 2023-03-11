@@ -181,7 +181,7 @@ const MFO_CONTENTS_1 = {
                                             { label: "Very Satisfactory", value: 4.00 },
                                             { label: "Satisfactory", value: 3.00 },
                                             { label: "Few Sessions", value: 2.00 },
-                                            { label: "None at All", value: 2.00 },
+                                            { label: "None at All", value: 1.00 },
                                         ]
                                     }
                                 }

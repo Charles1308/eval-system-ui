@@ -30,7 +30,7 @@ function Header() {
   const { url, payloads, method, setPayloads, clearFormStore } = useFormRequestStore(state => state);
   const { setNotifs } = useNotifStore(state => state);
   const hasPermission = usePermission()
-  const isAllMFOCompleted = useIsAllMFOCompleted();
+  const formStatus = useIsAllMFOCompleted();
 
   const [modal, setModal] = React.useState(null);
   const [evaluationData, setEvaluationData] = React.useState(null);
@@ -49,6 +49,16 @@ function Header() {
   const [formType, setFormType] = React.useState(null);
   const dataIndex = payloads.findIndex(({ type }) => type === selectedMFO);
   const data = payloads?.[dataIndex];
+
+  const isFieldsDisabled = React.useMemo(() => {
+    if (formType === 'IPCR') {
+      return !hasPermission('edit-ipcr');
+    } else if (formType === 'OPCR') {
+      return !hasPermission('edit-opcr');
+    }
+
+    return false;
+  }, [formType]);
 
   const component = React.useRef(null);
   const printComponent = React.useCallback(() => component.current, [component]);
@@ -92,9 +102,12 @@ function Header() {
   }
 
   const handleForm = async () => {
-    if (!isAllMFOCompleted) {
-      setNotifs({ message: "All field is required", type: "danger" });
-
+    if (!formStatus.completed) {
+      setNotifs({ 
+        message: `The "${formStatus.which}" is not yet complete.` || "All field is required.", 
+        type: "danger", 
+        timeout: 5000, 
+      });
       return;
     }
 
@@ -120,8 +133,9 @@ function Header() {
       setNotifs({ message });
       toggle(null);
       clearFormStore();
-      setEvaluationData();
+      setEvaluationData(null);
       setSelectedMFO(null);
+      setModal(null);
     })
     .catch(err => {
       console.log(err);
@@ -189,8 +203,9 @@ function Header() {
         toggle={() => {
           toggle(null);
           clearFormStore();
-          setEvaluationData();
+          setEvaluationData(null);
           setSelectedMFO(null);
+          setModal(null);
         }}
         size="xl"
       >
@@ -199,7 +214,8 @@ function Header() {
             toggle(null);
             clearFormStore();
             setSelectedMFO(null);
-            setEvaluationData();
+            setEvaluationData(null);
+            setModal(null);
           }}
         >
           <Badge color="warning" style={{ width: '200px' }}>
@@ -217,6 +233,7 @@ function Header() {
                 id: selectedId,
                 mfoData: data?.data,
                 editMode: !!selectedId,
+                disabled: isFieldsDisabled,
               }}
             />
           }
@@ -265,7 +282,8 @@ function Header() {
               toggle(null);
               clearFormStore();
               setSelectedMFO(null);
-              setEvaluationData();
+              setEvaluationData(null);
+              setModal(null);
             }}
           >
             Cancel

@@ -114,11 +114,11 @@ const MFO = (props) => {
     }, [field.other_fields]);
 
     React.useEffect(() => {
-        if (index && type) {
-            setAddMFOField(`${type}-${index}`, isFieldsCompleted);
+        if (type && field) {
+            setAddMFOField(`${type}-${field.title}`, isFieldsCompleted);
         }
 
-    }, [isFieldsCompleted, index, type]);
+    }, [isFieldsCompleted, type, field]);
 
     React.useEffect(() => {
         setResult(
@@ -139,12 +139,13 @@ const MFO = (props) => {
                     {field.other_fields?.map?.((other_field, otherIndex) => {
                         const type = other_field?.for === "Target" ? "dep-total" : other_field.key;
                         const isOtherType = type !== "dep-total";
+                        const id = `${field.title}-${type}`
 
                         return (
                             <BaseInputField
                                 disabled={isFieldsDisabled}
-                                id={`MFO-FIELD-BASE-${index}${otherIndex}`}
-                                key={`MFO-FIELD-BASE-${index}${otherIndex}`}
+                                id={id}
+                                key={id}
                                 DOMValues={other_field?.dom?.contents?.[other_field?.key]?.values}
                                 onChange={handleChange(type, isOtherType && "other")}
                                 value={isOtherType ? mfoData?.other?.[other_field.key] : data['dep-total']}
@@ -154,7 +155,8 @@ const MFO = (props) => {
                     })}
                     <TargetField 
                         disabled={isFieldsDisabled}
-                        id={`MFO-FIELD-TARGET-${index}`}
+                        // id={`MFO-FIELD-TARGET-${index}`}
+                        id={`${field.title}-target`}
                         DOMValues={field?.dom?.contents?.[field?.for]?.values} 
                         dependencyTotalNumber={data["dep-total"]}
                         value={data.target} 
@@ -163,13 +165,15 @@ const MFO = (props) => {
                     />
                     <ActualField 
                         disabled={isFieldsDisabled}
-                        id={`MFO-FIELD-ACTUAL-${index}`}
+                        // id={`MFO-FIELD-ACTUAL-${index}`}
+                        id={`${field.title}-actual`}
                         DOMValues={field?.dom?.contents?.[field?.for]?.values} 
                         value={data.actual} 
                         onChange={handleChange('actual')}	
                     />
                     <RateField 
-                        id={`MFO-FIELD-RATE-${index}`}
+                        // id={`MFO-FIELD-RATE-${index}`}
+                        id={`${field.title}-rate`}
                         target={data.percentage ?? data.target} 
                         actual={data.actual}
                         onChange={handleChange('rate')}

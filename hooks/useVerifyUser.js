@@ -4,6 +4,7 @@ import useUserStore from './store/useUserStore';
 
 const LOGIN_PATH = '/auth/login';
 const REGISTER_PATH = '/auth/register';
+const ROOT = '/'
 
 const useVerifyUser = () => {
     const setUser = useUserStore(state => state.setUser);
@@ -43,8 +44,8 @@ const useVerifyUser = () => {
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
             
-            if (pathname === LOGIN_PATH || pathname === REGISTER_PATH) {
-                window.location.href = '/';
+            if (pathname === LOGIN_PATH || pathname === REGISTER_PATH || pathname === ROOT) {
+                window.location.href = '/admin/dashboard';
             }
         })
         .catch(err => {
@@ -53,7 +54,7 @@ const useVerifyUser = () => {
             if (err?.response) {
                 if (err.response.status) {
                     if (pathname === LOGIN_PATH || pathname === REGISTER_PATH) return;
-
+                    
                     window.location.href = LOGIN_PATH;
                 }
             }
