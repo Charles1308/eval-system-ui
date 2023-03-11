@@ -9,6 +9,7 @@ import QETAComponent from '../QETA';
 
 import { 
     Input, 
+    Label,
     InputGroup, 
     InputGroupText, 
 } from 'reactstrap';
@@ -32,22 +33,20 @@ const MFO = (props) => {
                 "dep-total": null,
             },
             total: 0,
+            remarks: ''
         }, // Form's previous data
         onChange,
         percentage,
         editMode = false,
+        disabled,
     } = props;
 
-	const hasPermission = usePermission()
     const { setResult } = useResultStore(state => state)
     const { setAddMFOField } = useMFOMonitor(state => state);
     const [data, setData] = React.useState(mfoData?.data);
     const [other, setOther] = React.useState(mfoData?.other);
     const [total, setTotal] = React.useState(mfoData?.total);
-
-    const isFieldsDisabled = React.useMemo(() => {
-        return editMode && (!hasPermission('edit-ipcr') || !hasPermission('edit-opcr'))
-    }, [editMode])
+    const [remarks, setRemarks] = React.useState(mfoData?.remarks);
 
     const computedResult = React.useMemo(() => 
         percentage?.applyPercentage?.(total)
@@ -57,8 +56,9 @@ const MFO = (props) => {
     const payload = React.useMemo(() => ({
         data: { ...data },
         other: { ...other },
+        remarks,
         total,
-    }), [data, other, total]);
+    }), [data, other, total, remarks]);
 
     const isFieldsCompleted = React.useMemo(() => {
         let isOtherFilled = true;
@@ -143,7 +143,7 @@ const MFO = (props) => {
 
                         return (
                             <BaseInputField
-                                disabled={isFieldsDisabled}
+                                disabled={disabled}
                                 id={id}
                                 key={id}
                                 DOMValues={other_field?.dom?.contents?.[other_field?.key]?.values}
@@ -154,7 +154,7 @@ const MFO = (props) => {
                         )
                     })}
                     <TargetField 
-                        disabled={isFieldsDisabled}
+                        disabled={disabled}
                         // id={`MFO-FIELD-TARGET-${index}`}
                         id={`${field.title}-target`}
                         DOMValues={field?.dom?.contents?.[field?.for]?.values} 
@@ -164,7 +164,7 @@ const MFO = (props) => {
                         onChange={handleChange('target')}
                     />
                     <ActualField 
-                        disabled={isFieldsDisabled}
+                        disabled={disabled}
                         // id={`MFO-FIELD-ACTUAL-${index}`}
                         id={`${field.title}-actual`}
                         DOMValues={field?.dom?.contents?.[field?.for]?.values} 
@@ -178,6 +178,17 @@ const MFO = (props) => {
                         actual={data.actual}
                         onChange={handleChange('rate')}
                     />
+                    <Label size='sm' for={'remarks' + field.title}>Remarks</Label>
+                    <InputGroup>
+                        <Input 
+                            id={'remarks' + field.title}
+                            type="textarea"
+                            disabled={disabled}
+                            value={remarks}
+                            onChange={e => setRemarks(e.target.value)}
+                        />
+                    </InputGroup>
+                    <br/>
                     <QETAComponent
                         quality={handleQetaValue('Quality')}
                         efficiency={handleQetaValue('Effectiveness')}
