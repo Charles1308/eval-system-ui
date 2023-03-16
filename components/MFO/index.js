@@ -1,6 +1,8 @@
 import React from 'react';
 import useFormRequestsStore from '@hooks/store/useFormRequestsStore';
 import useNotifStore from '@hooks/store/useNotifStore';
+import useUserStore from '@hooks/store/useUserStore';
+
 import MFO from './MFO';
 import Result from './Result';
 import _ from 'lodash';
@@ -14,6 +16,10 @@ import {
 } from 'reactstrap';
 
 const MFOComponent = React.forwardRef((props, ref) => {
+	const { roles } = useUserStore(store => store)
+
+	const isFaculty = roles?.some?.(role => role?.name === 'FACULTY') ?? false;
+	
 	const { setUrl, setMethod, setPayload, setPayloads, payloads } = useFormRequestsStore(store => store);
 	const { setNotifs } = useNotifStore(store => store);
 	const { type, data, formType } = props;
@@ -185,7 +191,7 @@ const MFOComponent = React.forwardRef((props, ref) => {
 				<hr/>
 						
 				<MFO {...data} formType={formType} type={type} onChange={handleSetPayload} />
-				{type === "MFO5" ? <Result/> : null}
+				{type === "MFO5" && !isFaculty ? <Result/> : null}
 			</div>
 		</div>
 	);
