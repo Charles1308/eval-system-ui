@@ -4,6 +4,7 @@ const PERMISSIONS = {
         'view-opcr',
         'edit-opcr',
         'print-opcr',
+        'view-ipcr',
     ],
     'FACULTY': [
         'create-ipcr',
