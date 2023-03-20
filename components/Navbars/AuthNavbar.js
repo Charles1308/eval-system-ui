@@ -19,8 +19,8 @@ function AdminNavbar() {
       <Navbar className="navbar-top navbar-horizontal navbar-dark" expand="md">
         <Container className="px-4">
           <Link href="/">
-            <span>
-              <NavbarBrand href="#pablo">
+            <span className="d-flex align-items-center justify-content-center">
+              <NavbarBrand href="#pablo" >
                 <img
                   alt="..."
                   style={{
@@ -30,8 +30,13 @@ function AdminNavbar() {
                   }}
                   src={require("assets/img/brand/app-logo.png")}
                 />
-                Batangas State University
               </NavbarBrand>
+              <div style={{ display: 'inline-block' }}>
+                <h3 style={{ color: 'rgba(0, 0, 0, 0.6)', padding: '0', margin: '0' }}>
+                  Batangas State University
+                </h3>
+                <small style={{ color: 'rgba(0, 0, 0, 0.5)' }}>The National Engineering University</small>
+              </div>
             </span>
           </Link>
           <button className="navbar-toggler" id="navbar-collapse-main">
@@ -60,16 +65,16 @@ function AdminNavbar() {
               <NavItem>
                 <Link href="/auth/register">
                   <NavLink href="#pablo" className="nav-link-icon">
-                    <i className="ni ni-circle-08" />
-                    <span className="nav-link-inner--text">Register</span>
+                    <i className="ni ni-circle-08" style={{ color: 'rgba(0, 0, 0, 0.5)' }}/>
+                    <span className="nav-link-inner--text" style={{ color: 'rgba(0, 0, 0, 0.5)', display: 'inline'}}>Register</span>
                   </NavLink>
                 </Link>
               </NavItem>
               <NavItem>
                 <Link href="/auth/login">
                   <NavLink href="#pablo" className="nav-link-icon">
-                    <i className="ni ni-key-25" />
-                    <span className="nav-link-inner--text">Login</span>
+                    <i className="ni ni-key-25" style={{ color: 'rgba(0, 0, 0, 0.5)' }}/>
+                    <span className="nav-link-inner--text" style={{ color: 'rgba(0, 0, 0, 0.5)', display: 'inline'}}>Login</span>
                   </NavLink>
                 </Link>
               </NavItem>

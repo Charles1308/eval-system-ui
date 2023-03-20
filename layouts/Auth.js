@@ -20,13 +20,13 @@ function Auth(props) {
     <>
       <div className="main-content">
         <AuthNavbar />
-        <div className="header batsu-bg-color py-7 py-lg-8">
+        <div className="header batsu-bg-color py-7 py-lg-8 text-dark">
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
                 <Col lg="5" md="6">
-                  <h1 className="text-white">Welcome!</h1>
-                  <p className="text-lead text-light">
+                  <h1 style={{ color: 'rgba(0, 0, 0, 0.5)'}}>Welcome!</h1>
+                  <p className="text-lead" style={{ color: 'rgba(0, 0, 0, 0.4)' }}>
                     Web Based Office & Faculty Evaluation for College of Informatics and Computing Sciences
                   </p>
                 </Col>

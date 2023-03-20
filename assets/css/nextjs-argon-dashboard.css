@@ -14124,11 +14124,11 @@ article h5 + figure {
   flex-direction: column;
   justify-content: space-around; }
 
-.batsu-main-bg-color {
-  background-color: #cdcdcd !important;
-  fill: #cdcdcd !important; }
-
 .batsu-bg-color {
+  background-color: #dbd9d9 !important;
+  fill: #dbd9d9 !important; }
+
+.batsu-main-bg-color {
   background-color: #c94242 !important; }
 
 .datepicker {
