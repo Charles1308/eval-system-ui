@@ -10,17 +10,17 @@ import routes from "routes.js";
 
 function Auth(props) {
   React.useEffect(() => {
-    document.body.classList.add("bg-default");
+    document.body.classList.add("batsu-main-bg-color");
     // Specify how to clean up after this effect:
     return function cleanup() {
-      document.body.classList.remove("bg-default");
+      document.body.classList.remove("batsu-main-bg-color");
     };
   }, []);
   return (
     <>
       <div className="main-content">
         <AuthNavbar />
-        <div className="header bg-gradient-info py-7 py-lg-8">
+        <div className="header batsu-bg-color py-7 py-lg-8">
           <Container>
             <div className="header-body text-center mb-7">
               <Row className="justify-content-center">
@@ -43,7 +43,7 @@ function Auth(props) {
               y="0"
             >
               <polygon
-                className="fill-default"
+                className="batsu-main-bg-color"
                 points="2560 0 2560 100 0 100"
               />
             </svg>

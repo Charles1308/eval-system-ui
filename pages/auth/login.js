@@ -184,7 +184,7 @@ function Login() {
           </Col>
           <Col className="text-right" xs="6">
             <a
-              className="text-light"
+              style={{ color: 'rgba(0, 0, 0, 0.5)'}}
               href="#"
               onClick={(e) => {
                 e.preventDefault()
